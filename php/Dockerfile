@@ -8,3 +8,7 @@ RUN apt update && apt install -y zlib1g-dev g++ libicu-dev zip libzip-dev zip li
     && docker-php-ext-install zip \
     && apt-get install -y git \
     && a2enmod rewrite
+
+WORKDIR /var/www/html
+
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
