@@ -1,6 +1,6 @@
 <?php
 
-$head = Component::viewTemplate('head');
+$head = Component::viewTemplate('head', ['title' => 'index']);
 $footer = Component::viewTemplate('footer');
 
 ?>

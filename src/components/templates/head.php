@@ -1,5 +1,4 @@
 <?php
-var_dump($_PROPS);
 $c = new Component($_PROPS, function (array $props) {
     return [
         'title' => $props['title']
