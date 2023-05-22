@@ -36,10 +36,13 @@ class Component {
         }
         $this->raw_values = $values;
 
-        // XSS対策
-        $this->values = array_map(function ($value) {
+        // 文字列だった場合、XSS対策
+        $this->values = filter_var($values, FILTER_CALLBACK, ['options' => function ($value) {
+            if (gettype($value) !== 'string') {
+                return $value;
+            }
             return htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
-        }, $values);
+        }]);
     }
 
     /**
