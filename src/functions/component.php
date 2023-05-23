@@ -12,18 +12,8 @@ class Component {
      * @param array $requirePropKeys 必須プロパティのキーと型
      */
     function __construct(array $props, Closure $actionComponent, array $requirePropKeys = []) {
-        foreach ($requirePropKeys as $key => $type) {
-            if (!array_key_exists($key, $props)) {
-                // 必須プロパティが存在しなかった場合はエラーをスロー
-                var_dump($props);
-                throw new Exception('Prop key not found: ' . $key);
-            }
-            elseif (gettype($props[$key]) !== $type) {
-                // 必須プロパティが型が一致しなければエラーをスロー
-                var_dump($props);
-                throw new Exception('Prop type not match: ' . $key);
-            }
-        }
+        // キーとその型をチェック
+        checkKeyTypes($props, $requirePropKeys);
 
         // クロージャを実行
         $values = $actionComponent($props);
@@ -43,6 +33,36 @@ class Component {
             }
             return htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
         }]);
+    }
+
+    /**
+     * CSRFトークンを設定
+     *
+     * @return string CSRFトークン
+     */
+    public static function setCsrfToken(): string {
+        $csrf_token = bin2hex(random_bytes(32));
+        $_SESSION[CSRF_NAME] = $csrf_token;
+
+        return $csrf_token;
+    }
+
+    /**
+     * DELETEメソッドを設定
+     *
+     * @return void
+     */
+    public static function setDeleteMethod() {
+        echo '<input name="'. METHOD_NAME .'" type="hidden" value="DELETE" />';
+    }
+
+    /**
+     * PUTメソッドを設定
+     *
+     * @return void
+     */
+    public static function setPutMethod() {
+        echo '<input name="'. METHOD_NAME .'" type="hidden" value="PUT" />';
     }
 
     /**
