@@ -1,8 +1,5 @@
 <?php
 
-const CSRF_NAME = 'csrf_token';
-const METHOD_NAME = '_method';
-
 function var_log($dump) {
     echo '<pre>';
     var_dump($dump);
