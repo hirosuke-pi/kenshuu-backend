@@ -1,11 +1,26 @@
 <?php
 
-class Action {
+class ActionPage {
     private array $actionMethods;
 
-    function __construct() {
+    function __construct(bool $isCheckCsrfToken = true) {
         session_start();
         $this->actionMethods = [];
+
+        if ($isCheckCsrfToken) {
+            $this->checkCsrfToken();
+        }
+    }
+
+    private function checkCsrfToken () {
+        if (!isset($_SESSION['csrf_token']) || !isset($_REQUEST['csrf_token'])) {
+            throw new Exception('CSRF token is not set');
+        }
+        if ($_SESSION['csrf_token'] !== $_REQUEST['csrf_token']) {
+            throw new Exception('CSRF token is invalid');
+        }
+        unset($_SESSION['csrf_token']);
+        unset($_REQUEST['csrf_token']);
     }
 
     public function dispatch() {
@@ -16,41 +31,39 @@ class Action {
         }
         
         $actionMethod = $this->actionMethods[$method];
-        $response = $actionMethod->action($_REQUEST);
+        $response = $actionMethod->action();
 
         $_SESSION['action_response'] = [
             'data' => $response->getData(),
-            'status' => $response->getStatus(),
+            'isError' => $response->getError(),
         ];
 
-        header('Location: ' . $actionMethod->getUrl());
+        header('Location: ' . $response->getLocation());
     }
 
-    public function get(string $jumpUrl, Closure $getAction) {
-        $this->actionMethods['GET'] = new ActionMethod('GET', $jumpUrl, $getAction);
+    public function get(Closure $getAction) {
+        $this->actionMethods['GET'] = new ActionMethod('GET', $getAction);
     }
 
-    public function post(string $jumpUrl, Closure $postAction) {
-        $this->actionMethods['POST'] = new ActionMethod('POST', $jumpUrl, $postAction);
+    public function post(Closure $postAction) {
+        $this->actionMethods['POST'] = new ActionMethod('POST', $postAction);
     }
 
-    public function delete(string $jumpUrl, Closure $deleteAction) {
-        $this->actionMethods['DELETE'] = new ActionMethod('DELETE', $jumpUrl, $deleteAction);
+    public function delete(Closure $deleteAction) {
+        $this->actionMethods['DELETE'] = new ActionMethod('DELETE', $deleteAction);
     }
 
-    public function patch(string $jumpUrl, Closure $patchAction) {
-        $this->actionMethods['PATCH'] = new ActionMethod('PATCH', $jumpUrl, $patchAction);
+    public function put(Closure $patchAction) {
+        $this->actionMethods['PUT'] = new ActionMethod('PUT', $patchAction);
     }
 }
 
 class ActionMethod {
     private string $method;
-    private string $url;
     private Closure $action;
 
-    function __construct(string $method, string $url, Closure $action) {
+    function __construct(string $method, Closure $action) {
         $this->method = $method;
-        $this->url = $url;
         $this->action = $action;
     }
 
@@ -58,34 +71,31 @@ class ActionMethod {
         return $this->method;
     }
 
-    public function getUrl(): string {
-        return $this->url;
-    }
-
     public function action(array $params = []): ActionResponse {
         return ($this->action)($params);
     }
 }
 
-enum ActionResponseStatus {
-    case Success;
-    case Error;
-}
-
 class ActionResponse {
-    private ActionResponseStatus $status;
+    private string $location;
+    private bool $isError;
     private array $data;
 
-    function __construct(ActionResponseStatus $status, array $data = []) {
-        $this->status = $status;
+    function __construct(string $location, array $data = [], bool $isError = false) {
+        $this->location = $location;
         $this->data = $data;
+        $this->isError = $isError;
     }
 
-    public function getStatus(): ActionResponseStatus {
-        return $this->status;
+    public function getLocation(): string {
+        return $this->location;
     }
 
     public function getData(): array {
         return $this->data;
+    }
+
+    public function getError(): bool {
+        return $this->isError;
     }
 }

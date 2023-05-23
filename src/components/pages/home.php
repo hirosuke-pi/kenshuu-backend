@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 $head = Component::viewTemplate('head', ['title' => 'index']);
 $header = Component::viewTemplate('header');
