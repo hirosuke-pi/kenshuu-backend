@@ -1,6 +1,6 @@
 <?php
-session_start();
 
+session_start();
 $head = Component::viewTemplate('head');
 $header = Component::viewTemplate('header');
 $footer = Component::viewTemplate('footer');

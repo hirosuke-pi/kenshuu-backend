@@ -69,70 +69,58 @@ class Component {
      *
      * @param string $componentName コンポーネント名
      * @param array $props デフォルトプロパティ
-     * @param boolean $require_session セッションが必要かどうか
      */
-    public static function viewAtom(string $componentName, array $props = [], $require_session = false) {
-        return new ViewComponent($componentName, 'atoms', $props, $require_session);
+    public static function viewAtom(string $componentName) {
+        return new ViewComponent($componentName, 'atoms');
     }
 
     /**
      * Moleculeコンポーネントの読み込み
      *
      * @param string $componentName コンポーネント名
-     * @param array $props デフォルトプロパティ
-     * @param boolean $require_session セッションが必要かどうか
      */
-    public static function viewMolecule(string $componentName, array $props = [], $require_session = false) {
-        return new ViewComponent($componentName, 'molecules', $props, $require_session);
+    public static function viewMolecule(string $componentName) {
+        return new ViewComponent($componentName, 'molecules');
     }
 
     /**
      * Organismコンポーネントの読み込み
      *
      * @param string $componentName コンポーネント名
-     * @param array $props デフォルトプロパティ
-     * @param boolean $require_session セッションが必要かどうか
      */
-    public static function viewOrganism(string $componentName, array $props = [], $require_session = false) {
-        return new ViewComponent($componentName, 'organisms', $props, $require_session);
+    public static function viewOrganism(string $componentName) {
+        return new ViewComponent($componentName, 'organisms');
     }
 
     /**
      * Templateコンポーネントの読み込み
      *
      * @param string $componentName コンポーネント名
-     * @param array $props デフォルトプロパティ
-     * @param boolean $require_session セッションが必要かどうか
      */
-    public static function viewTemplate(string $componentName, array $props = [], $require_session = false) {
-        return new ViewComponent($componentName, 'templates', $props, $require_session);
+    public static function viewTemplate(string $componentName) {
+        return new ViewComponent($componentName, 'templates');
     }
 
     /**
      * Pageコンポーネントの読み込み
      *
      * @param string $componentName コンポーネント名
-     * @param array $props デフォルトプロパティ
-     * @param boolean $require_session セッションが必要かどうか
      */
-    public static function viewPage(string $componentName, array $props = [], $require_session = false) {
-        return new ViewComponent($componentName, 'pages', $props, $require_session);
+    public static function viewPage(string $componentName) {
+        return new ViewComponent($componentName, 'pages');
     }
 }
 
 class ViewComponent {
     private string $componentPath;
-    private array $props;
 
     /**
      * コンポーネントの読み込み
      *
      * @param string $componentName コンポーネント名
      * @param string $designName デザイン名
-     * @param array $props デフォルトプロパティ
-     * @param boolean $require_session セッションが必要かどうか
      */
-    function __construct(string $componentName, string $designName, array $props = [], $require_session = false) {
+    function __construct(string $componentName, string $designName) {
         // Directory traversal対策
         if (!ctype_alnum($designName)) {
             throw new Exception('Invalid component name: ' . $designName);
@@ -143,12 +131,6 @@ class ViewComponent {
 
         // コンポーネントパス設定
         $this->componentPath = __DIR__ . '/../components/'. $designName .'/' . $componentName . '.php';
-        $this->props = $props;
-
-        // セッションが必要な場合はセッションを開始
-        if ($require_session && !isset($_SESSION)) {
-            session_start();
-        }
     }
 
     /**
@@ -157,12 +139,8 @@ class ViewComponent {
      * @param array $props 優先プロパティ
      * @return void
      */
-    public function view(array $props = NULL) {
-        if (isset($props)) {
-            $this->props = $props;
-        }
-
-        $_PROPS = $this->props;
+    public function view(array $props = []) {
+        $_PROPS = $props;
         require $this->componentPath;
     }
 }
