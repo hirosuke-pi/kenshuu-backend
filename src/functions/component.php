@@ -38,13 +38,12 @@ class Component {
     /**
      * CSRFトークンを設定
      *
-     * @return string CSRFトークン
+     * @return void
      */
-    public static function setCsrfToken(): string {
+    public static function setCsrfToken(){
         $csrf_token = bin2hex(random_bytes(32));
         $_SESSION[CSRF_NAME] = $csrf_token;
-
-        return $csrf_token;
+        echo '<input name="'. CSRF_NAME .'" type="hidden" value="'. $csrf_token .'" />';
     }
 
     /**
