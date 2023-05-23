@@ -1,16 +1,16 @@
 CREATE TABLE "users" (
-  "id" integer PRIMARY KEY,
+  "id" varchar PRIMARY KEY,
   "username" varchar NOT NULL,
   "email" varchar UNIQUE NOT NULL,
   "password" varchar NOT NULL,
-  "profile_img_path" varchar NOT NULL,
+  "profile_img_path" varchar,
   "created_at" timestamp NOT NULL DEFAULT (now()),
   "deleted_at" timestamp
 );
 
 CREATE TABLE "posts" (
-  "id" integer PRIMARY KEY,
-  "user_id" integer NOT NULL,
+  "id" varchar PRIMARY KEY,
+  "user_id" varchar NOT NULL,
   "title" varchar NOT NULL,
   "body" text NOT NULL,
   "created_at" timestamp NOT NULL DEFAULT (now()),
@@ -19,20 +19,20 @@ CREATE TABLE "posts" (
 );
 
 CREATE TABLE "images" (
-  "id" integer PRIMARY KEY,
-  "post_id" integer NOT NULL,
+  "id" varchar PRIMARY KEY,
+  "post_id" varchar NOT NULL,
   "thumbnail_flag" bool NOT NULL DEFAULT false,
   "file_path" varchar NOT NULL
 );
 
 CREATE TABLE "posts_tags" (
-  "post_id" integer,
-  "tag_id" integer,
+  "post_id" varchar,
+  "tag_id" varchar,
   PRIMARY KEY ("post_id", "tag_id")
 );
 
 CREATE TABLE "tags" (
-  "id" integer PRIMARY KEY,
+  "id" varchar PRIMARY KEY,
   "tag_name" varchar UNIQUE NOT NULL
 );
 

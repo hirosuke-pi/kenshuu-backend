@@ -20,3 +20,17 @@ function checkKeyTypes(array $params, array $requirePropKeys) {
         }
     }
 }
+
+function connectPostgreSQL(): PDO {
+    $db = new PDO('pgsql:host='. DB_HOST .';dbname='. DB_NAME .'', DB_USER, DB_PASSWORD);
+    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    return $db;
+}
+
+function objectList2Array(array $objectList) {
+    $array = [];
+    foreach ($objectList as $object) {
+        $array[] = (array)$object;
+    }
+    return $array;
+}

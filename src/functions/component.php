@@ -19,21 +19,31 @@ class Component {
         $values = $actionComponent($props);
 
         // 型チェック
-        if (gettype($values) !== 'array') {
+        if (!is_array($values)) {
             // 返り値が配列でなければエラーをスロー
             var_dump($values);
             throw new Exception('Return value type not match: ' . gettype($values));
         }
         $this->raw_values = $values;
 
+        var_log($values);
         // 文字列だった場合、XSS対策
-        $this->values = filter_var($values, FILTER_CALLBACK, ['options' => function ($value) {
-            if (gettype($value) !== 'string') {
-                return $value;
-            }
-            return htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
-        }]);
+        // $this->values = filter_var($values, FILTER_CALLBACK, ['options' => function ($value) {
+        //     var_log($value);
+        //     if (gettype($value) === 'string') {
+        //         return htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
+        //     }
+        //     elseif (gettype($value) === 'object') {
+        //         return array_map(function ($value) {
+        //             return htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
+        //         }, $value);
+        //     }
+        //     return $value;
+        // }]);
+        // TODO: ここの処理修正
+
     }
+
 
     /**
      * CSRFトークンを設定
