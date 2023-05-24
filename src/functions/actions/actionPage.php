@@ -58,13 +58,12 @@ class ActionPage {
         
         // HTTPメソッドに対するクロージャー・パラメーター取得
         $actionMethod = $this->actionMethods[$method];
-        $requireParams = $actionMethod->getRequireParams();
 
         // 必須パラメーターが存在するか
-        checkKeyTypes($_REQUEST, $requireParams);
+        checkKeyTypes($_REQUEST, $actionMethod->requireParams);
 
         // クロージャーを実行
-        $response = $actionMethod->action($_REQUEST);
+        $response = ($actionMethod->action)($_REQUEST);
 
         // セッションにレスポンスを保存
         $_SESSION['action_response'] = [
