@@ -42,7 +42,7 @@ class PostsDAO {
         return $postDtoList;
     }
 
-    public function getPostId(string $id): PostsDTO {
+    public function getPostById(string $id): ?PostsDTO {
         $sql = 'SELECT * FROM '. $this::POSTS_TABLE .' WHERE id = :id AND deleted_at IS NULL';
         $stmt = $this->db->prepare($sql);
         $stmt->bindValue(':id', $id, PDO::PARAM_STR);
