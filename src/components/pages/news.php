@@ -1,13 +1,8 @@
 <?php
 
 session_start();
-$head = Component::viewTemplate('head');
-$header = Component::viewTemplate('header');
-$footer = Component::viewTemplate('footer');
-$end = Component::viewTemplate('end');
-
-$newsDetail = Component::viewOrganism('newsDetail');
-$userInfo = Component::viewOrganism('userInfo');
+[$head, $header, $footer, $end] = ViewComponent::importTemplates(['head', 'header', 'footer', 'end']);
+[$newsDetail, $userInfo] = ViewComponent::importOrganisms(['newsDetail', 'userInfo']);
 
 $component = new Component(
     $_PROPS,

@@ -1,6 +1,6 @@
 <?php
 
-$error = Component::viewOrganism('error');
+[$error] = ViewComponent::importOrganisms(['error']);
 
 $component = new Component(
     $_PROPS,

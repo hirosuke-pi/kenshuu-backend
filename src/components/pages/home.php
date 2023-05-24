@@ -1,13 +1,9 @@
 <?php
 
 session_start();
-$head = Component::viewTemplate('head');
-$header = Component::viewTemplate('header');
-$footer = Component::viewTemplate('footer');
-$end = Component::viewTemplate('end');
+[$head, $header, $footer, $end] = ViewComponent::importTemplates(['head', 'header', 'footer', 'end']);
+[$newsList, $postForm] = ViewComponent::importOrganisms(['newsList', 'postForm']);
 
-$newsList = Component::viewOrganism('newsList');
-$postForm = Component::viewOrganism('postForm');
 ?>
 
 <?=$head->view(['title' => 'Flash News'])?>

@@ -1,6 +1,6 @@
 <?php
 
-$newsCard = Component::viewMolecule('newsCard');
+[$newsCard] = ViewComponent::importMolecules(['newsCard']);
 
 $component = new Component(
     $_PROPS,

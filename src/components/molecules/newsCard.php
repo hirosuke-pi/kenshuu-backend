@@ -1,14 +1,14 @@
 <?php
 
-$badge = Component::viewAtom('badge');
+[$badge] = ViewComponent::importAtoms(['badge']);
 
-$c = new Component($_PROPS, function($props) {
+$component = new Component($_PROPS, function($props) {
     return [
         'post' => $props['post']
     ];
 }, ['post' => 'object']);
 
-$item = $c->values['post'];
+$item = $component->values['post'];
 $newsLink = '/news/index.php?id='. $item['id'];
 
 ?>
