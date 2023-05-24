@@ -68,12 +68,12 @@ class ActionPage {
 
         // セッションにレスポンスを保存
         $_SESSION['action_response'] = [
-            'data' => $response->getData(),
-            'isError' => $response->getError(),
+            'data' => $response->data,
+            'isError' => $response->isError,
         ];
 
         // リダイレクト
-        header('Location: ' . $response->getLocation());
+        header('Location: ' . $response->location);
     }
 
     /**
