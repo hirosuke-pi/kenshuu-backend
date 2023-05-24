@@ -19,16 +19,15 @@ class Component {
         $values = $actionComponent($props);
 
         // 型チェック
-        if (gettype($values) !== 'array') {
+        if (!is_array($values)) {
             // 返り値が配列でなければエラーをスロー
-            var_dump($values);
             throw new Exception('Return value type not match: ' . gettype($values));
         }
         $this->raw_values = $values;
 
         // 文字列だった場合、XSS対策
         $this->values = filter_var($values, FILTER_CALLBACK, ['options' => function ($value) {
-            if (gettype($value) !== 'string') {
+            if (!is_string($value)) {
                 return $value;
             }
             return htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
@@ -108,39 +107,5 @@ class Component {
      */
     public static function viewPage(string $componentName) {
         return new ViewComponent($componentName, 'pages');
-    }
-}
-
-class ViewComponent {
-    private string $componentPath;
-
-    /**
-     * コンポーネントの読み込み
-     *
-     * @param string $componentName コンポーネント名
-     * @param string $designName デザイン名
-     */
-    function __construct(string $componentName, string $designName) {
-        // Directory traversal対策
-        if (!ctype_alnum($designName)) {
-            throw new Exception('Invalid component name: ' . $designName);
-        }
-        elseif (!ctype_alnum($componentName)) {
-            throw new Exception('Invalid component name: ' . $componentName);
-        }
-
-        // コンポーネントパス設定
-        $this->componentPath = __DIR__ . '/../components/'. $designName .'/' . $componentName . '.php';
-    }
-
-    /**
-     * コンポーネントを表示
-     *
-     * @param array $props 優先プロパティ
-     * @return void
-     */
-    public function view(array $props = []) {
-        $_PROPS = $props;
-        require $this->componentPath;
     }
 }
