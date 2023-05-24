@@ -4,6 +4,7 @@ session_start();
 $head = Component::viewTemplate('head');
 $header = Component::viewTemplate('header');
 $footer = Component::viewTemplate('footer');
+$end = Component::viewTemplate('end');
 
 $newsList = Component::viewOrganism('newsList');
 $postForm = Component::viewOrganism('postForm');
@@ -15,5 +16,6 @@ $postForm = Component::viewOrganism('postForm');
         <?=$newsList->view()?>
         <hr class="ml-3 mr-3 mt-5">
         <?=$postForm->view()?>
+        <?=$footer->view()?>
     </body>
-<?=$footer->view()?>
+<?=$end->view()?>

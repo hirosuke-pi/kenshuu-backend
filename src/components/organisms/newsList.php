@@ -1,32 +1,22 @@
 <?php
 
+$newsCard = Component::viewMolecule('newsCard');
+
 $c = new Component($_PROPS, function() {
     $db = connectPostgreSQL();
-
     $postsDao = new PostsDAO($db);
-    $posts = $postsDao->getPosts();
 
     return [
-        'posts' => $posts,
+        'posts' => $postsDao->getPosts()
     ];
 });
 
 ?>
 
 <div>
-    <ul>
-        <?php foreach ($c->raw_values['posts'] as $post) { ?>
-            <!-- <?=var_log($post) ?> -->
-            <li>
-                <h3>
-                    <a href="/news/<?= $post['id'] ?>">
-                        <?=$post['title'] ?>
-                    </a>
-                </h3>
-                <p><?=$post['body'] ?></p>
-                <p><?=$post['createdAt'] ?></p>
-                <hr/>
-            </li>
+    <ul class="flex justify-center flex-wrap">
+        <?php foreach ($c->rawValues['posts'] as $post) { ?>
+            <?=$newsCard->view(['post' => $post])?>
         <?php } ?>
     </ul>
 </div>

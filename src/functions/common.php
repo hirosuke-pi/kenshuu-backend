@@ -27,10 +27,7 @@ function connectPostgreSQL(): PDO {
     return $db;
 }
 
-function objectList2Array(array $objectList) {
-    $array = [];
-    foreach ($objectList as $object) {
-        $array[] = (array)$object;
-    }
-    return $array;
+function getDateTimeFormat(string $datetime): string {
+    $now = new DateTime($datetime);
+    return $now->format('Y/m/d H:i:s');
 }
