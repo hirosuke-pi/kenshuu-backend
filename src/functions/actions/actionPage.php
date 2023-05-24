@@ -58,22 +58,21 @@ class ActionPage {
         
         // HTTPメソッドに対するクロージャー・パラメーター取得
         $actionMethod = $this->actionMethods[$method];
-        $requireParams = $actionMethod->getRequireParams();
 
         // 必須パラメーターが存在するか
-        checkKeyTypes($_REQUEST, $requireParams);
+        checkKeyTypes($_REQUEST, $actionMethod->requireParams);
 
         // クロージャーを実行
-        $response = $actionMethod->action($_REQUEST);
+        $response = ($actionMethod->action)($_REQUEST);
 
         // セッションにレスポンスを保存
         $_SESSION['action_response'] = [
-            'data' => $response->getData(),
-            'isError' => $response->getError(),
+            'data' => $response->data,
+            'isError' => $response->isError,
         ];
 
         // リダイレクト
-        header('Location: ' . $response->getLocation());
+        header('Location: ' . $response->location);
     }
 
     /**
@@ -118,98 +117,5 @@ class ActionPage {
      */
     public function put(Closure $patchAction, array $requireParams = []) {
         $this->actionMethods['PUT'] = new ActionMethod('PUT', $patchAction, $requireParams);
-    }
-}
-
-class ActionMethod {
-    private string $method;
-    private Closure $action;
-    private array $requireParams;
-
-    /**
-     * 各HTTPメソッドのクロージャーを作成
-     *
-     * @param string $method HTTPメソッド
-     * @param Closure $action アクション
-     * @param array $requireParams 必須パラメーター ['key' => 'keyType', ...]
-     */
-    function __construct(string $method, Closure $action, array $requireParams) {
-        $this->method = $method;
-        $this->action = $action;
-        $this->requireParams = $requireParams;
-    }
-
-    /**
-     * HTTPメソッドを取得
-     *
-     * @return string HTTPメソッド
-     */
-    public function getMethod(): string {
-        return $this->method;
-    }
-
-    /**
-     * 必須パラメーターを取得
-     *
-     * @return array 必須パラメーター ['key' => 'keyType', ...]
-     */
-    public function getRequireParams(): array {
-        return $this->requireParams;
-    }
-
-    /**
-     * クロージャーを実行
-     *
-     * @param array $params パラメーター
-     * @return ActionResponse アクションのレスポンス
-     */
-    public function action(array $params = []): ActionResponse {
-        return ($this->action)($params);
-    }
-}
-
-class ActionResponse {
-    private string $location;
-    private bool $isError;
-    private array $data;
-
-    /**
-     * アクションのレスポンスを作成
-     *
-     * @param string $location リダイレクト先パス
-     * @param array $data $_SESSIONに格納するデータ
-     * @param boolean $isError エラーかどうか
-     */
-    function __construct(string $location, array $data = [], bool $isError = false) {
-        $this->location = $location;
-        $this->data = $data;
-        $this->isError = $isError;
-    }
-
-    /**
-     * リダイレクト先を取得
-     *
-     * @return string リダイレクト先パス
-     */
-    public function getLocation(): string {
-        return $this->location;
-    }
-
-    /**
-     * $_SESSIONに格納するデータを取得
-     *
-     * @return array $_SESSIONに格納するデータ
-     */
-    public function getData(): array {
-        return $this->data;
-    }
-
-    /**
-     * エラーかどうかを取得
-     *
-     * @return boolean エラーかどうか
-     */
-    public function getError(): bool {
-        return $this->isError;
     }
 }
