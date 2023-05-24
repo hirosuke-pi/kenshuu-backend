@@ -22,7 +22,7 @@ class ViewComponent {
         }
 
         // コンポーネントパス設定
-        $this->componentPath = __DIR__ . '/../components/'. $designName .'/' . $componentName . '.php';
+        $this->componentPath = __DIR__ . '/../../components/'. $designName .'/' . $componentName . '.php';
         $this->props = $props;
 
         // セッションが必要な場合はセッションを開始
