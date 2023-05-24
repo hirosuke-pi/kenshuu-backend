@@ -9,7 +9,7 @@ $c = new Component($_PROPS, function($props) {
 }, ['post' => 'object']);
 
 $item = $c->values['post'];
-$newsLink = '/news.php?id='. $item['id'];
+$newsLink = '/news/index.php?id='. $item['id'];
 
 ?>
 
