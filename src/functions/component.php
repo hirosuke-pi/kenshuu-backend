@@ -15,12 +15,10 @@ class Component {
         foreach ($requirePropKeys as $key => $type) {
             if (!array_key_exists($key, $props)) {
                 // 必須プロパティが存在しなかった場合はエラーをスロー
-                var_dump($props);
                 throw new Exception('Prop key not found: ' . $key);
             }
             elseif (gettype($props[$key]) !== $type) {
                 // 必須プロパティが型が一致しなければエラーをスロー
-                var_dump($props);
                 throw new Exception('Prop type not match: ' . $key);
             }
         }
@@ -29,16 +27,15 @@ class Component {
         $values = $actionComponent($props);
 
         // 型チェック
-        if (gettype($values) !== 'array') {
+        if (!is_array($values)) {
             // 返り値が配列でなければエラーをスロー
-            var_dump($values);
             throw new Exception('Return value type not match: ' . gettype($values));
         }
         $this->raw_values = $values;
 
         // 文字列だった場合、XSS対策
         $this->values = filter_var($values, FILTER_CALLBACK, ['options' => function ($value) {
-            if (gettype($value) !== 'string') {
+            if (!is_string($value)) {
                 return $value;
             }
             return htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
@@ -98,52 +95,5 @@ class Component {
      */
     public static function viewPage(string $componentName, array $props = [], $require_session = false) {
         return new ViewComponent($componentName, 'pages', $props, $require_session);
-    }
-}
-
-class ViewComponent {
-    private string $componentPath;
-    private array $props;
-
-    /**
-     * コンポーネントの読み込み
-     *
-     * @param string $componentName コンポーネント名
-     * @param string $designName デザイン名
-     * @param array $props デフォルトプロパティ
-     * @param boolean $require_session セッションが必要かどうか
-     */
-    function __construct(string $componentName, string $designName, array $props = [], $require_session = false) {
-        // Directory traversal対策
-        if (!ctype_alnum($designName)) {
-            throw new Exception('Invalid component name: ' . $designName);
-        }
-        elseif (!ctype_alnum($componentName)) {
-            throw new Exception('Invalid component name: ' . $componentName);
-        }
-
-        // コンポーネントパス設定
-        $this->componentPath = __DIR__ . '/../components/'. $designName .'/' . $componentName . '.php';
-        $this->props = $props;
-
-        // セッションが必要な場合はセッションを開始
-        if ($require_session && !isset($_SESSION)) {
-            session_start();
-        }
-    }
-
-    /**
-     * コンポーネントを表示
-     *
-     * @param array $props 優先プロパティ
-     * @return void
-     */
-    public function view(array $props = NULL) {
-        if (isset($props)) {
-            $this->props = $props;
-        }
-
-        $_PROPS = $this->props;
-        require $this->componentPath;
     }
 }
