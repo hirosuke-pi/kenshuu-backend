@@ -53,25 +53,11 @@ class ViewComponent {
      * @param array $props 優先プロパティ
      * @return void
      */
-    public function viewIf(bool $flag, array $props = []) {
+    public function viewIf(bool $flag, array $props = []): bool {
         if (!$flag) {
-            return;
+            return false;
         }
         $this->view($props);
-    }
-
-    /**
-     * $flagがtrueの場合、コンポーネントを表示
-     * $flagがfalseの場合、die()を実行
-     *
-     * @param bool $flag フラグ
-     * @param array $props 優先プロパティ
-     * @return void
-     */
-    public function viewIfDie(bool $flag, array $props = []) {
-        if (!$flag) {
-            die();
-        }
-        $this->view($props);
+        return true;
     }
 }

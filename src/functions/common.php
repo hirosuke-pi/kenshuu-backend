@@ -31,3 +31,13 @@ function getDateTimeFormat(string $datetime): string {
     $now = new DateTime($datetime);
     return $now->format('Y/m/d H:i:s');
 }
+
+function jumpLocation(string $path, array $data = []) {
+    $_SESSION[JUMP_PAGE_INDEX] = $data;
+    header('location: ' . $path);
+    exit;
+}
+
+function getRefarerData(): array {
+    return isset($_SESSION[JUMP_PAGE_INDEX]) ? $_SESSION[JUMP_PAGE_INDEX] : [];
+}

@@ -61,7 +61,6 @@ class Component {
         return $convertedArray;
     }
 
-
     /**
      * CSRFトークンを設定
      *
