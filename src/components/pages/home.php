@@ -1,14 +1,17 @@
 <?php
 
-$head = Component::viewTemplate('head', ['title' => 'index']);
+session_start();
+$head = Component::viewTemplate('head');
+$header = Component::viewTemplate('header');
 $footer = Component::viewTemplate('footer');
 
+$postForm = Component::viewOrganism('postForm');
 ?>
 
-<?=$head->view()?>
+<?=$head->view(['title' => 'index'])?>
     <body>
-        <h1 class="text-3xl font-bold underline">
-            Hello world!
-        </h1>
+        <?=$header->view()?>
+        <hr class="ml-3 mr-3 mt-5">
+        <?=$postForm->view()?>
     </body>
 <?=$footer->view()?>
