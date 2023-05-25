@@ -4,9 +4,11 @@ session_start();
 [$head, $header, $footer, $end] = ViewComponent::importTemplates(['head', 'header', 'footer', 'end']);
 [$newsList, $postForm] = ViewComponent::importOrganisms(['newsList', 'postForm']);
 
+$headProps = ['title' => 'Flash News'];
+
 ?>
 
-<?=$head->view(['title' => 'Flash News'])?>
+<?=$head->view($headProps)?>
     <body>
         <?=$header->view()?>
         <?=$newsList->view()?>

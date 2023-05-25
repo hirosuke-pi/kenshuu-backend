@@ -14,11 +14,13 @@ $component = new Component(
     }
 );
 
+$posts = $component->rawValues['posts'];
+
 ?>
 
 <div>
     <ul class="flex justify-center flex-wrap">
-        <?php foreach ($component->rawValues['posts'] as $post): ?>
+        <?php foreach ($posts as $post): ?>
             <?=$newsCard->view(['post' => $post])?>
         <?php endforeach; ?>
     </ul>

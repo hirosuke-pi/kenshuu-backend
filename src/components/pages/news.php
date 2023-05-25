@@ -35,6 +35,9 @@ $component = new Component(
     }
 );
 
+$headProps = [
+    'title' => 'Flash News - '. $component->rawValues['post']->title
+];
 $newsDetailProps = [
     'post' => $component->rawValues['post']
 ];
@@ -45,7 +48,7 @@ $userInfoProps = [
 
 ?>
 
-<?=$head->view(['title' => 'Flash News - '. $component->rawValues['post']->title])?>
+<?=$head->view($headProps)?>
     <body>
         <?=$header->view()?>
         <section class="flex justify-center flex-wrap items-start">

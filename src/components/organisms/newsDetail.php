@@ -15,13 +15,14 @@ $component = new Component(
     ['post' => 'object']
 );
 
+$breadcrumbProps = ['paths' => $component->rawValues['paths']];
 $post = $component->values['post'];
 
 ?>
 
 <div class="w-full lg:w-3/6 ">
     <div class="m-3 p-2 rounded-lg">
-        <?=$breadcrumb->view(['paths' => $component->rawValues['paths']])?>
+        <?=$breadcrumb->view($breadcrumbProps)?>
     </div>
     <main class="rounded-lg border border-gray-300 m-3 overflow-hidden">
         <img class="w-full" src="/img/news.jpg" alt="news image">
