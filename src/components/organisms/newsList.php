@@ -18,8 +18,8 @@ $component = new Component(
 
 <div>
     <ul class="flex justify-center flex-wrap">
-        <?php foreach ($component->rawValues['posts'] as $post) { ?>
+        <?php foreach ($component->rawValues['posts'] as $post): ?>
             <?=$newsCard->view(['post' => $post])?>
-        <?php } ?>
+        <?php endforeach; ?>
     </ul>
 </div>
