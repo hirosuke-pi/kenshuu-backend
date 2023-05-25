@@ -22,9 +22,11 @@ $component = new Component(
         // ユーザーデータ取得
         $usersDao = new UsersDAO($db);
         $user = $usersDao->getUserById($post->userId);
+        $postsCount = $postsDao->getPostsCountByUserId($post->userId);
 
         return [
             'post' => $post,
+            'postsCount' => $postsCount,
             'user' => $user,
             'paths' => [
                 ['name' => 'ニュース - '. $post->title, 'link' => $_SERVER['REQUEST_URI']],
@@ -33,14 +35,22 @@ $component = new Component(
     }
 );
 
+$newsDetailProps = [
+    'post' => $component->rawValues['post']
+];
+$userInfoProps = [
+    'user' => $component->rawValues['user'],
+    'postsCount' => $component->values['postsCount']
+];
+
 ?>
 
 <?=$head->view(['title' => 'Flash News - '. $component->rawValues['post']->title])?>
     <body>
         <?=$header->view()?>
         <section class="flex justify-center flex-wrap items-start">
-            <?=$newsDetail->view(['post' => $component->rawValues['post']])?>
-            <?=$userInfo->view(['user' => $component->rawValues['user']])?>
+            <?=$newsDetail->view($newsDetailProps)?>
+            <?=$userInfo->view($userInfoProps)?>
         </section>
         <?=$footer->view()?>
     </body>

@@ -25,7 +25,7 @@ $post = $component->values['post'];
     </div>
     <main class="rounded-lg border border-gray-300 m-3 overflow-hidden">
         <img class="w-full" src="/img/news.jpg" alt="news image">
-        <article class="p-3">
+        <article class="p-5">
             <h2 class="text-4xl text-gray-800 font-bold mt-2 mb-2"><?=$post['title']?></h2>
             <hr/>
             <section class="mt-2">

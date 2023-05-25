@@ -6,13 +6,15 @@ $component = new Component(
     $_PROPS,
     function($props) {
         return [
+            'postsCount' => $props['postsCount'],
             'user' => $props['user']
         ];
     },
-    ['user' => 'object']
+    ['user' => 'object', 'postsCount' => 'integer']
 );
 
 $user = $component->values['user'];
+$postsCount = $component->values['postsCount'];
 
 ?>
 
@@ -26,7 +28,7 @@ $user = $component->values['user'];
                 <img class="w-20 h-20 rounded-full object-cover" src="/img/news.jpg" alt="user image">
                 <p class="text-xl font-bold text-gray-700 text-center">@<?=$user['username']?></p>
             </a>
-            <p class="text-gray-600 mt-2">記事投稿数: XXX</p>
+            <p class="text-gray-600 mt-2">記事投稿数: <strong><?=$postsCount ?></strong></p>
         </div>
     </section>
     <section class="border border-gray-300 rounded-lg p-5 mt-3">
