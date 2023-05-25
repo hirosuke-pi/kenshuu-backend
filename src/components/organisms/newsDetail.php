@@ -1,7 +1,5 @@
 <?php
 
-[$error] = ViewComponent::importOrganisms(['error']);
-
 $component = new Component(
     $_PROPS,
     function($props) {
@@ -9,25 +7,22 @@ $component = new Component(
             'post' => $props['post']
         ];
     },
-    ['post' => 'array']
+    ['post' => 'object']
 );
 
 $post = $component->values['post'];
 
 ?>
 
-<?php if (isset($component->values['post'])) { ?>
-    <main class="w-6/3">
-        <div>
-            <h1 class="text-3xl font-bold text-center"><?=$post['title']?></h1>
-            <p class="text-center text-gray-500">投稿者: <?=$post['userId']?></p>
-            <p class="text-center text-gray-500">投稿日: <?=$post['createdAt']?></p>
-            <p class="text-center text-gray-500">更新日: <?=$post['updatedAt']?></p>
-            <p class="text-center text-gray-500">削除日: <?=$post['deletedAt']?></p>
-            <p class="text-center text-gray-500">ID: <?=$post['id']?></p>
-            <p class="text-center text-gray-500">本文: <?=$post['body']?></p>
-        </div>
-    </main>
-<?php } else { ?>
-    <?=$error->view(['message' => '投稿が見つかりませんでした'])?>
-<?php } ?>
+
+<main class="w-full lg:w-3/6 rounded-lg border border-gray-300 m-3 overflow-hidden">
+    <img class="w-full" src="/img/news.jpg" alt="news image">
+    <article class="p-3">
+        <h2 class="text-4xl text-gray-800 font-bold mt-2 mb-2"><?=$post['title']?></h2>
+        <hr/>
+        <section class="mt-2">
+            <p class="text-gray-700">投稿日: <?=getDateTimeFormat($post['createdAt'])?></p>
+            <p class="text-gray-700 mt-5"><?=$post['body']?></p>
+        </section>
+    </article>
+</main>

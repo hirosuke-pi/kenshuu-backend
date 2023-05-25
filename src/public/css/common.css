@@ -7,3 +7,11 @@
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 3;
 }
+
+.detail {
+    min-width: 600px;
+}
+
+.min-info {
+    width: 300px;
+}

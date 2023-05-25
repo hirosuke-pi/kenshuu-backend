@@ -33,8 +33,8 @@ $component = new Component(
     <body>
         <?=$header->view()?>
         <section class="flex justify-center flex-wrap">
-            <?=$newsDetail->view(['post' => $component->values['post']])?>
-            <?=$userInfo->view(['user' => $component->values['user']])?>
+            <?=$newsDetail->view(['post' => $component->rawValues['post']])?>
+            <?=$userInfo->view(['user' => $component->rawValues['user']])?>
         </section>
         <?=$footer->view()?>
     </body>
