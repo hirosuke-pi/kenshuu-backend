@@ -2,19 +2,17 @@
 
 [$newsCard] = ViewComponent::importMolecules(['newsCard']);
 
-$component = new Component(
-    $_PROPS,
-    function() {
+$newsList = new PageComponent(
+    props: $_PROPS,
+    mounted: function(object &$values) {
         $db = connectPostgreSQL();
         $postsDao = new PostsDAO($db);
 
-        return [
-            'posts' => $postsDao->getPosts()
-        ];
+        $values->posts = $postsDao->getPosts();
     }
 );
 
-$posts = $component->rawValues['posts'];
+$posts = $newsList->rawValues->posts;
 
 ?>
 

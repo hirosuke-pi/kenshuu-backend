@@ -16,7 +16,7 @@ function checkKeyTypes(array $params, array $requirePropKeys) {
         elseif (gettype($params[$key]) !== $type) {
             // 必須パラメーターが型が一致しなければエラーをスロー
             var_log($params);
-            throw new Exception('Required parameter type not match: ' . $key);
+            throw new Exception('Required parameter type('. $type .') not match: ' . $key .'('. gettype($params[$key]) .')');
         }
     }
 }

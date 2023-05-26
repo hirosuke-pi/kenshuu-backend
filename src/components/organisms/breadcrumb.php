@@ -1,15 +1,15 @@
 <?php
 
-$component = new Component(
-    $_PROPS,
-    function($props) {
-        return [
-            'paths' => $props['paths']
-        ];
+$breadcrumb = new PageComponent(
+    props: $_PROPS,
+    mounted: function(object &$values, array $props) {
+        $values->paths = $props['paths'];
     },
-    ['paths' => 'array']
+    propTypes: [
+        'paths' => 'array'
+    ]
 );
-$paths = $component->values['paths'];
+$paths = $breadcrumb->values->paths;
 
 ?>
 
