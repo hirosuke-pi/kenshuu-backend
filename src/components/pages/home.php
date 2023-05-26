@@ -1,17 +1,19 @@
 <?php
 
 session_start();
-$head = Component::viewTemplate('head');
-$header = Component::viewTemplate('header');
-$footer = Component::viewTemplate('footer');
+[$head, $header, $footer, $end] = ViewComponent::importTemplates(['head', 'header', 'footer', 'end']);
+[$newsList, $postForm] = ViewComponent::importOrganisms(['newsList', 'postForm']);
 
-$postForm = Component::viewOrganism('postForm');
+$headProps = ['title' => 'Flash News'];
+
 ?>
 
-<?=$head->view(['title' => 'index'])?>
+<?=$head->view($headProps)?>
     <body>
         <?=$header->view()?>
+        <?=$newsList->view()?>
         <hr class="ml-3 mr-3 mt-5">
         <?=$postForm->view()?>
+        <?=$footer->view()?>
     </body>
-<?=$footer->view()?>
+<?=$end->view()?>
