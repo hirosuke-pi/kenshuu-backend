@@ -1,7 +1,5 @@
 <?php
 
-use LDAP\Result;
-
 class PageController {
     /**
      * リダイレクト
