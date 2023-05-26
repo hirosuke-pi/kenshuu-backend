@@ -27,7 +27,7 @@ class PageComponent {
         $this->rawValues = new stdClass();
 
         // キーとその型をチェック
-        checkKeyTypes($props, $requiredTypes);
+        checkKeyTypes($props, $propTypes);
 
         // クロージャを実行
         $mounted($this->rawValues, $props);

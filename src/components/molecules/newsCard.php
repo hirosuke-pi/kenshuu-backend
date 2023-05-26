@@ -7,7 +7,8 @@ $newsCard = new PageComponent(
     mounted: function(object &$values, array $props): void {
         $values->post = $props['post'];
     },
-    propTypes: ['post' => 'object']);
+    propTypes: ['post' => 'object']
+);
 
 $card = $newsCard->values->post;
 $newsLink = '/news/index.php?id='. $card['id'];
