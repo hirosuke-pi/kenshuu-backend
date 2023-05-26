@@ -1,15 +1,14 @@
 <?php
+class Breadcrumb extends Component {
+    public array $paths = [];
 
-$component = new Component(
-    $_PROPS,
-    function($props) {
-        return [
-            'paths' => $props['paths']
-        ];
-    },
-    ['paths' => 'array']
-);
-$paths = $component->values['paths'];
+    public function init(array $props) {
+        $this->paths = $props['paths'];
+    }
+}
+
+$breadcrumb = new Breadcrumb($_PROPS);
+$paths = $breadcrumb->paths;
 
 ?>
 
@@ -19,8 +18,8 @@ $paths = $component->values['paths'];
     </a>
     <?php foreach($paths as $path): ?>
         <i class="fa-solid fa-greater-than"></i>
-        <a class="mx-3 hover:underline" href="<?=$path['link']?>" class="text-gray-700 hover:underline">
-            <i class="fa-regular fa-file-lines"></i> <?=$path['name']?>
+        <a class="mx-3 hover:underline" href="<?=h($path['link'])?>" class="text-gray-700 hover:underline">
+            <i class="fa-regular fa-file-lines"></i> <?=h($path['name'])?>
         </a>
     <?php endforeach; ?>
 </div>

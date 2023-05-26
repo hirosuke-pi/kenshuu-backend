@@ -10,12 +10,10 @@ function checkKeyTypes(array $params, array $requirePropKeys) {
     foreach ($requirePropKeys as $key => $type) {
         if (!array_key_exists($key, $params)) {
             // 必須パラメーターが存在しなかった場合はエラーをスロー
-            var_log($params);
             throw new Exception('Required parameter key not found: ' . $key);
         }
         elseif (gettype($params[$key]) !== $type) {
             // 必須パラメーターが型が一致しなければエラーをスロー
-            var_log($params);
             throw new Exception('Required parameter type not match: ' . $key);
         }
     }
@@ -40,4 +38,8 @@ function jumpLocation(string $path, array $data = []) {
 
 function getRefarerData(): array {
     return isset($_SESSION[JUMP_PAGE_INDEX]) ? $_SESSION[JUMP_PAGE_INDEX] : [];
+}
+
+function h($value): string {
+    return htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
 }

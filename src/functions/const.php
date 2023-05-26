@@ -1,5 +1,7 @@
 <?php
 
+define('OBJECT_INIT', (object)[]);
+
 const CSRF_NAME = 'csrf_token';
 const METHOD_NAME = '_method';
 
