@@ -5,7 +5,7 @@
         <label for="message" class="block mb-2 mt-5 text-sm font-medium">投稿内容</label>
         <textarea required name="body" id="message" rows="10" class="block p-2.5 w-full text-sm text-gray-900 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="投稿内容"></textarea>
 
-        <?=Component::setCsrfToken()?>
+        <?=ViewComponent::setCsrfToken()?>
         <button class="mt-5 w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
             投稿
         </button>

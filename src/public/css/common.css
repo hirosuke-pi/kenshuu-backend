@@ -1,0 +1,17 @@
+@charset "UTF-8";
+
+.ellipsis-line-3 {
+    word-break: break-word;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+}
+
+.detail {
+    min-width: 600px;
+}
+
+.min-info {
+    width: 300px;
+}
