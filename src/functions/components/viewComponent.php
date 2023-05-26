@@ -27,7 +27,7 @@ class ViewComponent {
 
         // セッションが必要な場合はセッションを開始
         if ($require_session && !isset($_SESSION)) {
-            session_start();
+            PageController::sessionStart();
         }
     }
 

@@ -1,6 +1,6 @@
 <?php
 
-session_start();
+PageController::sessionStart();
 
 [$head, $header, $footer, $end] = 
     ViewComponent::importTemplates(['head', 'header', 'footer', 'end']);
@@ -10,13 +10,13 @@ session_start();
 $news = new PageComponent(
     props: $_PROPS,
     mounted: function(object &$values, array $props): void {
-        $db = connectPostgreSQL();
+        $db = FlashNewsDB::getPdo();
 
         // 投稿データ取得
         $postsDao = new PostsDAO($db);
         $post = $postsDao->getPostById($_GET['id']);
         if (!isset($post)) {
-            // jumpLocation('/error.php', ['message' => '投稿が見つかりませんでした']);
+            PageController::redirect('/error.php', ['message' => '投稿が見つかりませんでした']);
         }
 
         // ユーザーデータ取得
