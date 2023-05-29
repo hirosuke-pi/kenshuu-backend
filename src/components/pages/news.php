@@ -30,12 +30,17 @@ $news = new PageComponent(
         $values->user = $user;
         $values->postsCount = $postsCount;
 
-        $values->newsDetailProps = ['post' => $post];
+        $values->newsDetailProps = [
+            'post' => $post,
+            'mode' => $props['mode']
+        ];
         $values->userInfoProps = [
             'user' => $user,
-            'postsCount' => $postsCount
+            'postsCount' => $postsCount,
+            'mode' => $props['mode']
         ];
-    }
+    },
+    propTypes: ['mode' => 'string']
 );
 
 ?>
@@ -44,8 +49,8 @@ $news = new PageComponent(
     <body>
         <?=$header->view()?>
         <section class="flex justify-center flex-wrap items-start">
-            <?=$newsDetail->view($news->values->newsDetailProps)?>
-            <?=$userInfo->view($news->values->userInfoProps)?>
+            <?=$newsDetail->view($news->rawValues->newsDetailProps)?>
+            <?=$userInfo->view($news->rawValues->userInfoProps)?>
         </section>
         <?=$footer->view()?>
     </body>

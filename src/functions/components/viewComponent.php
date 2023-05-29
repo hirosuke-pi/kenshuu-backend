@@ -46,23 +46,8 @@ class ViewComponent {
         require $this->componentPath;
     }
 
+
     /**
-     * $flagがtrueの場合、コンポーネントを表示
-     *
-     * @param bool $flag フラグ
-     * @param array $props 優先プロパティ
-     * @return void
-     */
-    public function viewIf(bool $flag, array $props = []): bool {
-        if (!$flag) {
-            return false;
-        }
-        $this->view($props);
-        return true;
-    }
-
-
-        /**
      * CSRFトークンを設定
      *
      * @return void

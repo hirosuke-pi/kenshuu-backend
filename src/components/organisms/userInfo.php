@@ -9,7 +9,7 @@ $userInfo = new PageComponent(
         $values->user = $props['user'];
     },
     propTypes: [
-        'user' => 'array',
+        'user' => 'object',
         'postsCount' => 'integer'
     ]
 );

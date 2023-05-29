@@ -22,7 +22,7 @@ $newsLink = '/news/index.php?id='. $card['id'];
         </a>
         <div class="px-6 py-4">
             <a href="<?=$newsLink ?>" class="hover:underline hover:text-gray-500">
-                <h3 class="font-bold text-xl mb-2"><i class="fa-solid fa-newspaper"></i> <?=$card['title'] ?></h3>
+                <h3 class="font-bold text-xl mb-2"><?=$card['title'] ?></h3>
             </a>
             <p class="text-gray-700 text-base ellipsis-line-3">
                 <?=$card['body'] ?>
