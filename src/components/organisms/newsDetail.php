@@ -44,7 +44,7 @@ $newsDetail = new PageComponent(
 ?>
 
 <div class="w-full lg:w-3/6 ">
-    <div class="m-3 p-2 rounded-lg">
+    <div class="m-3 p-2">
         <?=$breadcrumb->view($newsDetail->values->breadcrumbProps)?>
     </div>
     <?php if ($newsDetail->values->editorMode): ?>

@@ -4,8 +4,8 @@ PageController::sessionStart();
 
 [$head, $header, $footer, $end] = 
     ViewComponent::importTemplates(['head', 'header', 'footer', 'end']);
-[$newsDetail, $userInfo, $breadcrumb] = 
-    ViewComponent::importOrganisms(['newsDetail', 'userInfo', 'breadcrumb']);
+[$newsDetail, $newsInfo] = 
+    ViewComponent::importOrganisms(['newsDetail', 'newsInfo']);
 
 $news = new PageComponent(
     props: $_PROPS,
@@ -50,7 +50,7 @@ $news = new PageComponent(
         <?=$header->view()?>
         <section class="flex justify-center flex-wrap items-start">
             <?=$newsDetail->view($news->rawValues->newsDetailProps)?>
-            <?=$userInfo->view($news->rawValues->userInfoProps)?>
+            <?=$newsInfo->view($news->rawValues->userInfoProps)?>
         </section>
         <?=$footer->view()?>
     </body>

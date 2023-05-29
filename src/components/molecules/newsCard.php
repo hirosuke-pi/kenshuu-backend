@@ -5,9 +5,16 @@
 $newsCard = new PageComponent(
     props: $_PROPS,
     mounted: function(object &$values, array $props): void {
+        if ($props['mode'] === 'card') {
+            $values->cardSize = 'max-w-sm';
+        }
+        else {
+            $values->cardSize = '';
+        }
+
         $values->post = $props['post'];
     },
-    propTypes: ['post' => 'object']
+    propTypes: ['post' => 'object', 'mode' => 'string']
 );
 
 $card = $newsCard->values->post;
@@ -16,7 +23,7 @@ $newsLink = '/news/index.php?id='. $card['id'];
 ?>
 
 <li class="m-3">
-    <div class="max-w-sm rounded overflow-hidden shadow-md">
+    <div class="<?=$newsCard->values->cardSize ?> rounded overflow-hidden shadow-md">
         <a href="<?=$newsLink ?>" class="">
             <img class="w-full" src="/img/news.jpg" alt="news image">
         </a>

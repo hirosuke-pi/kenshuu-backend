@@ -4,11 +4,16 @@ PageController::sessionStart();
 [$head, $header, $footer, $end] = ViewComponent::importTemplates(['head', 'header', 'footer', 'end']);
 [$newsList, $postForm] = ViewComponent::importOrganisms(['newsList', 'postForm']);
 
-$headProps = ['title' => 'Flash News'];
+$home = new PageComponent(
+    props: $_PROPS,
+    mounted: function(object &$values, array $props): void {
+        $values->headProps = ['title' => 'Flash News'];
+    }
+);
 
 ?>
 
-<?=$head->view($headProps)?>
+<?=$head->view($home->values->headProps)?>
     <body>
         <?=$header->view()?>
         <?=$newsList->view()?>
