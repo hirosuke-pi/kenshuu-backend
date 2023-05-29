@@ -94,18 +94,20 @@ class PostsDAO {
     }
 
     public function putPostById(string $id, string $title, string $body): bool {
-        $sql = 'UPDATE '. $this::POSTS_TABLE .' SET title = :title, body = :body WHERE id = :id';
+        $sql = 'UPDATE '. $this::POSTS_TABLE .' SET title = :title, body = :body, updated_at = :updated_at WHERE id = :id';
         $stmt = $this->db->prepare($sql);
         $stmt->bindValue(':id', $id, PDO::PARAM_STR);
         $stmt->bindValue(':title', $title, PDO::PARAM_STR);
         $stmt->bindValue(':body', $body, PDO::PARAM_STR);
+        $stmt->bindValue(':updated_at', (new DateTime())->format(DateTime::ATOM), PDO::PARAM_STR);
 
         return $stmt->execute();
     }
 
     public function deletePostById(string $id): bool {
-        $sql = 'DELETE FROM '. $this::POSTS_TABLE .' WHERE id = :id';
+        $sql = 'UPDATE '. $this::POSTS_TABLE .' SET deleted_at = :deleted_at WHERE id = :id';
         $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(':deleted_at', (new DateTime())->format(DateTime::ATOM), PDO::PARAM_STR);
         $stmt->bindValue(':id', $id, PDO::PARAM_STR);
 
         return $stmt->execute();

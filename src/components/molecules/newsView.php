@@ -6,6 +6,13 @@ $newsView = new PageComponent(
         $values->title = $props['title'];
         $values->body = $props['body'];
         $values->createdAt = $props['createdAt'];
+
+        if (isset($props['updatedAt'])) {
+            $values->updatedAt = $props['updatedAt'];
+        }
+        else {
+            $values->updatedAt = null;
+        }
     },
     propTypes: ['title' => 'string', 'body' => 'string', 'createdAt' => 'string']
 );
@@ -20,8 +27,17 @@ $newsView = new PageComponent(
         </h2>
         <hr/>
         <section class="mt-2">
-            <p class="text-gray-700"><i class="fa-regular fa-calendar"></i> <?=getDateTimeFormat($newsView->values->createdAt)?></p>
-            <p class="text-gray-700 mt-5">
+            <div class="flex flex-wrap">
+                <p class="mx-2 mt-2 text-gray-700">
+                    <i class="fa-regular fa-calendar"></i> <?=getDateTimeFormat($newsView->values->createdAt)?>
+                </p>
+                <?php if(isset($newsView->values->updatedAt)): ?>
+                    <p class="mx-2 mt-2 text-gray-700">
+                        <i class="fa-solid fa-pen-to-square"></i> <?=getDateTimeFormat($newsView->values->updatedAt)?> (更新)
+                    </p>
+                <?php endif; ?>
+            </div>
+            <p class="text-gray-700 mt-8">
                 <?=replaceBr($newsView->values->body) ?>
             </p>
         </section>

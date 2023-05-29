@@ -14,6 +14,7 @@ $newsDetail = new PageComponent(
             'title' => $post->title,
             'body' => $post->body,
             'createdAt' => $post->createdAt,
+            'updatedAt' => $post->updatedAt,
             'newsId' => $post->id
         ];
         $values->newsActionsProps = [
