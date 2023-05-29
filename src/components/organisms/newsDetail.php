@@ -6,24 +6,25 @@
 $newsDetail = new PageComponent(
     props: $_PROPS,
     mounted: function(object &$values, array $props) {
-        $values->post = $props['post'];
+        $post = $props['post'];
 
         $values->editorMode = in_array($props['mode'], [MODE_EDIT, MODE_NEW]);
 
         $values->newsTitleBodyProps = [
-            'title' => $values->post->title,
-            'body' => $values->post->body,
-            'createdAt' => $values->post->createdAt
+            'title' => $post->title,
+            'body' => $post->body,
+            'createdAt' => $post->createdAt,
+            'newsId' => $post->id
         ];
         $values->newsActionsProps = [
-            'newsId' => $values->post->id,
+            'newsId' => $post->id,
             'mode' => $props['mode']
         ];
 
         if ($values->editorMode) {
             $values->breadcrumbProps = [
                 'paths' => [
-                    ['name' => 'ニュース - '. $values->post->title, 'link' => 'index.php?id='. $values->post->id],
+                    ['name' => 'ニュース - '. $post->title, 'link' => 'index.php?id='. $post->id],
                     ['name' => 'ページを編集', 'link' => $_SERVER['REQUEST_URI']],
                 ]
             ];
@@ -31,7 +32,7 @@ $newsDetail = new PageComponent(
         else {
             $values->breadcrumbProps = [
                 'paths' => [
-                    ['name' => 'ニュース - '. $values->post->title, 'link' => $_SERVER['REQUEST_URI']]
+                    ['name' => 'ニュース - '. $post->title, 'link' => $_SERVER['REQUEST_URI']]
                 ]
             ];
         }

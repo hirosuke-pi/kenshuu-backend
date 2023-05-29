@@ -5,14 +5,15 @@ $newsEdit = new PageComponent(
     mounted: function(object &$values, array $props) {
         $values->title = $props['title'];
         $values->body = $props['body'];
-
+        $values->id = $props['newsId'];
     },
-    propTypes: ['title' => 'string', 'body' => 'string']
+    propTypes: ['title' => 'string', 'body' => 'string', 'newsId' => 'string']
 );
+$newsEditUrl = '/actions/news?id='. $newsEdit->values->id;
 
 ?>
 
-<form action="/actions/news" method="POST">
+<form action="<?=$newsEditUrl ?>" method="POST">
     <div class="rounded-lg border border-gray-300 m-3 overflow-hidden">
         <img class="w-full" src="/img/news.jpg" alt="news image">
         <article class="p-5">
@@ -29,7 +30,13 @@ $newsEdit = new PageComponent(
                     </textarea>
                 </p>
             </section>
+            <section class="mt-3">
+                <button  class="w-full bg-blue-400 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded ">
+                    <i class="fa-solid fa-rotate-right"></i> ページを更新
+                </button>
+            </section>
         </article>
     </div>
+    <?=ViewComponent::setPutMethod()?>
     <?=ViewComponent::setCsrfToken()?>
 </form>
