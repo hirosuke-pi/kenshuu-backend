@@ -42,7 +42,6 @@ $newsDetail = new PageComponent(
 
 ?>
 
-
 <div class="w-full lg:w-3/6 ">
     <div class="m-3 p-2 rounded-lg">
         <?=$breadcrumb->view($newsDetail->values->breadcrumbProps)?>

@@ -22,7 +22,7 @@ $newsView = new PageComponent(
         <section class="mt-2">
             <p class="text-gray-700"><i class="fa-regular fa-calendar"></i> <?=getDateTimeFormat($newsView->values->createdAt)?></p>
             <p class="text-gray-700 mt-5">
-                <?=$newsView->values->body ?>
+                <?=replaceBr($newsView->values->body) ?>
             </p>
         </section>
     </article>

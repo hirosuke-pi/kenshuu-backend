@@ -23,3 +23,7 @@ function getDateTimeFormat(string $datetime): string {
     $now = new DateTime($datetime);
     return $now->format('Y/m/d H:i:s');
 }
+
+function replaceBr(string $str): string {
+    return str_replace("\n", '<br/>', $str);
+}
