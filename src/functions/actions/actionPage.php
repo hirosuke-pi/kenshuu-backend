@@ -115,7 +115,7 @@ class ActionPage {
      * @param array $requireParams 必須パラメーター ['key' => 'keyType', ...]
      * @return void
      */
-    public function put(Closure $patchAction, array $requireParams = []) {
-        $this->actionMethods['PUT'] = new ActionMethod('PUT', $patchAction, $requireParams);
+    public function put(Closure $putAction, array $requireParams = []) {
+        $this->actionMethods['PUT'] = new ActionMethod('PUT', $putAction, $requireParams);
     }
 }

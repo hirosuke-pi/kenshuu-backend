@@ -9,7 +9,7 @@ $newsEdit = new PageComponent(
     },
     propTypes: ['title' => 'string', 'body' => 'string', 'newsId' => 'string']
 );
-$newsEditUrl = '/actions/news?id='. $newsEdit->values->id;
+$newsEditUrl = '/actions/news.php?id='. $newsEdit->values->id;
 
 ?>
 

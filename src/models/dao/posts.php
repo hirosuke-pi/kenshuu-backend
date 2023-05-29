@@ -92,4 +92,22 @@ class PostsDAO {
             $postData['deleted_at'],
         );
     }
+
+    public function putPostById(string $id, string $title, string $body): bool {
+        $sql = 'UPDATE '. $this::POSTS_TABLE .' SET title = :title, body = :body WHERE id = :id';
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(':id', $id, PDO::PARAM_STR);
+        $stmt->bindValue(':title', $title, PDO::PARAM_STR);
+        $stmt->bindValue(':body', $body, PDO::PARAM_STR);
+
+        return $stmt->execute();
+    }
+
+    public function deletePostById(string $id): bool {
+        $sql = 'DELETE FROM '. $this::POSTS_TABLE .' WHERE id = :id';
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(':id', $id, PDO::PARAM_STR);
+
+        return $stmt->execute();
+    }
 }
