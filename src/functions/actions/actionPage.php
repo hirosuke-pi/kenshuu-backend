@@ -9,7 +9,7 @@ class ActionPage {
      * @param boolean $isCheckCsrfToken CSRFトークンをチェックするかどうか
      */
     function __construct(bool $isCheckCsrfToken = true) {
-        session_start();
+        PageController::sessionStart();
         $this->actionMethods = [];
 
         // CSRFトークンをチェック

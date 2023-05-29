@@ -2,19 +2,20 @@
 
 [$badge] = ViewComponent::importAtoms(['badge']);
 
-$component = new Component(
-    $_PROPS,
-    function($props) {
-        return [
-            'postsCount' => $props['postsCount'],
-            'user' => $props['user']
-        ];
+$userInfo = new PageComponent(
+    props: $_PROPS,
+    mounted: function(object &$values, array $props) {
+        $values->postsCount = $props['postsCount'];
+        $values->user = $props['user'];
     },
-    ['user' => 'object', 'postsCount' => 'integer']
+    propTypes: [
+        'user' => 'array',
+        'postsCount' => 'integer'
+    ]
 );
 
-$user = $component->values['user'];
-$postsCount = $component->values['postsCount'];
+$user = $userInfo->values->user;
+$postsCount = $userInfo->values->postsCount;
 
 ?>
 

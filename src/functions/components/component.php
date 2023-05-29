@@ -1,53 +1,51 @@
 <?php
 
-class Component {
+class PageComponent {
     /**
-     * XSS対策済みのarray
+     * XSS対策済みのobject
      *
-     * @var array
+     * @var object
      */
-    public array $values;
+    public object $values;
 
     /**
-     * XSS対策されていない生のarray
+     * XSS対策されていない生のobject
      *
-     * @var array
+     * @var object
      */
-    public array $rawValues;
+    public object $rawValues;
 
     /**
      * コンポーネントを作成
      *
      * @param array $props プロパティ($_PROPS)の読み込み
-     * @param Closure $actionComponent コンポーネント処理。戻り値は連想配列
-     * @param array $requirePropKeys 必須プロパティのキーと型
+     * @param Closure $mounted コンポーネント処理。戻り値は連想配列
+     * @param array $requiredTypes 必須プロパティのキーと型
      */
-    function __construct(array $props, Closure $actionComponent, array $requirePropKeys = []) {
+    function __construct(array $props, Closure $mounted, array $propTypes = []) {
+        $this->values = new stdClass();
+        $this->rawValues = new stdClass();
+
         // キーとその型をチェック
-        checkKeyTypes($props, $requirePropKeys);
+        checkKeyTypes($props, $propTypes);
 
         // クロージャを実行
-        $values = $actionComponent($props);
+        $mounted($this->rawValues, $props);
 
-        // 型チェック
-        if (!is_array($values)) {
-            // 返り値が配列でなければエラーをスロー
-            throw new Exception('Return value type not match: ' . gettype($values));
-        }
-        $this->rawValues = $values;
-        $this->values = $this->convertHtmlspecialcharsArray($values);
+        // XSS対策
+        $this->values = (object)$this->convertHtmlspecialcharsArray($this->rawValues);
     }
 
     /**
      * 全ての配列にある文字列をXSS対策された文字列に変換
      * object型の場合はarray型にキャストし再帰的に処理する
      *
-     * @param array $array 生の配列
+     * @param array|object $list 生の配列
      * @return array XSS対策された配列
      */
-    private function convertHtmlspecialcharsArray(array $array): array {
+    private function convertHtmlspecialcharsArray(array|object $list): array {
         $convertedArray = [];
-        foreach ($array as $key => $value) {
+        foreach ($list as $key => $value) {
             if (is_object($value) || is_array($value)) {
                 $convertedArray[$key] = $this->convertHtmlspecialcharsArray((array)$value);
             }

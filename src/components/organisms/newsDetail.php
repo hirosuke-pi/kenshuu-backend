@@ -2,27 +2,26 @@
 
 [$breadcrumb] = ViewComponent::importOrganisms(['breadcrumb']);
 
-$component = new Component(
-    $_PROPS,
-    function($props) {
-        return [
-            'post' => $props['post'],
+$newsDetail = new PageComponent(
+    props: $_PROPS,
+    mounted: function(object &$values, array $props) {
+        $values->post = $props['post'];
+        $values->breadcrumbProps = [
             'paths' => [
-                ['name' => 'ニュース - '. $props['post']->title, 'link' => $_SERVER['REQUEST_URI']],
+                ['name' => 'ニュース - '. $values->post['title'], 'link' => $_SERVER['REQUEST_URI']]
             ]
         ];
     },
-    ['post' => 'object']
+    propTypes: ['post' => 'array']
 );
 
-$breadcrumbProps = ['paths' => $component->rawValues['paths']];
-$post = $component->values['post'];
+$post = $newsDetail->values->post;
 
 ?>
 
 <div class="w-full lg:w-3/6 ">
     <div class="m-3 p-2 rounded-lg">
-        <?=$breadcrumb->view($breadcrumbProps)?>
+        <?=$breadcrumb->view($newsDetail->values->breadcrumbProps)?>
     </div>
     <main class="rounded-lg border border-gray-300 m-3 overflow-hidden">
         <img class="w-full" src="/img/news.jpg" alt="news image">

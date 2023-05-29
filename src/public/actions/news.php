@@ -7,7 +7,7 @@ $action = new ActionPage();
 
 $action->post(
     function($params) {
-        $db = connectPostgreSQL();
+        $db = FlashNewsDB::getPdo();
         $postsDao = new PostsDAO($db);
 
         // 一時的にユーザーを固定

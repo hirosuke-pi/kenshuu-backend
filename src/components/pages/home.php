@@ -1,6 +1,6 @@
 <?php
 
-session_start();
+PageController::sessionStart();
 [$head, $header, $footer, $end] = ViewComponent::importTemplates(['head', 'header', 'footer', 'end']);
 [$newsList, $postForm] = ViewComponent::importOrganisms(['newsList', 'postForm']);
 

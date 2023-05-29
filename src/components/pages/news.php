@@ -1,22 +1,22 @@
 <?php
 
-session_start();
+PageController::sessionStart();
 
 [$head, $header, $footer, $end] = 
     ViewComponent::importTemplates(['head', 'header', 'footer', 'end']);
 [$newsDetail, $userInfo, $breadcrumb] = 
     ViewComponent::importOrganisms(['newsDetail', 'userInfo', 'breadcrumb']);
 
-$component = new Component(
-    $_PROPS,
-    function() {
-        $db = connectPostgreSQL();
+$news = new PageComponent(
+    props: $_PROPS,
+    mounted: function(object &$values, array $props): void {
+        $db = FlashNewsDB::getPdo();
 
         // 投稿データ取得
         $postsDao = new PostsDAO($db);
         $post = $postsDao->getPostById($_GET['id']);
         if (!isset($post)) {
-            // jumpLocation('/error.php', ['message' => '投稿が見つかりませんでした']);
+            PageController::redirect('/error.php', ['message' => '投稿が見つかりませんでした']);
         }
 
         // ユーザーデータ取得
@@ -24,36 +24,28 @@ $component = new Component(
         $user = $usersDao->getUserById($post->userId);
         $postsCount = $postsDao->getPostsCountByUserId($post->userId);
 
-        return [
-            'post' => $post,
-            'postsCount' => $postsCount,
+        // バリュー追加
+        $values->headProps = ['title' => 'Flash News - '. $post->title];
+        $values->post = $post;
+        $values->user = $user;
+        $values->postsCount = $postsCount;
+
+        $values->newsDetailProps = ['post' => $post];
+        $values->userInfoProps = [
             'user' => $user,
-            'paths' => [
-                ['name' => 'ニュース - '. $post->title, 'link' => $_SERVER['REQUEST_URI']],
-            ]
+            'postsCount' => $postsCount
         ];
     }
 );
 
-$headProps = [
-    'title' => 'Flash News - '. $component->rawValues['post']->title
-];
-$newsDetailProps = [
-    'post' => $component->rawValues['post']
-];
-$userInfoProps = [
-    'user' => $component->rawValues['user'],
-    'postsCount' => $component->values['postsCount']
-];
-
 ?>
 
-<?=$head->view($headProps)?>
+<?=$head->view($news->values->headProps)?>
     <body>
         <?=$header->view()?>
         <section class="flex justify-center flex-wrap items-start">
-            <?=$newsDetail->view($newsDetailProps)?>
-            <?=$userInfo->view($userInfoProps)?>
+            <?=$newsDetail->view($news->values->newsDetailProps)?>
+            <?=$userInfo->view($news->values->userInfoProps)?>
         </section>
         <?=$footer->view()?>
     </body>

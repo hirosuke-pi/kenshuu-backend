@@ -1,12 +1,10 @@
 <?php
-$component = new Component(
-    $_PROPS, 
-    function (array $props) {
-        return [
-            'title' => $props['title'],
-        ];
+$head = new PageComponent(
+    props: $_PROPS, 
+    mounted: function (object &$values, array $props) {
+        $values->title = $props['title'];
     },
-    ['title' => 'string']
+    propTypes: ['title' => 'string']
 );
 
 ?>
@@ -15,7 +13,7 @@ $component = new Component(
 <html lang="ja">
     <head>
         <meta charset="utf-8">
-        <title><?=$component->values['title']?></title>
+        <title><?=$head->values->title?></title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="https://cdn.tailwindcss.com"></script>
         <link rel="stylesheet" href="/css/common.css">
