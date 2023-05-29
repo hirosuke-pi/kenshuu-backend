@@ -16,7 +16,7 @@ $news = new PageComponent(
         $postsDao = new PostsDAO($db);
         $post = $postsDao->getPostById($_GET['id']);
         if (!isset($post)) {
-            PageController::redirect('/error.php', ['message' => '投稿が見つかりませんでした']);
+            PageController::redirect('/error.php', ['message' => '投稿が見つかりませんでした。']);
         }
 
         // ユーザーデータ取得
