@@ -45,4 +45,33 @@ class ViewComponent {
         $_PROPS = $this->props;
         require $this->componentPath;
     }
+
+    /**
+     * $flagがtrueの場合、コンポーネントを表示
+     *
+     * @param bool $flag フラグ
+     * @param array $props 優先プロパティ
+     * @return void
+     */
+    public function viewIf(bool $flag, array $props = []) {
+        if (!$flag) {
+            return;
+        }
+        $this->view($props);
+    }
+
+    /**
+     * $flagがtrueの場合、コンポーネントを表示
+     * $flagがfalseの場合、die()を実行
+     *
+     * @param bool $flag フラグ
+     * @param array $props 優先プロパティ
+     * @return void
+     */
+    public function viewIfDie(bool $flag, array $props = []) {
+        if (!$flag) {
+            die();
+        }
+        $this->view($props);
+    }
 }

@@ -20,3 +20,13 @@ function checkKeyTypes(array $params, array $requirePropKeys) {
         }
     }
 }
+
+function connectPostgreSQL(): PDO {
+    $db = new PDO('pgsql:host='. DB_HOST .';dbname='. DB_NAME .'', DB_USER, DB_PASSWORD);
+    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    return $db;
+}
+
+function getDateTimeFormat(string $datetime): string {
+    return (new DateTime($datetime))->format('Y/m/d H:i:s');
+}
