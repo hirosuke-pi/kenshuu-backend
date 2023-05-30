@@ -1,7 +1,7 @@
 <?php
 
 [$badge] = ViewComponent::importAtoms(['badge']);
-[$userInfo, $imagePreview] = ViewComponent::importMolecules(['userInfo', 'imagePreview']);
+[$userInfo, $imageSelector] = ViewComponent::importMolecules(['userInfo', 'imageSelector']);
 
 $newsInfo = new PageComponent(
     props: $_PROPS,
@@ -63,7 +63,7 @@ $newsInfo = new PageComponent(
             <div class="mt-5">
                 <?php for($i = 0; $i < 3; $i++): ?>
                     <div class="mt-2 rounded-md overflow-hidden">
-                        <?=$imagePreview->view(['name' => 'image'.$i]) ?>
+                        <?=$imageSelector->view(['name' => 'image'.$i, 'viewOnly' => !$newsInfo->values->isEditMode]) ?>
                     </div>
                 <?php endfor; ?>
             </div>

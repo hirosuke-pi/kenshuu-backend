@@ -1,6 +1,6 @@
 <?php
 
-[$imagePreview] = ViewComponent::importMolecules(['imagePreview']);
+[$imageSelector] = ViewComponent::importMolecules(['imageSelector']);
 
 $newsEdit = new PageComponent(
     props: $_PROPS,
@@ -9,6 +9,10 @@ $newsEdit = new PageComponent(
         $values->body = $props['body'];
         $values->id = $props['newsId'];
         $values->isEditMode = $props['mode'] === MODE_EDIT;
+        $values->imageSelectorProps = [
+            'name' => 'thumbnail',
+            'mode' => $props['mode'] === MODE_EDIT
+        ];
     },
     propTypes: ['mode' => 'string', 'title' => 'string', 'body' => 'string', 'newsId' => 'string']
 );
@@ -18,7 +22,7 @@ $newsEditUrl = '/actions/news.php?id='. $newsEdit->values->id;
 
 <form action="<?=$newsEditUrl ?>" method="POST" onSubmit="return confirm('この内容でニュースをアップロードしますか？')" enctype="multipart/form-data" >
     <div class="rounded-lg border border-gray-300 m-3 overflow-hidden relative">
-        <?=$imagePreview->view(['name' => 'thumbnail']) ?>
+        <?=$imageSelector->view($newsEdit->values->imageSelectorProps) ?>
         <article class="p-5">
             <h2 class="text-4xl text-gray-800 font-bold mt-2 mb-2">
                 <label for="default-input" class="block mb-2 mt-5 text-sm font-medium">タイトル</label>
