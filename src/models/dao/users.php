@@ -1,11 +1,12 @@
 <?php
 
 class UsersDAO {
-    private PDO $db;
     public const USERS_TABLE = 'users';
 
-    function __construct(PDO $db) {
-        $this->db = $db;
+    public function __construct(private ?PDO $db = null) {
+        if (is_null($this->db)) {
+            $this->db = connectPostgreSQL();
+        }
     }
 
     public function createUser(string $username, string $email, string $password, string $profileImagePath = ''): bool {

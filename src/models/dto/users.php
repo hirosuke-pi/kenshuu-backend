@@ -1,7 +1,7 @@
 <?php
 
 class UsersDTO {
-    function __construct(
+    public function __construct(
         public readonly string $id, 
         public readonly string $username, 
         public readonly string $email, 
@@ -11,15 +11,15 @@ class UsersDTO {
         public readonly ?string $deletedAt)
     {}
 
-    function getCreatedAtDateTime(): ?DateTime {
-        if ($this->createdAt === null) {
+    public function getCreatedAtDateTime(): ?DateTime {
+        if (is_null($this->createdAt)) {
             return null;
         }
         return new DateTime($this->createdAt);
     }
 
-    function getDeletedAtDateTime(): ?DateTime {
-        if ($this->deletedAt === null) {
+    public function getDeletedAtDateTime(): ?DateTime {
+        if (is_null($this->deletedAt)) {
             return null;
         }
         return new DateTime($this->deletedAt);
