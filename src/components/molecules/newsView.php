@@ -31,7 +31,7 @@ $newsView = new PageComponent(
                 <p class="mx-2 mt-2 text-gray-700">
                     <i class="fa-regular fa-calendar"></i> <?=getDateTimeFormat($newsView->values->createdAt)?>
                 </p>
-                <?php if(isset($newsView->values->updatedAt)): ?>
+                <?php if($newsView->values->updatedAt !== ''): ?>
                     <p class="mx-2 mt-2 text-gray-700">
                         <i class="fa-solid fa-pen-to-square"></i> <?=getDateTimeFormat($newsView->values->updatedAt)?> (更新)
                     </p>

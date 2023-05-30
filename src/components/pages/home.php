@@ -17,8 +17,6 @@ $home = new PageComponent(
     <body>
         <?=$header->view()?>
         <?=$newsList->view()?>
-        <hr class="ml-3 mr-3 mt-5">
-        <?=$postForm->view()?>
         <?=$footer->view()?>
     </body>
 <?=$end->view()?>

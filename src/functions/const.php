@@ -7,4 +7,4 @@ const REDIRECT_INDEX = 'redirect_data';
 
 const MODE_EDIT = 'edit';
 const MODE_VIEW = 'view';
-const MODE_NEW = 'new';
+const MODE_CREATE = 'create';

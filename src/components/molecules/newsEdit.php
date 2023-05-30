@@ -6,8 +6,9 @@ $newsEdit = new PageComponent(
         $values->title = $props['title'];
         $values->body = $props['body'];
         $values->id = $props['newsId'];
+        $values->isEditMode = $props['mode'] === MODE_EDIT;
     },
-    propTypes: ['title' => 'string', 'body' => 'string', 'newsId' => 'string']
+    propTypes: ['mode' => 'string', 'title' => 'string', 'body' => 'string', 'newsId' => 'string']
 );
 $newsEditUrl = '/actions/news.php?id='. $newsEdit->values->id;
 
@@ -30,11 +31,15 @@ $newsEditUrl = '/actions/news.php?id='. $newsEdit->values->id;
             </section>
             <section class="mt-3">
                 <button  class="w-full bg-blue-400 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded ">
-                    <i class="fa-solid fa-rotate-right"></i> ページを更新
+                    <?php if($newsEdit->values->isEditMode): ?>
+                        <i class="fa-solid fa-rotate-right"></i> ニュースを更新
+                    <?php else: ?>
+                        <i class="fa-solid fa-plus"></i> ニュースを作成
+                    <?php endif; ?>
                 </button>
             </section>
         </article>
     </div>
-    <?=ViewComponent::setPutMethod()?>
     <?=ViewComponent::setCsrfToken()?>
+    <?php if ($newsEdit->values->isEditMode) ViewComponent::setPutMethod() ?>
 </form>

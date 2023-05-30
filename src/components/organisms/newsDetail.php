@@ -8,25 +8,34 @@ $newsDetail = new PageComponent(
     mounted: function(object &$values, array $props) {
         $post = $props['post'];
 
-        $values->editorMode = in_array($props['mode'], [MODE_EDIT, MODE_NEW]);
+        $values->editorMode = in_array($props['mode'], [MODE_EDIT, MODE_CREATE]);
 
         $values->newsTitleBodyProps = [
-            'title' => $post->title,
-            'body' => $post->body,
-            'createdAt' => $post->createdAt,
-            'updatedAt' => $post->updatedAt,
-            'newsId' => $post->id
+            'title' => $post->title ?? '',
+            'body' => $post->body ?? '',
+            'createdAt' => $post->createdAt ?? '',
+            'updatedAt' => $post->updatedAt ?? '',
+            'newsId' => $post->id ?? '',
+            'mode' => $props['mode']
         ];
         $values->newsActionsProps = [
-            'newsId' => $post->id,
+            'newsId' => $post->id ?? '',
             'mode' => $props['mode']
         ];
 
-        if ($values->editorMode) {
+        if ($props['mode'] === MODE_EDIT) {
             $values->breadcrumbProps = [
                 'paths' => [
                     ['name' => 'ニュース - '. $post->title, 'link' => 'index.php?id='. $post->id],
                     ['name' => 'ページを編集', 'link' => $_SERVER['REQUEST_URI']],
+                ]
+            ];
+        }
+        elseif ($props['mode'] === MODE_CREATE) {
+            $values->breadcrumbProps = [
+                'paths' => [
+                    ['name' => 'ユーザーページ', 'link' => '/user/index.php'],
+                    ['name' => 'ニュースを作成', 'link' => $_SERVER['REQUEST_URI']],
                 ]
             ];
         }
@@ -48,7 +57,7 @@ $newsDetail = new PageComponent(
         <?=$breadcrumb->view($newsDetail->values->breadcrumbProps)?>
     </div>
     <?php if ($newsDetail->values->editorMode): ?>
-        <?=$newsEdit->view(props: $newsDetail->rawValues->newsTitleBodyProps) ?>
+        <?=$newsEdit->view($newsDetail->rawValues->newsTitleBodyProps) ?>
     <?php else: ?>
         <?=$newsActions->view($newsDetail->values->newsActionsProps) ?>
         <?=$newsView->view($newsDetail->rawValues->newsTitleBodyProps) ?>
