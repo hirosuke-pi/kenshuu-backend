@@ -28,6 +28,5 @@ function connectPostgreSQL(): PDO {
 }
 
 function getDateTimeFormat(string $datetime): string {
-    $now = new DateTime($datetime);
-    return $now->format('Y/m/d H:i:s');
+    return (new DateTime($datetime))->format('Y/m/d H:i:s');
 }

@@ -1,11 +1,12 @@
 <?php
 
 class PostsDAO {
-    private PDO $db;
     public const POSTS_TABLE = 'posts';
 
-    function __construct(PDO $db) {
-        $this->db = $db;
+    public function __construct(private ?PDO $db = null) {
+        if (is_null($this->db)) {
+            $this->db = connectPostgreSQL();
+        }
     }
 
     public function createPost(string $userId, string $title, string $body): bool {
