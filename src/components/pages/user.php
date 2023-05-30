@@ -42,7 +42,7 @@ $user = new PageComponent(
 <?=$head->view($user->values->headProps)?>
     <body>
         <?=$header->view()?>
-        <section class="flex justify-center flex-wrap items-start">
+        <section class="flex justify-center flex-wrap-reverse items-end">
             <?=$userPosts->view($user->rawValues->userPostsProps)?>
             <?=$userDetail->view($user->rawValues->userDetailProps)?>
         </section>

@@ -7,12 +7,14 @@ $userInfo = new PageComponent(
         $values->title = $props['title'];
         $values->username = $props['username'];
         $values->postsCount = $props['postsCount'];
+        $values->visibleSettingButton = $props['visibleSettingButton'];
     },
     propTypes: [
         'id' => 'string',
         'title' => 'string',
         'username' => 'string',
-        'postsCount' => 'integer'
+        'postsCount' => 'integer',
+        'visibleSettingButton' => 'boolean'
     ]
 );
 
@@ -30,5 +32,10 @@ $userUrl = '/user/index.php?id='. $userInfo->values->id;
             <p class="text-xl font-bold text-gray-700 text-center">@<?=$userInfo->values->username ?></p>
         </a>
         <p class="text-gray-600 mt-2">記事投稿数: <strong><?=$userInfo->values->postsCount ?></strong></p>
+        <?php if ($userInfo->values->visibleSettingButton): ?>
+            <a href="/user/settings.php" class="w-full border border-gray-400 hover:bg-gray-300 text-gray-600 font-bold py-2 px-4 rounded text-center mt-3">
+                <i class="fa-solid fa-user-gear"></i> ユーザー設定
+            </a>
+        <?php endif; ?>
     </div>
 </section>

@@ -23,7 +23,7 @@ $userPosts = new PageComponent(
 ?>
 
 <div class="w-full lg:w-3/6 ">
-    <div class="m-2">
+    <div class="mt-3 mx-3 p-2">
         <?=$breadcrumb->view($userPosts->values->breadcrumbProps)?>
     </div>
     <ul class="flex justify-center flex-wrap">

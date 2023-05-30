@@ -22,11 +22,11 @@ $userUrl = '/user/index.php?id='. $user['id'];
                 <i class="fa-solid fa-bolt-lightning group-hover:text-yellow-400"></i> Flash News
             </h1>
         </a>
-        <div class="flex items-center text-gray-700">
-            <a href="/actions/logout.php" class="hover:bg-gray-200 rounded-lg p-2 mr-4">
+        <div class="flex items-center text-gray-700 flex-wrap">
+            <a href="/actions/logout.php" class="hover:bg-gray-200 rounded-lg p-2 mr-4 mt-3 ">
                 <i class="fa-solid fa-right-from-bracket"></i> ログアウト
             </a>
-            <a href="<?=$userUrl ?>" class="flex items-center py-2 px-4 hover:bg-gray-200 rounded-lg border border-gray-300">
+            <a href="<?=$userUrl ?>" class="flex items-center py-2 px-4 hover:bg-gray-200 rounded-lg border border-gray-300 mt-3">
                 <img class="w-7 h-7 rounded-full object-cover mr-1" src="/img/news.jpg" alt="user image">
                 <p class="text-xl font-bold">@<?=$user['username'] ?></p>
             </a>
