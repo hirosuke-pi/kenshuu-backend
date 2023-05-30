@@ -5,7 +5,7 @@
 $newsList = new PageComponent(
     props: $_PROPS,
     mounted: function(object &$values) {
-        $db = FlashNewsDB::getPdo();
+        $db = PDOFactory::getNewPDOInstance();
         $postsDao = new PostsDAO($db);
 
         $values->posts = $postsDao->getPosts();

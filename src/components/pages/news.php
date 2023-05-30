@@ -10,7 +10,7 @@ PageController::sessionStart();
 $news = new PageComponent(
     props: $_PROPS,
     mounted: function(object &$values, array $props): void {
-        $db = FlashNewsDB::getPdo();
+        $db = PDOFactory::getNewPDOInstance();
 
         // 投稿データ取得
         $postsDao = new PostsDAO($db);

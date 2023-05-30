@@ -7,7 +7,7 @@ $action = new ActionPage();
 
 $action->post(
     function($params) {
-        $db = FlashNewsDB::getPdo();
+        $db = PDOFactory::getNewPDOInstance();
         $postsDao = new PostsDAO($db);
 
         // 一時的にユーザーを固定
