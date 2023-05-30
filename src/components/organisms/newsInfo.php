@@ -1,12 +1,13 @@
 <?php
 
 [$badge] = ViewComponent::importAtoms(['badge']);
-[$userInfo] = ViewComponent::importMolecules(['userInfo']);
+[$userInfo, $imagePreview] = ViewComponent::importMolecules(['userInfo', 'imagePreview']);
 
 $newsInfo = new PageComponent(
     props: $_PROPS,
     mounted: function(object &$values, array $props) {
         $values->user = $props['user'];
+        $values->isEditMode = in_array($props['mode'], [MODE_EDIT, MODE_CREATE]);
 
         $values->userInfoProps = [
             'id' => $values->user->id,
@@ -18,32 +19,54 @@ $newsInfo = new PageComponent(
     },
     propTypes: [
         'user' => 'object',
-        'postsCount' => 'integer'
+        'postsCount' => 'integer',
+        'mode' => 'string'
     ]
 );
 
 ?>
 
 <aside class="w-full lg:w-80 m-3">
-    <?=$userInfo->view($newsInfo->rawValues->userInfoProps)?>
-    <section class="border border-gray-300 rounded-lg p-5 mt-3">
-        <h3 class="text-xl text-gray-800 font-bold border-b border-gray-400">
-            <i class="fa-solid fa-tags"></i> タグ
-        </h3>
-        <div class="mt-3 flex flex-wrap">
-            <?=$badge->view(['title' => 'テストバッジ1'])?>
-            <?=$badge->view(['title' => 'テストバッジ2'])?>
-            <?=$badge->view(['title' => 'テストバッジ3'])?>
-        </div>
-    </section>
-    <section class="border border-gray-300 rounded-lg p-5 mt-3">
-        <h3 class="text-xl text-gray-800 font-bold border-b border-gray-400">
-            <i class="fa-solid fa-images"></i> 画像一覧
-        </h3>
-        <div class="mt-5">
-            <img class="w-full rounded-lg my-2" src="/img/news.jpg" alt="news image">
-            <img class="w-full rounded-lg my-2" src="/img/news.jpg" alt="news image">
-            <img class="w-full rounded-lg my-2" src="/img/news.jpg" alt="news image">
-        </div>
-    </section>
+    <form id="image-tag">
+        <?=$userInfo->view($newsInfo->rawValues->userInfoProps)?>
+        <section class="border border-gray-300 rounded-lg p-5 mt-3">
+            <h3 class="text-xl text-gray-800 font-bold border-b border-gray-400">
+                <i class="fa-solid fa-tags"></i> タグ
+            </h3>
+            <?php if ($newsInfo->values->isEditMode): ?>
+                <div class="mt-3 flex flex-wrap">
+                    <div class="mx-3">
+                        <input type="checkbox" name="tags" id="test1" value="test1"/> 
+                        <label for="test1">タグ1</label>
+                    </div>
+                    <div class="mx-3">
+                        <input type="checkbox" name="tags" id="test2" value="test2"/> 
+                        <label for="test2">タグ2</label>
+                    </div>
+                    <div class="mx-3">
+                        <input type="checkbox" name="tags" id="test3" value="test3"/> 
+                        <label for="test3">タグ3</label>
+                    </div>
+                </div>
+            <?php else: ?>
+                <div class="mt-3 flex flex-wrap">
+                    <?=$badge->view(['title' => 'テストバッジ1'])?>
+                    <?=$badge->view(['title' => 'テストバッジ2'])?>
+                    <?=$badge->view(['title' => 'テストバッジ3'])?>
+                </div>
+            <?php endif; ?>
+        </section>
+        <section class="border border-gray-300 rounded-lg p-5 mt-3">
+            <h3 class="text-xl text-gray-800 font-bold border-b border-gray-400">
+                <i class="fa-solid fa-images"></i> 画像一覧
+            </h3>
+            <div class="mt-5">
+                <?php for($i = 0; $i < 3; $i++): ?>
+                    <div class="mt-2 rounded-md overflow-hidden">
+                        <?=$imagePreview->view(['name' => 'image'.$i]) ?>
+                    </div>
+                <?php endfor; ?>
+            </div>
+        </section>
+    </form>
 </aside>
