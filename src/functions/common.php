@@ -29,8 +29,7 @@ function h(string $str): string {
  * @return string 変換済みの文字列
  */
 function getDateTimeFormat(string $datetime): string {
-    $now = new DateTime($datetime);
-    return $now->format('Y/m/d H:i:s');
+    return (new DateTime($datetime))->format('Y/m/d H:i:s');
 }
 
 function replaceBr(string $str): string {
