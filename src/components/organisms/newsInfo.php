@@ -39,14 +39,6 @@ $newsInfo = new PageComponent(
                         <input type="checkbox" name="tags" id="test1" value="test1"/> 
                         <label for="test1">タグ1</label>
                     </div>
-                    <div class="mx-3">
-                        <input type="checkbox" name="tags" id="test2" value="test2"/> 
-                        <label for="test2">タグ2</label>
-                    </div>
-                    <div class="mx-3">
-                        <input type="checkbox" name="tags" id="test3" value="test3"/> 
-                        <label for="test3">タグ3</label>
-                    </div>
                 </div>
             <?php else: ?>
                 <div class="mt-3 flex flex-wrap">
