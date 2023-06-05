@@ -5,7 +5,7 @@ class UsersDAO {
 
     public function __construct(private ?PDO $db = null) {
         if (is_null($this->db)) {
-            $this->db = connectPostgreSQL();
+            $this->db = PDOFactory::getNewPDOInstance();
         }
     }
 
