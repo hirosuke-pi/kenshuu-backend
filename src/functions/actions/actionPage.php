@@ -39,6 +39,26 @@ class ActionPage {
     }
 
     /**
+     * キーとその型をチェック
+     *
+     * @param array $params チェックしたい配列
+     * @param array $requirePropKeys チェックするキーとその型
+     * @return void
+     */
+    private function checkKeyTypes(array $params, array $requirePropKeys): void {
+        foreach ($requirePropKeys as $key => $type) {
+            if (!array_key_exists($key, $params)) {
+                // 必須パラメーターが存在しなかった場合はエラーをスロー
+                throw new Exception('Required parameter key not found: ' . $key);
+            }
+            elseif (gettype($params[$key]) !== $type) {
+                // 必須パラメーターが型が一致しなければエラーをスロー
+                throw new Exception('Required parameter type('. $type .') not match: ' . $key .'('. gettype($params[$key]) .')');
+            }
+        }
+    }
+
+    /**
      * GET, POST, PUT, DELETEを判定してアクションを実行
      * 実行後は、設定したアクションのレスポンスをセッションに保存してリダイレクトする
      *
@@ -60,7 +80,7 @@ class ActionPage {
         $actionMethod = $this->actionMethods[$method];
 
         // 必須パラメーターが存在するか
-        checkKeyTypes($_REQUEST, $actionMethod->requireParams);
+        self::checkKeyTypes($_REQUEST, $actionMethod->requireParams);
 
         // クロージャーを実行
         $response = ($actionMethod->action)($_REQUEST);
