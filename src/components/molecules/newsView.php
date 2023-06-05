@@ -2,14 +2,12 @@
 
 class NewsView {
     /**
-     * ニュース表示用のコンポーネントをレンダリング
+     * 表示用のニュース記事コンポーネントをレンダリング
      *
-     * @param string $title タイトル
-     * @param string $body ニュース内容
-     * @param string $createdAt 作成日時
+     * @param PostsDTO $post ニュース投稿DTO
      * @return void
      */
-    public static function render(string $title, string $body, string $createdAt) {
+    public static function render(PostsDTO $post) {
         ?>
             <main class="rounded-lg border border-gray-300 m-3 overflow-hidden">
                 <img class="w-full" src="/img/news.jpg" alt="news image">
