@@ -7,7 +7,7 @@ class Head {
             <html lang="ja">
                 <head>
                     <meta charset="utf-8">
-                    <title><?=$title ?></title>
+                    <title><?=h($title) ?></title>
                     <meta name="viewport" content="width=device-width, initial-scale=1.0">
                     <script src="https://cdn.tailwindcss.com"></script>
                     <link rel="stylesheet" href="/css/common.css">

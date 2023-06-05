@@ -13,23 +13,13 @@ function var_log(mixed $dump) {
 }
 
 /**
- * キーとその型をチェック
+ * htmlspecialcharsのエイリアス
  *
- * @param array $params チェックしたい配列
- * @param array $requirePropKeys チェックするキーとその型
- * @return void
+ * @param string $str エスケープしたい文字列
+ * @return string エスケープ済みの文字列
  */
-function checkKeyTypes(array $params, array $requirePropKeys) {
-    foreach ($requirePropKeys as $key => $type) {
-        if (!array_key_exists($key, $params)) {
-            // 必須パラメーターが存在しなかった場合はエラーをスロー
-            throw new Exception('Required parameter key not found: ' . $key);
-        }
-        elseif (gettype($params[$key]) !== $type) {
-            // 必須パラメーターが型が一致しなければエラーをスロー
-            throw new Exception('Required parameter type('. $type .') not match: ' . $key .'('. gettype($params[$key]) .')');
-        }
-    }
+function h(string $str): string {
+    return htmlspecialchars($str, ENT_QUOTES, 'UTF-8');
 }
 
 /**

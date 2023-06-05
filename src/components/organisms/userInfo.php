@@ -13,9 +13,9 @@ class UserInfo {
                     <div class="mt-3 flex justify-center items-center flex-col">
                         <a href="#" class="hover:underline">
                             <img class="w-20 h-20 rounded-full object-cover" src="/img/news.jpg" alt="user image">
-                            <p class="text-xl font-bold text-gray-700 text-center">@<?=$username ?></p>
+                            <p class="text-xl font-bold text-gray-700 text-center">@<?=h($username) ?></p>
                         </a>
-                        <p class="text-gray-600 mt-2">記事投稿数: <strong><?=$postsCount ?></strong></p>
+                        <p class="text-gray-600 mt-2">記事投稿数: <strong><?=h($postsCount) ?></strong></p>
                     </div>
                 </section>
                 <section class="border border-gray-300 rounded-lg p-5 mt-3">

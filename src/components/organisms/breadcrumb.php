@@ -9,8 +9,8 @@ class Breadcrumb {
                 </a>
                 <?php foreach($paths as $path): ?>
                     <i class="fa-solid fa-greater-than"></i>
-                    <a class="mx-3 hover:underline" href="<?=$path['link']?>" class="text-gray-700 hover:underline">
-                        <i class="fa-regular fa-file-lines"></i> <?=$path['name']?>
+                    <a class="mx-3 hover:underline" href="<?=h($path['link']) ?>" class="text-gray-700 hover:underline">
+                        <i class="fa-regular fa-file-lines"></i> <?=h($path['name']) ?>
                     </a>
                 <?php endforeach; ?>
             </div>

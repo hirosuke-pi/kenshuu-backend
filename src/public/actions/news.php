@@ -6,7 +6,7 @@ require_once '../../functions/autoload/actions.php';
 $action = new ActionPage();
 
 $action->post(
-    function($params) {
+    function(array $params): ActionResponse {
         $db = PDOFactory::getNewPDOInstance();
         $postsDao = new PostsDAO($db);
 
@@ -14,7 +14,7 @@ $action->post(
         $usersDao = new UsersDAO($db);
         $userDto = $usersDao->getUserByEmail('test@test.com');
 
-    $postsDao->createPost($userDto->id, $params['title'], $params['body']);
+        $postsDao->createPost($userDto->id, $params['title'], $params['body']);
 
         return new ActionResponse('/');
     },
