@@ -1,7 +1,15 @@
 <?php
 
 class NewsView {
-    public static function render(PostsDTO $post) {
+    /**
+     * ニュース表示用のコンポーネントをレンダリング
+     *
+     * @param string $title タイトル
+     * @param string $body ニュース内容
+     * @param string $createdAt 作成日時
+     * @return void
+     */
+    public static function render(string $title, string $body, string $createdAt) {
         ?>
             <main class="rounded-lg border border-gray-300 m-3 overflow-hidden">
                 <img class="w-full" src="/img/news.jpg" alt="news image">
