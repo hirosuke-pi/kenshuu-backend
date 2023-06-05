@@ -11,6 +11,11 @@ class UsersDTO {
         public readonly ?string $deletedAt)
     {}
 
+    /**
+     * ユーザーの作成日時をDateTime型で取得
+     *
+     * @return DateTime|null 作成日時
+     */
     public function getCreatedAtDateTime(): ?DateTime {
         if (is_null($this->createdAt)) {
             return null;
@@ -18,6 +23,11 @@ class UsersDTO {
         return new DateTime($this->createdAt);
     }
 
+    /**
+     * ユーザーの削除日時をDateTime型で取得
+     *
+     * @return DateTime|null 削除日時
+     */
     public function getDeletedAtDateTime(): ?DateTime {
         if (is_null($this->deletedAt)) {
             return null;
