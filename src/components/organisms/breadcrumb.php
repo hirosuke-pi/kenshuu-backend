@@ -1,6 +1,12 @@
 <?php
 
 class Breadcrumb {
+    /**
+     * 現在いる位置をレンダリング
+     *
+     * @param array $paths [['link' => 'https://example.com', 'name' => 'ホーム'], ...] の形式
+     * @return void
+     */
     public static function render(array $paths): void {
         ?>
             <div class="flex items-center text-gray-700">

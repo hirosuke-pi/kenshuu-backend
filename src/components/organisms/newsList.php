@@ -3,6 +3,11 @@
 require_once __DIR__ .'/../molecules/newsCard.php';
 
 class NewsList {
+    /**
+     * ニュースリストをカードでレンダリング
+     *
+     * @return void
+     */
     public static function render(): void {
         $db = PDOFactory::getNewPDOInstance();
         $postsDao = new PostsDAO($db);

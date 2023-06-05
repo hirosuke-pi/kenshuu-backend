@@ -3,6 +3,12 @@
 require_once __DIR__ .'/breadcrumb.php';
 
 class NewsDetail {
+    /**
+     * ニュース詳細をレンダリング
+     *
+     * @param PostsDTO $post
+     * @return void
+     */
     public static function render(PostsDTO $post): void {
         $props = [['name' => 'ニュース - '. $post->title, 'link' => $_SERVER['REQUEST_URI']]];
 

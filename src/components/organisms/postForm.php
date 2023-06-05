@@ -1,6 +1,11 @@
 <?php
 
 class PostForm {
+    /**
+     * ニュース投稿フォームをレンダリング
+     *
+     * @return void
+     */
     public static function render(): void {
         ?>
             <form class="flex flexjustify-center items-center flex-col" method="POST" action="/actions/news.php?test=aaaaa">

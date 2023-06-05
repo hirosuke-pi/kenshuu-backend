@@ -3,6 +3,13 @@
 require_once __DIR__ .'/../atoms/badge.php';
 
 class UserInfo {
+    /**
+     * ユーザー情報をレンダリング
+     *
+     * @param string $username ユーザー名
+     * @param integer $postsCount 投稿数
+     * @return void
+     */
     public static function render(string $username, int $postsCount): void {
         ?>
             <aside class="w-full lg:w-80 m-3">

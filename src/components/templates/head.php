@@ -1,6 +1,12 @@
 <?php
 
 class Head {
+    /**
+     * <head>タグをレンダリング
+     *
+     * @param string $title
+     * @return void
+     */
     public static function render(string $title): void {
         ?>
             <!DOCTYPE html>

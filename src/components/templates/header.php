@@ -1,6 +1,11 @@
 <?php
 
 class Header {
+    /**
+     * ヘッダーをレンダリング
+     *
+     * @return void
+     */
     public static function render(): void {
         ?>
             <header class="flex justify-center mt-10 mb-3">

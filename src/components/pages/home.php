@@ -11,6 +11,11 @@ require_once __DIR__ .'/../organisms/newsList.php';
 require_once __DIR__ .'/../organisms/postForm.php';
 
 class Home {
+    /**
+     * ホームページをレンダリング
+     *
+     * @return void
+     */
     public static function render(): void {
         ?>
             <?=Head::render('Flash News')?>

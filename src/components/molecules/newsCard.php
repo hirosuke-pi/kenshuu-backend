@@ -3,6 +3,12 @@
 require_once __DIR__ .'/../atoms/badge.php';
 
 class NewsCard {
+    /**
+     * ニュースのカードをレンダリング
+     *
+     * @param PostsDTO $post ニュースのデータ
+     * @return void
+     */
     public static function render(PostsDTO $post): void {
         $newsLink = '/news/index.php?id='. $post->id;
 

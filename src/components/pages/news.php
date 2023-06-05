@@ -11,6 +11,11 @@ require_once __DIR__ .'/../organisms/newsDetail.php';
 require_once __DIR__ .'/../organisms/userInfo.php';
 
 class News {
+    /**
+     * ニュース詳細ページをレンダリング
+     *
+     * @return void
+     */
     public static function render(): void {
         $db = PDOFactory::getNewPDOInstance();
 
