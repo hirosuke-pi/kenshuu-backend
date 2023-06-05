@@ -1,7 +1,7 @@
 <?php
 
 class PostsDTO {
-    function __construct(
+    public function __construct(
         public readonly string $id, 
         public readonly string $userId, 
         public readonly string $title, 
@@ -11,19 +11,19 @@ class PostsDTO {
         public readonly ?string $deletedAt)
     {}
 
-    function getCreatedAtDateTime(): DateTime {
+    public function getCreatedAtDateTime(): DateTime {
         return new DateTime($this->createdAt);
     }
 
-    function getUpdatedAtDateTime(): ?DateTime {
-        if ($this->updatedAt === null) {
+    public function getUpdatedAtDateTime(): ?DateTime {
+        if (is_null($this->updatedAt)) {
             return null;
         }
         return new DateTime($this->updatedAt);
     }
 
-    function getDeletedAtDateTime(): ?DateTime {
-        if ($this->deletedAt === null) {
+    public function getDeletedAtDateTime(): ?DateTime {
+        if (is_null($this->deletedAt === null)) {
             return null;
         }
         return new DateTime($this->deletedAt);
