@@ -2,14 +2,16 @@
 
 PageController::sessionStart();
 
-[$head, $header, $footer, $end] = 
-    ViewComponent::importTemplates(['head', 'header', 'footer', 'end']);
-[$newsDetail, $userInfo, $breadcrumb] = 
-    ViewComponent::importOrganisms(['newsDetail', 'userInfo', 'breadcrumb']);
+require_once __DIR__ .'/../templates/head.php';
+require_once __DIR__ .'/../templates/header.php';
+require_once __DIR__ .'/../templates/end.php';
+require_once __DIR__ .'/../templates/footer.php';
 
-$news = new PageComponent(
-    props: $_PROPS,
-    mounted: function(object &$values, array $props): void {
+require_once __DIR__ .'/../organisms/newsDetail.php';
+require_once __DIR__ .'/../organisms/userInfo.php';
+
+class News {
+    public static function render(): void {
         $db = PDOFactory::getNewPDOInstance();
 
         // 投稿データ取得
@@ -18,35 +20,22 @@ $news = new PageComponent(
         if (!isset($post)) {
             PageController::redirect('/error.php', ['message' => '投稿が見つかりませんでした']);
         }
-
-        // ユーザーデータ取得
+    
         $usersDao = new UsersDAO($db);
         $user = $usersDao->getUserById($post->userId);
         $postsCount = $postsDao->getPostsCountByUserId($post->userId);
-
-        // バリュー追加
-        $values->headProps = ['title' => 'Flash News - '. $post->title];
-        $values->post = $post;
-        $values->user = $user;
-        $values->postsCount = $postsCount;
-
-        $values->newsDetailProps = ['post' => $post];
-        $values->userInfoProps = [
-            'user' => $user,
-            'postsCount' => $postsCount
-        ];
+    
+        ?>
+            <?=Head::render('Flash News - '. $post->title) ?>
+                <body>
+                    <?=Header::render() ?>
+                    <section class="flex justify-center flex-wrap items-start">
+                        <?=NewsDetail::render($post) ?>
+                        <?=UserInfo::render($user->username, $postsCount) ?>
+                    </section>
+                    <?=Footer::render() ?>
+                </body>
+            <?=End::render() ?>
+        <?php
     }
-);
-
-?>
-
-<?=$head->view($news->values->headProps)?>
-    <body>
-        <?=$header->view()?>
-        <section class="flex justify-center flex-wrap items-start">
-            <?=$newsDetail->view($news->values->newsDetailProps)?>
-            <?=$userInfo->view($news->values->userInfoProps)?>
-        </section>
-        <?=$footer->view()?>
-    </body>
-<?=$end->view()?>
+}

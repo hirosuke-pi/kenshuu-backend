@@ -1,34 +1,28 @@
 <?php
 
-[$newsCard, $breadcrumb] = ViewComponent::importMolecules(['newsCard', 'breadcrumb']);
+require_once __DIR__ .'/breadcrumb.php';
+require_once __DIR__ .'/../molecules/newsCard.php';
 
-$userPosts = new PageComponent(
-    props: $_PROPS,
-    mounted: function(object &$values, array $props) {
+class userPosts {
+    public static function render(string $username): void {
         $db = PDOFactory::getNewPDOInstance();
 
         $postsDao = new PostsDAO($db);
         $posts = $postsDao->getPostsByUserId($_GET['id']);
 
-        $values->posts = $posts;
-        $values->breadcrumbProps = [
-            'paths' => [
-                ['name' => 'ユーザー - @'. $props['username'], 'link' => $_SERVER['REQUEST_URI']]
-            ]
-        ];
-    },
-    propTypes: ['username' => 'string']
-);
+        $props = [['name' => 'ユーザー - @'. $username, 'link' => $_SERVER['REQUEST_URI']]];
 
-?>
-
-<div class="w-full lg:w-3/6 ">
-    <div class="mt-3 mx-3 p-2">
-        <?=$breadcrumb->view($userPosts->values->breadcrumbProps)?>
-    </div>
-    <ul class="flex justify-center flex-wrap">
-        <?php foreach ($userPosts->rawValues->posts as $post): ?>
-            <?=$newsCard->view(['post' => $post, 'mode' => 'full'])?>
-        <?php endforeach; ?>
-    </ul>
-</div>
+        ?>
+            <div class="w-full lg:w-3/6 ">
+                <div class="mt-3 mx-3 p-2">
+                    <?=Breadcrumb::render($props) ?>
+                </div>
+                <ul class="flex justify-center flex-wrap">
+                    <?php foreach ($posts as $post): ?>
+                        <?=NewsCard::render($post) ?>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+        <?php
+    }
+}

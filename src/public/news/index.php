@@ -1,4 +1,6 @@
 <?php
 
 require_once '../../functions/autoload/views.php';
-ViewComponent::importPage('news')->view();
+require_once '../../components/pages/news.php';
+
+News::render();
