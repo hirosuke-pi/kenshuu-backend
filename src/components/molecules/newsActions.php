@@ -1,6 +1,12 @@
 <?php
 
 class NewsActions {
+    /**
+     * 管理者用操作メニューをレンダリング
+     *
+     * @param string $newsId 操作するニュースID
+     * @return void
+     */
     public static function render(string $newsId) {
         $editUrl = './edit.php?id='. $newsId;
         $deleteUrl = '/actions/news.php?id='. $newsId;

@@ -1,8 +1,16 @@
 <?php
 
 class NewsEdit {
-    public static function render(string $id, string $title, string $body): void {
-        $newsEditUrl = '/actions/news?id='. $id;
+    /**
+     * ニュース編集フォームをレンダリング
+     *
+     * @param string $newsId ニュースID
+     * @param string $title ニュースタイトル
+     * @param string $body ニュース本文
+     * @return void
+     */
+    public static function render(string $newsId, string $title, string $body): void {
+        $newsEditUrl = '/actions/news?id='. $newsId;
 
         ?>
             <form action="<?=$newsEditUrl ?>" method="POST">

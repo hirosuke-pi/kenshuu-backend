@@ -6,6 +6,13 @@ require_once __DIR__ .'/../molecules/newsActions.php';
 require_once __DIR__ .'/../molecules/newsView.php';
 
 class NewsDetail {
+    /**
+     * ニュース詳細コンポーネントをレンダリング
+     *
+     * @param PostsDTO $post 投稿DTO
+     * @param string $mode 表示モードか、編集モードか (固定値: MODE_VIEW, MODE_EDIT, MODE_NEW)
+     * @return void
+     */
     public static function render(PostsDTO $post, string $mode): void {
         $newsDetail = new NewsDetail(['post' => $post, 'mode' => $mode]);
         $editorMode = in_array($mode, [MODE_EDIT, MODE_NEW]);
