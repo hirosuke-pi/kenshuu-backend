@@ -1,15 +1,16 @@
 <?php
 
 class TagsDAO {
-    private PDO $db;
-    public const POSTS_TABLE = 'posts';
+    public const TAGS_TABLE = 'tags';
 
-    function __construct(PDO $db) {
-        $this->db = $db;
+    function __construct(private ?PDO $db = null) {
+        if (is_null($this->db)) {
+            $this->db = PDOFactory::getNewPDOInstance();
+        }
     }
 
     public function getTags(): array {
-        $sql = 'SELECT * FROM '. $this::POSTS_TABLE;
+        $sql = 'SELECT * FROM '. $this::TAGS_TABLE;
         $stmt = $this->db->query($sql);
         if (!$stmt->execute()) {
             return [];

@@ -17,15 +17,17 @@ class PostsDAO {
      * @param string $body 内容
      * @return boolean トランザクションが成功したかどうか
      */
-    public function createPost(string $userId, string $title, string $body): bool {
+    public function createPost(string $userId, string $title, string $body): string {
+        $newsId = 'post_' . uniqid(mt_rand());
         $sql = 'INSERT INTO '. $this::POSTS_TABLE .' (id, user_id, title, body) VALUES (:id, :user_id, :title, :body)';
         $stmt = $this->db->prepare($sql);
-        $stmt->bindValue(':id', 'post_' . uniqid(mt_rand()), PDO::PARAM_STR);
+        $stmt->bindValue(':id', $newsId, PDO::PARAM_STR);
         $stmt->bindValue(':user_id', $userId, PDO::PARAM_STR);
         $stmt->bindValue(':title', $title, PDO::PARAM_STR);
         $stmt->bindValue(':body', $body, PDO::PARAM_STR);
 
-        return $stmt->execute();
+        $stmt->execute();
+        return $newsId;
     }
 
     /**
