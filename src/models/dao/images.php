@@ -36,7 +36,7 @@ class ImagesDAO {
      * @return array
      */
     public function getImagesByPostId(string $postId): array {
-        $sql = 'SELECT * FROM '. $this::IMAGES_TABLE .' WHERE post_id = :post_id AND deleted_at IS NULL';
+        $sql = 'SELECT * FROM '. $this::IMAGES_TABLE .' WHERE post_id = :post_id AND thumbnail_flag = FALSE';
         $stmt = $this->db->prepare($sql);
         $stmt->bindValue(':post_id', $postId, PDO::PARAM_STR);
 
@@ -52,9 +52,36 @@ class ImagesDAO {
                 $image['post_id'],
                 $image['thumbnail_flag'],
                 $image['file_path'],
-                $image['deleted_at'],
             );
         }
         return $imagesDtoList;
+    }
+
+    /**
+     * 投稿IDを元に画像を取得
+     *
+     * @param string $postId
+     * @return array
+     */
+    public function getThumbnailByPostId(string $postId): ?ImagesDTO {
+        $sql = 'SELECT * FROM '. $this::IMAGES_TABLE .' WHERE post_id = :post_id AND thumbnail_flag = TRUE';
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(':post_id', $postId, PDO::PARAM_STR);
+
+        if (!$stmt->execute()) {
+            return [];
+        }
+
+        $image = $stmt->fetch(PDO::FETCH_ASSOC);
+        if (!$image) {
+            return null;
+        }
+
+        return new ImagesDTO(
+            $image['id'],
+            $image['post_id'],
+            $image['thumbnail_flag'],
+            $image['file_path'],
+        );
     }
 }

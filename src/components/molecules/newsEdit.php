@@ -13,18 +13,24 @@ class NewsEdit {
     public static function render(?PostsDTO $post, string $mode): void {
         $newsEditUrl = '/actions/news.php';
         $isEditMode = false;
+        $thumbnailPath = DEFAULT_THUMBNAIL;
         if ($mode === MODE_EDIT) {
             $newsEditUrl .= '?id='. $post->id;
             $isEditMode = true;
+            $thumbnailPath = ImagesRepo::getThumbnailSrcByPostId($post->id);
         }
-        
+
         $title = $post->title ?? '';
         $body = $post->body ?? '';
 
         ?>
             <form id="newsForm" action="<?=$newsEditUrl ?>" method="POST" enctype="multipart/form-data">
                 <div class="rounded-lg border border-gray-300 m-3 overflow-hidden">
-                    <?=SelectImage::render('thumbnail') ?>
+                    <?php if($isEditMode): ?>
+                        <img class="w-full" src="<?=$thumbnailPath?>" alt="news image">
+                    <?php else: ?>
+                        <?=SelectImage::render('thumbnail') ?>
+                    <?php endif; ?>
                     <article class="p-5">
                         <h2 class="text-4xl text-gray-800 font-bold mt-2 mb-2">
                             <label for="default-input" class="block mb-2 mt-5 text-sm font-medium">タイトル</label>

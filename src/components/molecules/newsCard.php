@@ -11,13 +11,14 @@ class NewsCard {
      */
     public static function render(PostsDTO $post, string $mode): void {
         $newsLink = '/news/index.php?id='. $post->id;
-        $cardSize = $mode === 'card' ? 'max-w-sm' : '';
+        $cardSize = $mode === 'card' ? 'max-w-sm' : 'w-full';
+        $thumbnailPath = ImagesRepo::getThumbnailSrcByPostId($post->id);
 
         ?>
-            <li class="m-3">
-                <div class="<?=$cardSize ?> rounded overflow-hidden shadow-md">
+            <li class="m-3 <?=$cardSize ?>">
+                <div class="rounded overflow-hidden shadow-md">
                     <a href="<?=$newsLink ?>" class="">
-                        <img class="w-full" src="/img/news.jpg" alt="news image">
+                        <img class="w-full" src="<?=$thumbnailPath ?>" alt="news image">
                     </a>
                     <div class="px-6 py-4">
                         <a href="<?=$newsLink ?>" class="hover:underline hover:text-gray-500">

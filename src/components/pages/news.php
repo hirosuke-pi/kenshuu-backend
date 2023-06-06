@@ -44,7 +44,7 @@ class News {
                     <?=Header::render() ?>
                     <section class="flex justify-center flex-wrap items-start">
                         <?=NewsDetail::render($user, $post, $mode) ?>
-                        <?=NewsInfo::render($user, $postsCount, $mode) ?>
+                        <?=NewsInfo::render($user, $post, $postsCount, $mode) ?>
                     </section>
                     <?=Footer::render() ?>
                 </body>

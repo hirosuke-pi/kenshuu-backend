@@ -10,3 +10,5 @@ const MODE_VIEW = 'view';
 const MODE_CREATE = 'create';
 
 const MAX_IMAGE_COUNT = 4;
+
+const DEFAULT_THUMBNAIL = '/img/news.jpg';
