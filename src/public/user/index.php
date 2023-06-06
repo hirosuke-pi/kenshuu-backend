@@ -1,4 +1,6 @@
 <?php
 
 require_once '../../functions/autoload/views.php';
-ViewComponent::importPage('user')->view();
+require_once '../../components/pages/user.php';
+
+User::render();

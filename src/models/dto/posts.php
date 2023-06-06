@@ -1,7 +1,7 @@
 <?php
 
 class PostsDTO {
-    function __construct(
+    public function __construct(
         public readonly string $id, 
         public readonly string $userId, 
         public readonly string $title, 
@@ -11,19 +11,34 @@ class PostsDTO {
         public readonly ?string $deletedAt)
     {}
 
-    function getCreatedAtDateTime(): DateTime {
+    /**
+     * ニュースの作成日時をDateTime型で取得
+     *
+     * @return DateTime 作成日時
+     */
+    public function getCreatedAtDateTime(): DateTime {
         return new DateTime($this->createdAt);
     }
 
-    function getUpdatedAtDateTime(): ?DateTime {
-        if ($this->updatedAt === null) {
+    /**
+     * ニュースの更新日時をDateTime型で取得
+     *
+     * @return DateTime|null 更新日時
+     */
+    public function getUpdatedAtDateTime(): ?DateTime {
+        if (is_null($this->updatedAt)) {
             return null;
         }
         return new DateTime($this->updatedAt);
     }
 
-    function getDeletedAtDateTime(): ?DateTime {
-        if ($this->deletedAt === null) {
+    /**
+     * ニュースの削除日時をDateTime型で取得
+     *
+     * @return DateTime|null 削除日時
+     */
+    public function getDeletedAtDateTime(): ?DateTime {
+        if (is_null($this->deletedAt === null)) {
             return null;
         }
         return new DateTime($this->deletedAt);
