@@ -1,65 +1,53 @@
 <?php
 
-[$newsEdit, $newsView] = ViewComponent::importMolecules(['newsEdit', 'newsView']);
-[$breadcrumb, $newsActions] = ViewComponent::importMolecules(['breadcrumb', 'newsActions']);
+require_once __DIR__ .'/../molecules/breadcrumb.php';
+require_once __DIR__ .'/../molecules/newsEdit.php';
+require_once __DIR__ .'/../molecules/newsActions.php';
+require_once __DIR__ .'/../molecules/newsView.php';
 
-$newsDetail = new PageComponent(
-    props: $_PROPS,
-    mounted: function(object &$values, array $props) {
-        $post = $props['post'];
+class NewsDetail {
+    /**
+     * ニュース詳細コンポーネントをレンダリング
+     *
+     * @param UsersDTO $user ユーザーDTO
+     * @param ?PostsDTO $post 投稿DTO
+     * @param string $mode 表示モードか、編集モードか (固定値: MODE_VIEW, MODE_EDIT, MODE_CREATE)
+     * @return void
+     */
+    public static function render(UsersDTO $user, ?PostsDTO $post, string $mode): void {
+        $editorMode = in_array($mode, [MODE_EDIT, MODE_CREATE]);
 
-        $values->editorMode = in_array($props['mode'], [MODE_EDIT, MODE_CREATE]);
-
-        $values->newsTitleBodyProps = [
-            'title' => $post->title ?? '',
-            'body' => $post->body ?? '',
-            'createdAt' => $post->createdAt ?? '',
-            'updatedAt' => $post->updatedAt ?? '',
-            'newsId' => $post->id ?? '',
-            'mode' => $props['mode']
-        ];
-        $values->newsActionsProps = [
-            'newsId' => $post->id ?? '',
-            'mode' => $props['mode']
-        ];
-
-        if ($props['mode'] === MODE_EDIT) {
-            $values->breadcrumbProps = [
-                'paths' => [
-                    ['name' => 'ニュース - '. $post->title, 'link' => 'index.php?id='. $post->id],
-                    ['name' => 'ページを編集', 'link' => $_SERVER['REQUEST_URI']],
-                ]
+        $breadcrumbProps = [];
+        if ($mode === MODE_EDIT) {
+            $breadcrumbProps = [
+                ['name' => 'ニュース - '. $post->title, 'link' => 'index.php?id='. $post->id],
+                ['name' => 'ページを編集', 'link' => $_SERVER['REQUEST_URI']],
             ];
         }
-        elseif ($props['mode'] === MODE_CREATE) {
-            $values->breadcrumbProps = [
-                'paths' => [
-                    ['name' => 'ユーザーページ', 'link' => '/user/index.php'],
-                    ['name' => 'ニュースを作成', 'link' => $_SERVER['REQUEST_URI']],
-                ]
+        elseif ($mode === MODE_CREATE) {
+            $breadcrumbProps = [
+                ['name' => 'ユーザー - @'. $user->username, 'link' => '/user/index.php?id='. $user->id],
+                ['name' => 'ニュースを作成', 'link' => $_SERVER['REQUEST_URI']],
             ];
         }
-        else {
-            $values->breadcrumbProps = [
-                'paths' => [
-                    ['name' => 'ニュース - '. $post->title, 'link' => $_SERVER['REQUEST_URI']]
-                ]
+        elseif ($mode === MODE_VIEW) {
+            $breadcrumbProps = [
+                ['name' => 'ニュース - '. $post->title, 'link' => $_SERVER['REQUEST_URI']]
             ];
         }
-    },
-    propTypes: ['post' => 'object', 'mode' => 'string']
-);
 
-?>
-
-<div class="w-full lg:w-3/6 ">
-    <div class="m-3 p-2">
-        <?=$breadcrumb->view($newsDetail->values->breadcrumbProps)?>
-    </div>
-    <?php if ($newsDetail->values->editorMode): ?>
-        <?=$newsEdit->view($newsDetail->rawValues->newsTitleBodyProps) ?>
-    <?php else: ?>
-        <?=$newsActions->view($newsDetail->values->newsActionsProps) ?>
-        <?=$newsView->view($newsDetail->rawValues->newsTitleBodyProps) ?>
-    <?php endif; ?>
-</div>
+        ?>
+            <div class="w-full lg:w-3/6 ">
+                <div class="m-3 p-2">
+                    <?=Breadcrumb::render($breadcrumbProps)?>
+                </div>
+                <?php if ($editorMode): ?>
+                    <?=NewsEdit::render($post, $mode) ?>
+                <?php else: ?>
+                    <?=NewsActions::render($post->id) ?>
+                    <?=NewsView::render($post) ?>
+                <?php endif; ?>
+            </div>       
+        <?php
+    }
+}

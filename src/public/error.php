@@ -1,4 +1,6 @@
 <?php
 
 require_once '../functions/autoload/views.php';
-ViewComponent::importPage('error')->view();
+require_once '../components/pages/errorPage.php';
+
+ErrorPage::render();

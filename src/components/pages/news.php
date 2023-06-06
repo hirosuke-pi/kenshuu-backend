@@ -2,80 +2,53 @@
 
 PageController::sessionStart();
 
-[$head, $header, $footer, $end] = 
-    ViewComponent::importTemplates(['head', 'header', 'footer', 'end']);
-[$newsDetail, $newsInfo] = 
-    ViewComponent::importOrganisms(['newsDetail', 'newsInfo']);
+require_once __DIR__ .'/../templates/head.php';
+require_once __DIR__ .'/../templates/header.php';
+require_once __DIR__ .'/../templates/end.php';
+require_once __DIR__ .'/../templates/footer.php';
 
-$news = new PageComponent(
-    props: $_PROPS,
-    mounted: function(object &$values, array $props): void {
-        $db = FlashNewsDB::getPdo();
+require_once __DIR__ .'/../organisms/newsDetail.php';
+require_once __DIR__ .'/../organisms/newsInfo.php';
 
-        if (in_array($props['mode'], [MODE_VIEW, MODE_EDIT])) {
+class News {
+    /**
+     * ニュース詳細ページをレンダリング
+     * 
+     * @param string $mode 表示モードか、編集モードか (固定値: MODE_VIEW, MODE_EDIT, MODE_CREATE)
+     * @return void 
+     */
+    public static function render(string $mode): void {
+        $db = PDOFactory::getNewPDOInstance();
+
+        $usersDao = new UsersDAO($db);
+        $user = $usersDao->getUserByEmail('test@test.com');
+
+        $postsDao = new PostsDAO($db);
+        $postsCount = $postsDao->getPostsCountByUserId($user->id);
+
+        $title = '新規作成';
+        $post = null;
+        if (in_array($mode, [MODE_VIEW, MODE_EDIT])) {
             // 編集・閲覧モード
             // 投稿データ取得
-            $postsDao = new PostsDAO($db);
             $post = $postsDao->getPostById($_GET['id']);
             if (!isset($post)) {
                 PageController::redirect('/error.php', ['message' => '投稿が見つかりませんでした。']);
             }
-
-            // ユーザーデータ取得
-            $usersDao = new UsersDAO($db);
-            $user = $usersDao->getUserById($post->userId);
-            $postsCount = $postsDao->getPostsCountByUserId($post->userId);
-
-            // バリュー追加
-            $values->headProps = ['title' => 'Flash News - '. $post->title];
-
-            $values->newsDetailProps = [
-                'post' => $post,
-                'mode' => $props['mode']
-            ];
-            $values->newsInfoProps = [
-                'user' => $user,
-                'postsCount' => $postsCount,
-                'mode' => $props['mode']
-            ];
+            $title = $post->title;
         }
-        elseif ($props['mode'] === MODE_CREATE) {
-            // 新規作成モード
-            // ユーザーデータ取得
-            $usersDao = new UsersDAO($db);
-            $user = $usersDao->getUserByEmail('test@test.com');
-            $postsDao = new PostsDAO($db);
-            $postsCount = $postsDao->getPostsCountByUserId($user->id);
-
-            // バリュー追加
-            $values->headProps = ['title' => 'Flash News - ニュースを作成'];
-
-            $values->newsDetailProps = [
-                'post' => (object)[],
-                'mode' => $props['mode']
-            ];
-            $values->newsInfoProps = [
-                'user' => $user,
-                'postsCount' => $postsCount,
-                'mode' => $props['mode']
-            ];
-        }
-        else {
-            PageController::redirect('/error.php', ['message' => '不正なアクセスです。']);
-        }
-    },
-    propTypes: ['mode' => 'string']
-);
-
-?>
-
-<?=$head->view($news->values->headProps)?>
-    <body>
-        <?=$header->view()?>
-        <section class="flex justify-center flex-wrap items-start">
-            <?=$newsDetail->view($news->rawValues->newsDetailProps)?>
-            <?=$newsInfo->view($news->rawValues->newsInfoProps)?>
-        </section>
-        <?=$footer->view()?>
-    </body>
-<?=$end->view()?>
+    
+        ?>
+            <?=Head::render('Flash News - '. $title) ?>
+                <body>
+                    <?=Header::render() ?>
+                    <section class="flex justify-center flex-wrap items-start">
+                        <?=NewsDetail::render($user, $post, $mode) ?>
+                        <?=NewsInfo::render($user, $postsCount, $mode) ?>
+                    </section>
+                    <?=Footer::render() ?>
+                </body>
+            <?=End::render() ?>
+        <?php
+    }
+}

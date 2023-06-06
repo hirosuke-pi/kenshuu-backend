@@ -1,4 +1,6 @@
 <?php
 
 require_once '../functions/autoload/views.php';
-ViewComponent::importPage('home')->view();
+require_once '../components/pages/home.php';
+
+Home::render();

@@ -2,15 +2,26 @@
 
 PageController::sessionStart();
 
-[$head, $header, $footer, $end] = 
-    ViewComponent::importTemplates(['head', 'header', 'footer', 'end']);
-[$userDetail, $userPosts] = 
-    ViewComponent::importOrganisms(['userDetail', 'userPosts']);
+require_once __DIR__ .'/../templates/head.php';
+require_once __DIR__ .'/../templates/header.php';
+require_once __DIR__ .'/../templates/end.php';
+require_once __DIR__ .'/../templates/footer.php';
 
-$user = new PageComponent(
-    props: $_PROPS,
-    mounted: function(object &$values, array $props): void {
-        $db = FlashNewsDB::getPdo();
+require_once __DIR__ .'/../organisms/userPosts.php';
+require_once __DIR__ .'/../organisms/userDetail.php';
+
+class User {
+    /**
+     * ユーザーページをレンダリング
+     *
+     * @return void
+     */
+    public static function render(): void {
+        $db = PDOFactory::getNewPDOInstance();
+
+        if (!isset($_GET['id'])) {
+            PageController::redirect('/error.php', ['message' => 'ユーザーIDが指定されていません。']);
+        }
 
         // ユーザーデータ取得
         $usersDao = new UsersDAO($db);
@@ -20,32 +31,17 @@ $user = new PageComponent(
             PageController::redirect('/error.php', ['message' => 'ユーザーが見つかりませんでした。']);
         }
 
-        // 投稿データ取得
-        $postsDao = new PostsDAO($db);
-        $postsCount = $postsDao->getPostsCountByUserId($_GET['id']);
-
-        // バリュー追加
-        $values->headProps = ['title' => 'Flash News - @'. $user->username];
-        $values->userDetailProps = [
-            'id' => $user->id,
-            'postsCount' => $postsCount,
-            'name' => $user->username,
-        ];
-        $values->userPostsProps = [
-            'username' => $user->username
-        ];
+        ?>
+            <?=Head::render('Flash News - @'. $user->username) ?>
+                <body>
+                    <?=Header::render() ?>
+                    <section class="flex justify-center flex-wrap-reverse items-end">
+                        <?=UserPosts::render($user->username) ?>
+                        <?=userDetail::render($user) ?>
+                    </section>
+                    <?=Footer::render() ?>
+                </body>
+            <?=End::render() ?>
+        <?php
     }
-);
-
-?>
-
-<?=$head->view($user->values->headProps)?>
-    <body>
-        <?=$header->view()?>
-        <section class="flex justify-center flex-wrap-reverse items-end">
-            <?=$userPosts->view($user->rawValues->userPostsProps)?>
-            <?=$userDetail->view($user->rawValues->userDetailProps)?>
-        </section>
-        <?=$footer->view()?>
-    </body>
-<?=$end->view()?>
+}

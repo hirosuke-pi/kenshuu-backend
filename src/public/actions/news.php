@@ -6,8 +6,8 @@ require_once '../../functions/autoload/actions.php';
 $action = new ActionPage();
 
 $action->post(
-    function($params) {
-        $db = FlashNewsDB::getPdo();
+    function(array $params): ActionResponse {
+        $db = PDOFactory::getNewPDOInstance();
         $postsDao = new PostsDAO($db);
 
         // 一時的にユーザーを固定
@@ -22,8 +22,8 @@ $action->post(
 );
 
 $action->put(
-    function($params) {
-        $db = FlashNewsDB::getPdo();
+    function(array $params): ActionResponse {
+        $db = PDOFactory::getNewPDOInstance();
         $postsDao = new PostsDAO($db);
         $postsDao->putPostById($_GET['id'], $params['title'], $params['body']);
 
@@ -33,8 +33,8 @@ $action->put(
 );
 
 $action->delete(
-    function($params) {
-        $db = FlashNewsDB::getPdo();
+    function(array $params): ActionResponse {
+        $db = PDOFactory::getNewPDOInstance();
         $postsDao = new PostsDAO($db);
         $postsDao->deletePostById($_GET['id']);
 

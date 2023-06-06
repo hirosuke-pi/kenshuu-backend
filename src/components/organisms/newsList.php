@@ -1,25 +1,27 @@
 <?php
 
-[$newsCard] = ViewComponent::importMolecules(['newsCard']);
+require_once __DIR__ .'/../molecules/newsCard.php';
 
-$newsList = new PageComponent(
-    props: $_PROPS,
-    mounted: function(object &$values) {
-        $db = FlashNewsDB::getPdo();
+class NewsList {
+    /**
+     * ニュースリストをカードでレンダリング
+     *
+     * @return void
+     */
+    public static function render(): void {
+        $db = PDOFactory::getNewPDOInstance();
         $postsDao = new PostsDAO($db);
 
-        $values->posts = $postsDao->getPosts();
+        $posts = $postsDao->getPosts();
+
+        ?>
+            <div>
+                <ul class="flex justify-center flex-wrap">
+                    <?php foreach ($posts as $post): ?>
+                        <?=NewsCard::render($post, 'card') ?>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+        <?php
     }
-);
-
-$posts = $newsList->rawValues->posts;
-
-?>
-
-<div>
-    <ul class="flex justify-center flex-wrap">
-        <?php foreach ($posts as $post): ?>
-            <?=$newsCard->view(['post' => $post, 'mode' => 'card'])?>
-        <?php endforeach; ?>
-    </ul>
-</div>
+}
