@@ -4,6 +4,12 @@ require_once __DIR__ .'/../molecules/newsCard.php';
 require_once __DIR__ .'/../molecules/breadcrumb.php';
 
 class UserPosts {
+    /**
+     * ユーザーのニュース投稿一覧をレンダリング
+     *
+     * @param string $username ユーザー名
+     * @return void
+     */
     public static function render(string $username): void {
         $db = PDOFactory::getNewPDOInstance();
 

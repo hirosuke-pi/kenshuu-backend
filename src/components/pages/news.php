@@ -13,8 +13,9 @@ require_once __DIR__ .'/../organisms/newsInfo.php';
 class News {
     /**
      * ニュース詳細ページをレンダリング
-     *
-     * @return void
+     * 
+     * @param string $mode 表示モードか、編集モードか (固定値: MODE_VIEW, MODE_EDIT, MODE_CREATE)
+     * @return void 
      */
     public static function render(string $mode): void {
         $db = PDOFactory::getNewPDOInstance();
@@ -25,7 +26,7 @@ class News {
         $postsDao = new PostsDAO($db);
         $postsCount = $postsDao->getPostsCountByUserId($user->id);
 
-        $title = 'Flash News - 新規作成';
+        $title = '新規作成';
         $post = null;
         if (in_array($mode, [MODE_VIEW, MODE_EDIT])) {
             // 編集・閲覧モード
@@ -34,7 +35,7 @@ class News {
             if (!isset($post)) {
                 PageController::redirect('/error.php', ['message' => '投稿が見つかりませんでした。']);
             }
-            $title = 'Flash News - '. $post->title;
+            $title = $post->title;
         }
     
         ?>

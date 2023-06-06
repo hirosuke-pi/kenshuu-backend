@@ -8,6 +8,11 @@ require_once __DIR__ .'/../templates/end.php';
 require_once __DIR__ .'/../templates/footer.php';
 
 class ErrorPage {
+    /**
+     * エラーページをレンダリング
+     *
+     * @return void
+     */
     public static function render(): void {
         $session = PageController::getRedirectData();
         if (!isset($session) || !isset($session['message'])) {

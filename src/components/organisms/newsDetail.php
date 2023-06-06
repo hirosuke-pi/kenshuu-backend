@@ -9,7 +9,8 @@ class NewsDetail {
     /**
      * ニュース詳細コンポーネントをレンダリング
      *
-     * @param PostsDTO $post 投稿DTO
+     * @param UsersDTO $user ユーザーDTO
+     * @param ?PostsDTO $post 投稿DTO
      * @param string $mode 表示モードか、編集モードか (固定値: MODE_VIEW, MODE_EDIT, MODE_CREATE)
      * @return void
      */

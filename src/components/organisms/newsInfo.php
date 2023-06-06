@@ -5,15 +5,13 @@ require_once __DIR__ .'/../molecules/userInfo.php';
 
 class NewsInfo {
     /**
-     * ユーザー情報をレンダリング
+     * ニュース情報をレンダリング
      *
-     * @param string $username ユーザー名
+     * @param UsersDTO $user ユーザーDTO
      * @param integer $postsCount 投稿数
      * @return void
      */
     public static function render(UsersDTO $user, int $postsCount): void {
-        
-
         ?>
             <aside class="w-full lg:w-80 m-3">
                 <?=UserInfo::render(user: $user, postsCount: $postsCount, title: '投稿者', visibleSettingButton: false) ?>

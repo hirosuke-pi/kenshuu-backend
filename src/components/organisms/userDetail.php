@@ -3,6 +3,12 @@
 require_once __DIR__ .'/../molecules/userInfo.php';
 
 class UserDetail {
+    /**
+     * ユーザー詳細をレンダリング
+     *
+     * @param UsersDTO $user ユーザーDTO
+     * @return void
+     */
     public static function render(UsersDTO $user) {
         // 投稿データ取得
         $db = PDOFactory::getNewPDOInstance();
