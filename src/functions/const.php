@@ -8,3 +8,5 @@ const REDIRECT_INDEX = 'redirect_data';
 const MODE_EDIT = 'edit';
 const MODE_VIEW = 'view';
 const MODE_CREATE = 'create';
+
+const MAX_IMAGE_COUNT = 4;

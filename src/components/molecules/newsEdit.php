@@ -22,15 +22,14 @@ class NewsEdit {
         $body = $post->body ?? '';
 
         ?>
-            <form action="<?=$newsEditUrl ?>" method="POST">
+            <form id="newsForm" action="<?=$newsEditUrl ?>" method="POST" enctype="multipart/form-data">
                 <div class="rounded-lg border border-gray-300 m-3 overflow-hidden">
-                    <?=SelectImage::render('thumnail', null) ?>
+                    <?=SelectImage::render('thumbnail') ?>
                     <article class="p-5">
                         <h2 class="text-4xl text-gray-800 font-bold mt-2 mb-2">
                             <label for="default-input" class="block mb-2 mt-5 text-sm font-medium">タイトル</label>
                             <input required value="<?=h($title) ?>" name="title" placeholder="タイトル" type="text" id="default-input" class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                         </h2>
-                        <hr/>
                         <section class="mt-2">
                             <p class="text-gray-700 mt-5">
                                 <label for="message" class="block mb-2 mt-5 text-sm font-medium">投稿内容</label>
@@ -51,6 +50,13 @@ class NewsEdit {
                     </button>
                 </div>
             </form>
+            <script>
+                document.getElementById('newsForm')?.addEventListener('formdata', (event) => {
+                    document.querySelectorAll('.image-input').forEach((element) => {
+                        event.formData.append(element.name, element.files[0]);
+                    });
+                });
+            </script>
         <?php
     }
 }

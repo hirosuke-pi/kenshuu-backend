@@ -22,7 +22,7 @@ class SelectImage {
             <?php if ($visibleSelectButton): ?>
                 <div class="w-full relative">
                     <img id="<?=$imgId?>" class="w-full" src="<?=$src?>" alt="news image">
-                    <input id="<?=$inputId?>" class="hidden" type="file" name="<?=$inputId?>" accept="image/*">
+                    <input id="<?=$inputId?>" class="hidden image-input" type="file" name="<?=$inputId?>" accept="image/*">
                     <div class="absolute top-0 right-0">
                         <button id="<?=$buttonId?>" type="button" type="button" class="m-2 px-3 py-2 text-xl border border-gray-400 bg-gray-100 rounded-full opacity-80 hover:opacity-100" >
                             <i class="fa-solid fa-upload"></i>

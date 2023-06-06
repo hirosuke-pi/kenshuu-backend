@@ -7,6 +7,9 @@ $action = new ActionPage();
 
 $action->post(
     function(array $params): ActionResponse {
+        var_log($_FILES);
+        die;
+
         $db = PDOFactory::getNewPDOInstance();
         $postsDao = new PostsDAO($db);
 
