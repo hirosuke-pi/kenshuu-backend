@@ -14,8 +14,17 @@ $action->post(
         $usersDao = new UsersDAO($db);
         $userDto = $usersDao->getUserByEmail('test@test.com');
 
+        // ニュース投稿データをDBに追加
         $postsDao = new PostsDAO($db);
         $newsId = $postsDao->createPost($userDto->id, $params['title'], $params['body']);
+
+        // タグをDBに追加
+        if (isset($params['tags'])) {
+            $tagsDao = new TagsDAO($db);
+            foreach($params['tags'] as $tag) {
+                $tagsDao->addTagByPostId($tag, $newsId);
+            }
+        }
 
         // 画像フォルダ作成
         $imageDir = __DIR__ .'/../img/news/'. $newsId;
@@ -33,6 +42,8 @@ $action->post(
 
             $imageId = 'image_' . uniqid(mt_rand());
             $filename = $imageId .'.'. h($ext);
+
+            // 画像をDBに登録
             $imagesDao->createImage($imageId, $newsId, $key === 'thumbnail', $filename);
 
             move_uploaded_file($value['tmp_name'], $imageDir .'/'. $filename);

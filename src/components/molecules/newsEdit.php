@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ .'/selectImage.php';
+require_once __DIR__ .'/../atoms/selectImage.php';
 
 class NewsEdit {
     /**
@@ -57,11 +57,17 @@ class NewsEdit {
                 </div>
             </form>
             <script>
-                document.getElementById('newsForm')?.addEventListener('formdata', (event) => {
+                document.getElementById('newsForm').addEventListener('formdata', (event) => {
                     document.querySelectorAll('.image-input').forEach((element) => {
+                        if (!element?.files?.[0]) return;
                         event.formData.append(element.name, element.files[0]);
                     });
+                    document.querySelectorAll('.tag-input').forEach((element) => {
+                        if (!element.checked) return;
+                        event.formData.append(element.name, element.value);
+                    });
                 });
+
             </script>
         <?php
     }

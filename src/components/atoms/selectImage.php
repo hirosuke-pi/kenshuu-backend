@@ -6,7 +6,6 @@ class SelectImage {
      *
      * @param string $name inputタグのname属性
      * @param ?string $src 画像ソース
-     * @param bool $visibleSelectButton 画像選択ボタンを表示するかどうか
      * @return void
      */
     public static function render(string $name, ?string $src = null): void {
