@@ -18,15 +18,15 @@ class Home {
      */
     public static function render(): void {
         ?>
-            <?=Head::render('Flash News')?>
+            <?php Head::render('Flash News')?>
                 <body>
-                    <?=Header::render()?>
-                    <?=NewsList::render()?>
+                    <?php Header::render()?>
+                    <?php NewsList::render()?>
                     <hr class="ml-3 mr-3 mt-5">
-                    <?=PostForm::render()?>
-                    <?=Footer::render()?>
+                    <?php PostForm::render()?>
+                    <?php Footer::render()?>
                 </body>
-            <?=End::render()?>
+            <?php End::render()?>
         <?php
     }
 }

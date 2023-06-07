@@ -13,12 +13,12 @@ function var_log(mixed $dump) {
 }
 
 /**
- * htmlspecialcharsのエイリアス
+ * HTML特殊文字のエスケープを行う
  *
  * @param string $str エスケープしたい文字列
  * @return string エスケープ済みの文字列
  */
-function h(string $str): string {
+function convertSpecialCharsToHtmlEntities(string $str): string {
     return htmlspecialchars($str, ENT_QUOTES, 'UTF-8');
 }
 

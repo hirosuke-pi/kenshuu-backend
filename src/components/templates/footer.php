@@ -7,9 +7,7 @@ class Footer {
      * @return void
      */
     public static function render(): void {
-        ?>
-            <footer class="m-5">
-            </footer>
-        <?php
+        echo '<footer class="m-5">';
+        echo '</footer>';
     }
 }
