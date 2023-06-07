@@ -60,11 +60,15 @@ $action->post(
 
 $action->put(
     function(array $params): ActionResponse {
+        if ($params['title'] === '' || $params['body'] === '') {
+            return new ActionResponse('/news/edit.php?id='. $params['id'], 'error', 'タイトルと本文は必須です。');
+        }
+
         $db = PDOFactory::getNewPDOInstance();
         $postsDao = new PostsDAO($db);
-        $postsDao->putPostById($_GET['id'], $params['title'], $params['body']);
+        $postsDao->putPostById($params['id'], $params['title'], $params['body']);
 
-        return new ActionResponse('/news/index.php?id='. $_GET['id'], 'success', 'ニュースを編集しました。');
+        return new ActionResponse('/news/index.php?id='. $params['id'], 'success', 'ニュースを編集しました。');
     },
     ['title' => 'string', 'body' => 'string', 'id' => 'string']
 );
