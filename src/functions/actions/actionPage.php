@@ -26,11 +26,11 @@ class ActionPage {
     private function checkCsrfToken () {
         // CSRFトークン有無チェック
         if (!isset($_SESSION[CSRF_NAME]) || !isset($_REQUEST[CSRF_NAME])) {
-            PageController::redirect('/error.php', ['message' => 'CSRFトークンが設定されていません。']);
+            PageController::redirectWithStatus('/error.php', 'error', 'CSRFトークンが設定されていません。');
         }
         // CSRFトークン一致チェック
         if ($_SESSION[CSRF_NAME] !== $_REQUEST[CSRF_NAME]) {
-            PageController::redirect('/error.php', ['message' => 'CSRFトークンが一致しません。']);
+            PageController::redirectWithStatus('/error.php', 'error', 'CSRFトークンが一致しません。');
         }
 
         // CSRFトークンを破棄
@@ -49,11 +49,11 @@ class ActionPage {
         foreach ($requirePropKeys as $key => $type) {
             if (!array_key_exists($key, $params)) {
                 // 必須パラメーターが存在しなかった場合はエラーをスロー
-                throw new Exception('Required parameter key not found: ' . $key);
+                PageController::redirectWithStatus('/error.php', 'error', '必須パラメーターが存在しません。'. $key);
             }
             elseif (gettype($params[$key]) !== $type) {
                 // 必須パラメーターが型が一致しなければエラーをスロー
-                throw new Exception('Required parameter type('. $type .') not match: ' . $key .'('. gettype($params[$key]) .')');
+                PageController::redirectWithStatus('/error.php', 'error', '必須パラメーターの型('. $type .')が一致しません: ' . $key .'('. gettype($params[$key]) .')');
             }
         }
     }
@@ -73,7 +73,7 @@ class ActionPage {
 
         // HTTPメソッドが存在するか
         if (!isset($this->actionMethods[$method])) {
-            PageController::redirect('/error.php', ['message' => '許可されていないメソッドです。']);
+            PageController::redirectWithStatus('/error.php', 'error', '許可されていないメソッドです。');
         }
         
         // HTTPメソッドに対するクロージャー・パラメーター取得
@@ -85,14 +85,8 @@ class ActionPage {
         // クロージャーを実行
         $response = ($actionMethod->action)($_REQUEST);
 
-        // セッションにレスポンスを保存
-        $_SESSION['action_response'] = [
-            'data' => $response->data,
-            'isError' => $response->isError,
-        ];
-
         // リダイレクト
-        header('Location: ' . $response->location);
+        PageController::redirectWithStatus($response->location, $response->status, $response->message);
     }
 
     /**

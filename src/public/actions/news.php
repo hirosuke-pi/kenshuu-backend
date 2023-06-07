@@ -49,7 +49,7 @@ $action->post(
             move_uploaded_file($value['tmp_name'], $imageDir .'/'. $filename);
         }
 
-        return new ActionResponse('/');
+        return new ActionResponse('/', 'success', 'ニュースを投稿しました。ID: '. $newsId);
     },
     ['title' => 'string', 'body' => 'string']
 );
@@ -60,18 +60,19 @@ $action->put(
         $postsDao = new PostsDAO($db);
         $postsDao->putPostById($_GET['id'], $params['title'], $params['body']);
 
-        return new ActionResponse('/news/index.php?id='. $_GET['id']);
+        return new ActionResponse('/news/index.php?id='. $_GET['id'], 'success', 'ニュースを編集しました。');
     },
     ['title' => 'string', 'body' => 'string', 'id' => 'string']
 );
 
 $action->delete(
     function(array $params): ActionResponse {
+        $newsId = $_GET['id'];
         $db = PDOFactory::getNewPDOInstance();
         $postsDao = new PostsDAO($db);
-        $postsDao->deletePostById($_GET['id']);
+        $postsDao->deletePostById($newsId);
 
-        return new ActionResponse('/');
+        return new ActionResponse('/', 'success', 'ニュースを削除しました。 ID: '. $newsId);
     },
     ['id' => 'string']
 );

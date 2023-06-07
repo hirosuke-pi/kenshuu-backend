@@ -20,7 +20,7 @@ class User {
         $db = PDOFactory::getNewPDOInstance();
 
         if (!isset($_GET['id'])) {
-            PageController::redirect('/error.php', ['message' => 'ユーザーIDが指定されていません。']);
+            PageController::redirectWithStatus('/error.php', 'error', 'ユーザーIDが指定されていません。');
         }
 
         // ユーザーデータ取得
@@ -28,7 +28,7 @@ class User {
         $user = $usersDao->getUserById($_GET['id']);
 
         if (!isset($user)) {
-            PageController::redirect('/error.php', ['message' => 'ユーザーが見つかりませんでした。']);
+            PageController::redirectWithStatus('/error.php', 'error', 'ユーザーが見つかりませんでした。');
         }
 
         ?>

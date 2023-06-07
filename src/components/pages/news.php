@@ -18,6 +18,10 @@ class News {
      * @return void 
      */
     public static function render(string $mode): void {
+        if (!isset($_GET['id'])) {
+            PageController::redirectWithStatus('/error.php', 'error', 'ニュースIDが指定されていません。');
+        }
+
         $db = PDOFactory::getNewPDOInstance();
 
         $usersDao = new UsersDAO($db);
@@ -33,7 +37,7 @@ class News {
             // 投稿データ取得
             $post = $postsDao->getPostById($_GET['id']);
             if (!isset($post)) {
-                PageController::redirect('/error.php', ['message' => '投稿が見つかりませんでした。']);
+                PageController::redirectWithStatus('/error.php', 'error', '投稿が見つかりませんでした。');
             }
             $title = $post->title;
         }
