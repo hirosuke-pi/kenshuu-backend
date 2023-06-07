@@ -9,7 +9,7 @@ class NewsList {
      * @return void
      */
     public static function render(): void {
-        $db = PDOFactory::getNewPDOInstance();
+        $db = PDOFactory::getPDOInstance();
         $postsDao = new PostsDAO($db);
 
         $posts = $postsDao->getPosts();

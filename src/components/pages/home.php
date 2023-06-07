@@ -17,6 +17,7 @@ class Home {
      * @return void
      */
     public static function render(): void {
+        PDOFactory::getNewPDOInstance();
         ?>
             <?php Head::render('Flash News')?>
                 <body>
