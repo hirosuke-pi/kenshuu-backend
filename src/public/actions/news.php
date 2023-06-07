@@ -10,6 +10,10 @@ $action->post(
         $db = PDOFactory::getNewPDOInstance();
         $imagesDao = new ImagesDAO($db);
 
+        if ($params['title'] === '' || $params['body'] === '') {
+            return new ActionResponse('/news/post.php', 'error', 'タイトルと本文は必須です。');
+        }
+
         // 一時的にユーザーを固定
         $usersDao = new UsersDAO($db);
         $userDto = $usersDao->getUserByEmail('test@test.com');

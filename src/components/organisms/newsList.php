@@ -1,6 +1,7 @@
 <?php
 
 require_once __DIR__ .'/../molecules/newsCard.php';
+require_once __DIR__ .'/../molecules/alertSession.php';
 
 class NewsList {
     /**
@@ -15,6 +16,9 @@ class NewsList {
         $posts = $postsDao->getPosts();
 
         ?>
+            <div class="m-3">
+                <?=AlertSession::render() ?>
+            </div>
             <div>
                 <ul class="flex justify-center flex-wrap">
                     <?php foreach ($posts as $post): ?>

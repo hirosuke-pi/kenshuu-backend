@@ -18,7 +18,7 @@ class News {
      * @return void 
      */
     public static function render(string $mode): void {
-        if (!isset($_GET['id'])) {
+        if ($mode !== MODE_CREATE && !isset($_GET['id'])) {
             PageController::redirectWithStatus('/error.php', 'error', 'ニュースIDが指定されていません。');
         }
 
