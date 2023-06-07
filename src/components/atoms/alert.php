@@ -7,6 +7,15 @@ enum AlertType {
 }
 
 class Alert {
+    /**
+     * アラートをレンダリング
+     *
+     * @param string $title タイトル
+     * @param string $message メッセージ
+     * @param AlertType $type アラートの種類
+     * @param boolean $visibleCloseButton 閉じるボタンを表示するかどうか
+     * @return void
+     */
     public static function render(string $title, string $message, AlertType $type, bool $visibleCloseButton = true): void {
         $baseColor = match($type) {
             AlertType::ERROR => 'red',

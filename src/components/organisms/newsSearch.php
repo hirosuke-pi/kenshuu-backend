@@ -1,6 +1,12 @@
 <?php
 
 class NewsSearch {
+    /**
+     * ニュース検索用コンポーネントをレンダリング
+     *
+     * @param array $posts ニュースの配列
+     * @return void
+     */
     public static function render(array $posts): void {
         ?>
             <aside class="w-full my-2">
