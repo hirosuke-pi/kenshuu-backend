@@ -18,7 +18,7 @@ class UserInfo {
                         <img class="w-20 h-20 rounded-full object-cover" src="/img/news.jpg" alt="user image">
                         <p class="text-xl font-bold text-gray-700 text-center">@<?=h($user->username) ?></p>
                     </a>
-                    <p class="text-gray-600 mt-2">記事投稿数: <strong><?=h($postsCount) ?></strong></p>
+                    <p class="text-gray-600 mt-2">記事投稿数: <strong><?=h($postsCount) ?>件</strong></p>
                     <?php if ($visibleSettingButton): ?>
                         <a href="/user/settings.php" class="w-full border border-gray-400 hover:bg-gray-300 text-gray-600 font-bold py-2 px-4 rounded text-center mt-3">
                             <i class="fa-solid fa-user-gear"></i> ユーザー設定

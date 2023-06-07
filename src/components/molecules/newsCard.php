@@ -17,7 +17,7 @@ class NewsCard {
 
         ?>
             <li class="m-3 <?=$cardSize ?>">
-                <div class="rounded overflow-hidden shadow-md">
+                <div class="rounded overflow-hidden border border-gray-300">
                     <a href="<?=$newsLink ?>" class="">
                         <img class="w-full" src="<?=$thumbnailPath ?>" alt="news image">
                     </a>
