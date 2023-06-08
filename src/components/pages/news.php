@@ -16,7 +16,7 @@ class News {
      *
      * @return void
      */
-    public static function render(): void {
+    public static function render(string $mode): void {
         $db = PDOFactory::getNewPDOInstance();
 
         // 投稿データ取得
@@ -35,7 +35,7 @@ class News {
                 <body>
                     <?php Header::render() ?>
                     <section class="flex justify-center flex-wrap items-start">
-                        <?php NewsDetail::render($post) ?>
+                        <?php NewsDetail::render($post, $mode) ?>
                         <?php UserInfo::render($user->username, $postsCount) ?>
                     </section>
                     <?php Footer::render() ?>

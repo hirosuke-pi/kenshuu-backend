@@ -31,3 +31,13 @@ function convertSpecialCharsToHtmlEntities(string $str): string {
 function getDateTimeFormat(string $datetime): string {
     return (new DateTime($datetime))->format('Y/m/d H:i:s');
 }
+
+/**
+ * 改行を<br/>に変換する
+ *
+ * @param string $str 変換したい文字列
+ * @return string
+ */
+function replaceBrTagByNewLineCharacter(string $str): string {
+    return str_replace("\n", '<br/>', $str);
+}

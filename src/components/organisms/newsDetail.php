@@ -1,34 +1,37 @@
 <?php
 
-require_once __DIR__ .'/breadcrumb.php';
+require_once __DIR__ .'/../molecules/breadcrumb.php';
+require_once __DIR__ .'/../molecules/newsEdit.php';
+require_once __DIR__ .'/../molecules/newsActions.php';
+require_once __DIR__ .'/../molecules/newsView.php';
 
 class NewsDetail {
     /**
-     * ニュース詳細をレンダリング
+     * ニュース詳細コンポーネントをレンダリング
      *
-     * @param PostsDTO $post
+     * @param PostsDTO $post 投稿DTO
+     * @param string $mode 表示モードか、編集モードか (固定値: MODE_VIEW, MODE_EDIT, MODE_NEW)
      * @return void
      */
-    public static function render(PostsDTO $post): void {
-        $props = [['name' => 'ニュース - '. $post->title, 'link' => $_SERVER['REQUEST_URI']]];
+    public static function render(PostsDTO $post, string $mode): void {
+        $newsDetail = new NewsDetail(['post' => $post, 'mode' => $mode]);
+        $editorMode = in_array($mode, [MODE_EDIT, MODE_NEW], true);
 
+        $breadcrumbProps = [
+            ['name' => 'ニュース - '. $post->title, 'link' => $_SERVER['REQUEST_URI']]
+        ];
         ?>
             <div class="w-full lg:w-3/6 ">
                 <div class="m-3 p-2 rounded-lg">
-                    <?php Breadcrumb::render($props)?>
+                    <?php Breadcrumb::render($breadcrumbProps) ?>
                 </div>
-                <main class="rounded-lg border border-gray-300 m-3 overflow-hidden">
-                    <img class="w-full" src="/img/news.jpg" alt="news image">
-                    <article class="p-5">
-                        <h2 class="text-4xl text-gray-800 font-bold mt-2 mb-2"><i class="fa-solid fa-newspaper"></i> <?=convertSpecialCharsToHtmlEntities($post->title) ?></h2>
-                        <hr/>
-                        <section class="mt-2">
-                            <p class="text-gray-700"><i class="fa-regular fa-calendar"></i> <?=getDateTimeFormat($post->createdAt) ?></p>
-                            <p class="text-gray-700 mt-5"><?=convertSpecialCharsToHtmlEntities($post->body) ?></p>
-                        </section>
-                    </article>
-                </main>
-            </div>
+                <?php if ($editorMode): ?>
+                    <?php NewsEdit::render($post->id, $post->title, $post->body) ?>
+                <?php else: ?>
+                    <?php NewsActions::render($post->id) ?>
+                    <?php NewsView::render($post->title, $post->body, $post->createdAt) ?>
+                <?php endif; ?>
+            </div>       
         <?php
     }
 }
