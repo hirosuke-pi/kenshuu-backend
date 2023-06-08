@@ -22,7 +22,7 @@ class News {
         // 投稿データ取得
         $postsDao = new PostsDAO($db);
         $post = $postsDao->getPostById($_GET['id']);
-        if (!isset($post)) {
+        if (is_null($post)) {
             PageController::redirect('/error.php', ['message' => '投稿が見つかりませんでした。']);
         }
     
@@ -31,16 +31,16 @@ class News {
         $postsCount = $postsDao->getPostsCountByUserId($post->userId);
     
         ?>
-            <?=Head::render('Flash News - '. $post->title) ?>
+            <?php Head::render('Flash News - '. $post->title) ?>
                 <body>
-                    <?=Header::render() ?>
+                    <?php Header::render() ?>
                     <section class="flex justify-center flex-wrap items-start">
-                        <?=NewsDetail::render($post, $mode) ?>
-                        <?=UserInfo::render($user->username, $postsCount) ?>
+                        <?php NewsDetail::render($post, $mode) ?>
+                        <?php UserInfo::render($user->username, $postsCount) ?>
                     </section>
-                    <?=Footer::render() ?>
+                    <?php Footer::render() ?>
                 </body>
-            <?=End::render() ?>
+            <?php End::render() ?>
         <?php
     }
 }
