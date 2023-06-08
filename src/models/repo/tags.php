@@ -19,7 +19,7 @@ class TagsRepo {
      * @param int $postId 投稿ID
      * @return array タグの配列
      */
-    public static function getTagsByPostId(int $postId): array {
+    public static function getTagsByPostId(string $postId): array {
         $db = PDOFactory::getPDOInstance();
         $tagsDao = new TagsDAO($db);
 

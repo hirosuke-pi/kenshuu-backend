@@ -17,10 +17,7 @@ class Home {
      * @return void
      */
     public static function render(): void {
-        $db = PDOFactory::getNewPDOInstance();
-        $postsDao = new PostsDAO($db);
-
-        $posts = $postsDao->getPosts();
+        $posts = PostsRepo::getPosts();
 
         ?>
             <?php Head::render('Flash News')?>

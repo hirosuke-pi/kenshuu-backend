@@ -24,8 +24,8 @@ class NewsActions {
                         <button  class="bg-red-400 hover:bg-red-500 text-white font-bold py-2 px-4 rounded ">
                             <i class="fa-solid fa-trash"></i> ページを削除
                         </button>
-                        <?php PageController::setCsrfToken()?>
-                        <?php PageController::setDeleteMethod()?>
+                        <?php PageController::setCsrfToken() ?>
+                        <?php PageController::setDeleteMethod() ?>
                     </form>
                 </div>
             </div>

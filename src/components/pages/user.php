@@ -36,7 +36,7 @@ class User {
                 <body>
                     <?=Header::render() ?>
                     <section class="flex justify-center flex-wrap-reverse items-end">
-                        <?=UserPosts::render($user->username) ?>
+                        <?=UserPosts::render($user->id, $user->username) ?>
                         <?=userDetail::render($user) ?>
                     </section>
                     <?=Footer::render() ?>

@@ -10,7 +10,6 @@ class UserDetail {
      * @return void
      */
     public static function render(UsersDTO $user) {
-        // 投稿データ取得
         $postsCount = PostsRepo::getPostsCountByUserId($user->id);
 
         ?>

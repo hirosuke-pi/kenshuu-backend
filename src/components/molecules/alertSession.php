@@ -21,13 +21,13 @@ class AlertSession {
             'warning' => '警告',
             default => '',
         };
-        $status = match($message) {
+        $type = match($status) {
             'success' => AlertType::SUCCESS,
             'error' => AlertType::ERROR,
             'warning' => AlertType::WARNING,
             default => AlertType::INFO,
         };
 
-        Alert::render($title .': ', $message, $status, $visibleCloseButton);
+        Alert::render($title .': ', $message, $type, $visibleCloseButton);
     }
 }

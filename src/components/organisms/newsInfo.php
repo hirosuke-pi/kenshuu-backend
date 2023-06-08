@@ -15,8 +15,9 @@ class NewsInfo {
      * @param NewsMode $mode ニュース表示モード
      * @return void
      */
-    public static function render(UsersDTO $user, ?PostsDTO $post, int $postsCount, NewsMode $mode): void {
+    public static function render(UsersDTO $user, ?PostsDTO $post, NewsMode $mode): void {
         $isCreateMode = $mode === NewsMode::CREATE;
+        $postsCount = PostsRepo::getPostsCountByUserId($user->id);
         $tags = match($mode) {
             NewsMode::CREATE => TagsRepo::getTags(),
             default => TagsRepo::getTagsByPostId($post->id)

@@ -18,7 +18,7 @@ class NewsDetail {
      * @return void
      */
     public static function render(UsersDTO $user, ?PostsDTO $post, NewsMode $mode): void {
-        $editorMode = $mode === NewsMode::EDIT || $mode === NewsMode::CREATE;
+        $editorMode = in_array($mode, [NewsMode::EDIT, NewsMode::CREATE], true);
 
         $breadcrumbProps = match($mode) {
             NewsMode::EDIT => [

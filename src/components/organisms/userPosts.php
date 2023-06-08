@@ -10,8 +10,8 @@ class UserPosts {
      * @param string $username ユーザー名
      * @return void
      */
-    public static function render(string $username): void {
-        $posts = PostsRepo::getPostsByUserId($_GET['id']);
+    public static function render(string $userId, string $username): void {
+        $posts = PostsRepo::getPostsByUserId($userId);
         $breadcrumbProps = [
             ['name' => 'ユーザー - @'. $username, 'link' => $_SERVER['REQUEST_URI']]
         ];

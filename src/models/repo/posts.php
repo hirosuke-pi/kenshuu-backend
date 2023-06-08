@@ -12,4 +12,16 @@ class PostsRepo {
         $postsDao = new PostsDAO($db);
         return $postsDao->getPostsByUserId($userId);
     }
+
+    public static function getPostById(string $postId): PostsDTO {
+        $db = PDOFactory::getPDOInstance();
+        $postsDao = new PostsDAO($db);
+        return $postsDao->getPostById($postId);
+    }
+
+    public static function getPosts() {
+        $db = PDOFactory::getPDOInstance();
+        $postsDao = new PostsDAO($db);
+        return $postsDao->getPosts();
+    }
 }

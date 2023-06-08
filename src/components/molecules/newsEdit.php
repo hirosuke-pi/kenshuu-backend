@@ -71,7 +71,6 @@ class NewsEdit {
                         event.formData.append(element.name, element.value);
                     });
                 });
-
             </script>
         <?php
     }
