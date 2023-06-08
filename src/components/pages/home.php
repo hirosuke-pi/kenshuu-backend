@@ -23,20 +23,20 @@ class Home {
         $posts = $postsDao->getPosts();
 
         ?>
-            <?=Head::render('Flash News')?>
+            <?php Head::render('Flash News')?>
                 <body>
-                    <?=Header::render()?>
+                    <?php Header::render()?>
                     <div class="flex flex-col justify-center items-center">
                         <div class="w-11/12">
-                            <?=NewsSearch::render($posts)?>
+                            <?php NewsSearch::render($posts)?>
                         </div>
                         <div class="w-11/12">
-                            <?=NewsList::render($posts)?>
+                            <?php NewsList::render($posts)?>
                         </div>
                     </div>
-                    <?=Footer::render()?>
+                    <?php Footer::render()?>
                 </body>
-            <?=End::render()?>
+            <?php End::render()?>
         <?php
     }
 }

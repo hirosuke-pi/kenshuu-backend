@@ -18,7 +18,7 @@ class NewsList {
                 <ul class="flex justify-center flex-wrap">
                     <?php if (count($posts) > 0): ?>
                         <?php foreach ($posts as $post): ?>
-                            <?=NewsCard::render($post, 'card') ?>
+                            <?php NewsCard::render($post, 'card') ?>
                         <?php endforeach; ?>
                     <?php else: ?>
                         <div class="flex justify-center items-center my-3">

@@ -19,7 +19,7 @@ class TagCheckbox {
                 <?php foreach($tags as $tag): ?>
                     <div class="mx-3 my-1">
                         <input id="tag<?=$tag->id ?>" name="tags[]" value="<?=$tag->id ?>" class="tag-input" type="checkbox">
-                        <label for="tag<?=$tag->id ?>"><?=h($tag->tagName) ?></label>
+                        <label for="tag<?=$tag->id ?>"><?=convertSpecialCharsToHtmlEntities($tag->tagName) ?></label>
                     </div>
                 <?php endforeach; ?>
             <?php else: ?>

@@ -7,8 +7,6 @@ class End {
      * @return void
      */
     public static function render(): void {
-        ?>
-            </html>
-        <?php
+        echo '</html>';
     }
 }

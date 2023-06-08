@@ -42,16 +42,16 @@ class NewsDetail {
         ?>
             <div class="w-full lg:w-3/6 ">
                 <div class="m-3 p-2">
-                    <?=Breadcrumb::render($breadcrumbProps)?>
+                    <?php Breadcrumb::render($breadcrumbProps)?>
                 </div>
                 <div class="m-3">
                     <?=AlertSession::render() ?>
                 </div>
                 <?php if ($editorMode): ?>
-                    <?=NewsEdit::render($post, $mode) ?>
+                    <?php NewsEdit::render($post, $mode) ?>
                 <?php else: ?>
-                    <?=NewsActions::render($post->id) ?>
-                    <?=NewsView::render($post) ?>
+                    <?php NewsActions::render($post->id) ?>
+                    <?php NewsView::render($post) ?>
                 <?php endif; ?>
             </div>       
         <?php

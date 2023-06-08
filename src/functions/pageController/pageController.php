@@ -8,7 +8,7 @@ class PageController {
      * @param int $statusCode ステータスコード
      * @return void
      */
-    public static function redirect(string $url, array $data = [], int $statusCode = 303): void {
+    public static function redirect(string $url, array $data = [], int $statusCode = 302): void {
         if (count($data) > 0) {
             $_SESSION[REDIRECT_INDEX] = $data;
         }

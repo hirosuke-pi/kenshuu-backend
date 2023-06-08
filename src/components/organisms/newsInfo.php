@@ -18,13 +18,13 @@ class NewsInfo {
     public static function render(UsersDTO $user, ?PostsDTO $post, int $postsCount, string $mode): void {
         ?>
             <aside class="w-full lg:w-80 m-3">
-                <?=UserInfo::render(user: $user, postsCount: $postsCount, title: '投稿者', visibleSettingButton: false) ?>
+                <?php UserInfo::render(user: $user, postsCount: $postsCount, title: '投稿者', visibleSettingButton: false) ?>
                 <section class="border border-gray-300 rounded-lg p-5 mt-3">
                     <h3 class="text-xl text-gray-800 font-bold border-b border-gray-400">
                         <i class="fa-solid fa-tags"></i> タグ
                     </h3>
                     <div class="mt-3 flex flex-wrap">
-                        <?=TagCheckbox::render($mode === MODE_CREATE, $post->id ?? null) ?>
+                        <?php TagCheckbox::render($mode === MODE_CREATE, $post->id ?? null) ?>
                     </div>
                 </section>
                 <section class="border border-gray-300 rounded-lg p-5 mt-3">
