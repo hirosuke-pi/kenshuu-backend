@@ -74,8 +74,8 @@ class ImagesDAO {
     /**
      * 投稿IDを元に画像を取得
      *
-     * @param string $postId
-     * @return array
+     * @param string $postId 投稿ID
+     * @return ?ImagesDTO 画像DTO
      */
     public function getThumbnailByPostId(string $postId): ?ImagesDTO {
         $imagesTable = $this::IMAGES_TABLE;

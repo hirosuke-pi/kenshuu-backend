@@ -4,12 +4,12 @@ class NewsActions {
     /**
      * 管理者用操作メニューをレンダリング
      *
-     * @param string $newsId 操作するニュースID
+     * @param string $postId 操作するニュースID
      * @return void
      */
-    public static function render(string $newsId) {
-        $editUrl = './edit.php?id='. $newsId;
-        $deleteUrl = '/actions/news.php?id='. $newsId;
+    public static function render(string $postId) {
+        $editUrl = './edit.php?id='. $postId;
+        $deleteUrl = '/actions/news.php?id='. $postId;
 
         ?>
             <div class="rounded-lg border border-gray-300 m-3 overflow-hidden p-5">

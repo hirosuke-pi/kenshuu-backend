@@ -25,4 +25,13 @@ class TagsRepo {
 
         return $tagsDao->getTagsByPostId($postId);
     }
+
+    public static function addTagsByPostId(array $tags, string $postId): void {
+        $db = PDOFactory::getPDOInstance();
+        $tagsDao = new TagsDAO($db);
+
+        foreach($tags as $tag) {
+            $tagsDao->addTagByPostId($tag, $postId);
+        }
+    }
 }

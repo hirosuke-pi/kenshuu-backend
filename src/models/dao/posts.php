@@ -49,15 +49,15 @@ class PostsDAO {
                 (:id, :user_id, :title, :body)
         SQL;
 
-        $newsId = 'post_' . uniqid(mt_rand());
+        $postId = 'post_' . uniqid(mt_rand());
         $stmt = $this->db->prepare($sql);
-        $stmt->bindValue(':id', $newsId, PDO::PARAM_STR);
+        $stmt->bindValue(':id', $postId, PDO::PARAM_STR);
         $stmt->bindValue(':user_id', $userId, PDO::PARAM_STR);
         $stmt->bindValue(':title', $title, PDO::PARAM_STR);
         $stmt->bindValue(':body', $body, PDO::PARAM_STR);
 
         $stmt->execute();
-        return $newsId;
+        return $postId;
     }
 
     /**

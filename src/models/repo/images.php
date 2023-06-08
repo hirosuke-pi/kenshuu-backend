@@ -8,7 +8,7 @@ class ImagesRepo {
      * @return string 画像パス
      */
     public static function getThumbnailSrcByPostId(string $postId): string {
-        $db = PDOFactory::getNewPDOInstance();
+        $db = PDOFactory::getPDOInstance();
 
         $imagesDao = new ImagesDAO($db);
         $imagesDto = $imagesDao->getThumbnailByPostId($postId);
@@ -27,7 +27,7 @@ class ImagesRepo {
      * @return array 画像パスリスト
      */
     public static function getImagesSrcByPostId(string $postId): array {
-        $db = PDOFactory::getNewPDOInstance();
+        $db = PDOFactory::getPDOInstance();
 
         $imagesDao = new ImagesDAO($db);
         $imagesDtoList = $imagesDao->getImagesByPostId($postId);
@@ -38,5 +38,16 @@ class ImagesRepo {
         }
 
         return $imagesSrcList;
+    }
+
+    public static function createImageFile(string $postId, bool $thumbnailFlag, string $fileExt): string {
+        $db = PDOFactory::getPDOInstance();
+        $imagesDao = new ImagesDAO($db);
+
+        $imageId = 'image_' . uniqid(mt_rand());
+        $filename = $imageId .'.'. convertSpecialCharsToHtmlEntities($fileExt);
+        $imagesDao->createImage($imageId, $postId, $thumbnailFlag, $filename);
+
+        return $filename;
     }
 }

@@ -7,4 +7,11 @@ class UsersRepo {
 
         return $usersDao->getUserByEmail($email);
     }
+
+    public static function getUserById(string $id): UsersDTO {
+        $db = PDOFactory::getPDOInstance();
+        $usersDao = new UsersDAO($db);
+
+        return $usersDao->getUserById($id);
+    }
 }

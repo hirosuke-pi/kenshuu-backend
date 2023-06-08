@@ -24,4 +24,10 @@ class PostsRepo {
         $postsDao = new PostsDAO($db);
         return $postsDao->getPosts();
     }
+
+    public static function createPost(string $userId, string $title, string $body): string {
+        $db = PDOFactory::getPDOInstance();
+        $postsDao = new PostsDAO($db);
+        return $postsDao->createPost($userId, $title, $body);
+    }
 }
