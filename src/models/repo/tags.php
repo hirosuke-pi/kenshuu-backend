@@ -26,6 +26,13 @@ class TagsRepo {
         return $tagsDao->getTagsByPostId($postId);
     }
 
+    /**
+     * タグを追加 (投稿ID指定)
+     *
+     * @param array $tags タグの配列
+     * @param string $postId 投稿ID
+     * @return void
+     */
     public static function addTagsByPostId(array $tags, string $postId): void {
         $db = PDOFactory::getPDOInstance();
         $tagsDao = new TagsDAO($db);

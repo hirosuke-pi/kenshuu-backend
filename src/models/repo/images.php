@@ -40,6 +40,14 @@ class ImagesRepo {
         return $imagesSrcList;
     }
 
+    /**
+     * 画像データをテーブルに挿入
+     *
+     * @param string $postId 投稿ID
+     * @param boolean $thumbnailFlag サムネイルかどうか
+     * @param string $fileExt ファイル拡張子
+     * @return string 画像ファイル名
+     */
     public static function createImageFile(string $postId, bool $thumbnailFlag, string $fileExt): string {
         $db = PDOFactory::getPDOInstance();
         $imagesDao = new ImagesDAO($db);
