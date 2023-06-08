@@ -15,7 +15,7 @@ class NewsDetail {
      * @return void
      */
     public static function render(UsersDTO $user, ?PostsDTO $post, string $mode): void {
-        $editorMode = in_array($mode, [MODE_EDIT, MODE_CREATE]);
+        $editorMode = in_array($mode, [MODE_EDIT, MODE_CREATE], true);
 
         $breadcrumbProps = [];
         if ($mode === MODE_EDIT) {
