@@ -15,7 +15,7 @@ class NewsView {
                 <img class="w-full" src="<?=$thumbnailPath ?>" alt="news image">
                 <article class="p-5">
                     <h2 class="text-4xl text-gray-800 font-bold mt-2 mb-2">
-                        <?=h($post->title) ?>
+                        <?=convertSpecialCharsToHtmlEntities($post->title) ?>
                     </h2>
                     <hr/>
                     <section class="mt-2">
@@ -30,7 +30,7 @@ class NewsView {
                             <?php endif; ?>
                         </div>
                         <p class="text-gray-700 mt-8">
-                            <?=replaceBr(h($post->body)) ?>
+                            <?=replaceBr(convertSpecialCharsToHtmlEntities($post->body)) ?>
                         </p>
                     </section>
                 </article>

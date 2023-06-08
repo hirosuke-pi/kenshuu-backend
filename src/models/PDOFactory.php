@@ -6,7 +6,7 @@ class PDOFactory {
     const DB_PASSWORD = 'secret';
     const DB_HOST = 'database';
 
-    private static $pdo;
+    private static PDO $pdo;
 
     /**
      * PDOインスタンスを取得

@@ -32,23 +32,23 @@ class News {
             // 編集・閲覧モード
             // 投稿データ取得
             $post = $postsDao->getPostById($_GET['id']);
-            if (!isset($post)) {
+            if (is_null($post)) {
                 PageController::redirect('/error.php', ['message' => '投稿が見つかりませんでした。']);
             }
             $title = $post->title;
         }
     
         ?>
-            <?=Head::render('Flash News - '. $title) ?>
+            <?php Head::render('Flash News - '. $title) ?>
                 <body>
-                    <?=Header::render() ?>
+                    <?php Header::render() ?>
                     <section class="flex justify-center flex-wrap items-start">
-                        <?=NewsDetail::render($user, $post, $mode) ?>
-                        <?=NewsInfo::render($user, $post, $postsCount, $mode) ?>
+                        <?php NewsDetail::render($user, $post, $mode) ?>
+                        <?php NewsInfo::render($user, $post, $postsCount, $mode) ?>
                     </section>
-                    <?=Footer::render() ?>
+                    <?php Footer::render() ?>
                 </body>
-            <?=End::render() ?>
+            <?php End::render() ?>
         <?php
     }
 }

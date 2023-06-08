@@ -27,7 +27,7 @@ class Header {
                         </a>
                         <a href="<?=$userUrl ?>" class="flex items-center py-2 px-4 hover:bg-gray-200 rounded-lg border border-gray-300 mt-3">
                             <img class="w-7 h-7 rounded-full object-cover mr-1" src="/img/news.jpg" alt="user image">
-                            <p class="text-xl font-bold">@<?=h($user->username) ?></p>
+                            <p class="text-xl font-bold">@<?=convertSpecialCharsToHtmlEntities($user->username) ?></p>
                         </a>
                     </div>
                 </div>

@@ -32,7 +32,7 @@ $action->post(
             }
 
             $imageId = 'image_' . uniqid(mt_rand());
-            $filename = $imageId .'.'. h($ext);
+            $filename = $imageId .'.'. convertSpecialCharsToHtmlEntities($ext);
             $imagesDao->createImage($imageId, $newsId, $key === 'thumbnail', $filename);
 
             move_uploaded_file($value['tmp_name'], $imageDir .'/'. $filename);
