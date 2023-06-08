@@ -11,9 +11,7 @@ class UserDetail {
      */
     public static function render(UsersDTO $user) {
         // 投稿データ取得
-        $db = PDOFactory::getNewPDOInstance();
-        $postsDao = new PostsDAO($db);
-        $postsCount = $postsDao->getPostsCountByUserId($user->id);
+        $postsCount = PostsRepo::getPostsCountByUserId($user->id);
 
         ?>
             <aside class="w-full lg:w-80 m-3">

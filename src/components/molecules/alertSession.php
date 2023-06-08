@@ -10,25 +10,24 @@ class AlertSession {
      * @return void
      */
     public static function render(bool $visibleCloseButton = true): void {
-        $data = PageController::getRedirectData();
-        if (is_null($data) || !isset($data['status']) || !isset($data['message'])) {
+        [$status, $message] = PageController::getRedirectStatus();
+        if ($status === null || $message === null) {
             return;
         }
 
-        $title = match($data['status']) {
+        $title = match($status) {
             'success' => '成功',
             'error' => 'エラー',
             'warning' => '警告',
             default => '',
         };
-
-        $status = match($data['status']) {
+        $status = match($message) {
             'success' => AlertType::SUCCESS,
             'error' => AlertType::ERROR,
             'warning' => AlertType::WARNING,
             default => AlertType::INFO,
         };
 
-        Alert::render($title .': ', $data['message'], $status, $visibleCloseButton);
+        Alert::render($title .': ', $message, $status, $visibleCloseButton);
     }
 }

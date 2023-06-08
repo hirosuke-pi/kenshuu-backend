@@ -8,12 +8,14 @@ class NewsCard {
      * ニュースのカードをレンダリング
      *
      * @param PostsDTO $post ニュースのデータ
+     * @param CardSize $mode カードの表示モード
      * @return void
      */
-    public static function render(PostsDTO $post, string $mode): void {
+    public static function render(PostsDTO $post, CardSize $mode): void {
         $newsLink = '/news/index.php?id='. $post->id;
-        $cardSize = $mode === 'card' ? 'w-96' : 'w-full';
+        $cardSize = $mode === CardSize::SMALL ? 'w-96' : 'w-full';
         $thumbnailPath = ImagesRepo::getThumbnailSrcByPostId($post->id);
+        $tags = TagsRepo::getTagsByPostId($post->id);
 
         ?>
             <li class="m-3 <?=$cardSize ?>">
@@ -40,7 +42,7 @@ class NewsCard {
                     </div>
                     <hr class="ml-3 mr-3 mt-1 mb-1">
                     <div class="px-6 pt-4 pb-2">
-                        <?php TagCheckbox::render(false, $post->id) ?>
+                        <?php TagCheckbox::render($tags, false) ?>
                     </div>
                 </div>
             </li>

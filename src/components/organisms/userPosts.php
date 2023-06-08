@@ -11,11 +11,7 @@ class UserPosts {
      * @return void
      */
     public static function render(string $username): void {
-        $db = PDOFactory::getNewPDOInstance();
-
-        $postsDao = new PostsDAO($db);
-        $posts = $postsDao->getPostsByUserId($_GET['id']);
-
+        $posts = PostsRepo::getPostsByUserId($_GET['id']);
         $breadcrumbProps = [
             ['name' => 'ユーザー - @'. $username, 'link' => $_SERVER['REQUEST_URI']]
         ];
@@ -27,7 +23,7 @@ class UserPosts {
                 </div>
                 <ul class="flex justify-center flex-wrap">
                     <?php foreach ($posts as $post): ?>
-                        <?=NewsCard::render($post, 'full') ?>
+                        <?=NewsCard::render($post, CardSize::WIDE) ?>
                     <?php endforeach; ?>
                 </ul>
             </div>

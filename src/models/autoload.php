@@ -13,3 +13,4 @@ require_once __DIR__ . '/dto/images.php';
 require_once __DIR__ . '/dto/tags.php';
 
 require_once __DIR__ . '/repo/images.php';
+require_once __DIR__ . '/repo/tags.php';

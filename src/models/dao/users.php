@@ -19,7 +19,14 @@ class UsersDAO {
      * @return boolean トランザクションが成功したかどうか
      */
     public function createUser(string $username, string $email, string $password, string $profileImagePath = ''): bool {
-        $sql = 'INSERT INTO '. $this::USERS_TABLE .' (id, username, email, password, profile_img_path) VALUES (:id, :username, :email, :password, :profile_img_path)';
+        $usersTable = $this::USERS_TABLE;
+        $sql = <<<SQL
+            INSERT INTO {$usersTable}
+                (id, username, email, password, profile_img_path)
+            VALUES
+                (:id, :username, :email, :password, :profile_img_path)
+        SQL;
+
         $stmt = $this->db->prepare($sql);
         $stmt->bindValue(':id', 'user_'.uniqid(mt_rand()), PDO::PARAM_STR);
         $stmt->bindValue(':username', $username, PDO::PARAM_STR);
@@ -37,7 +44,14 @@ class UsersDAO {
      * @return UsersDTO|null ユーザーが存在しない場合はnull
      */
     public function getUserByEmail(string $email): ?UsersDTO {
-        $sql = 'SELECT * FROM '. $this::USERS_TABLE .' WHERE email = :email AND deleted_at IS NULL';
+        $usersTable = $this::USERS_TABLE;
+        $sql = <<<SQL
+            SELECT * FROM
+                {$usersTable} 
+            WHERE
+                email = :email AND deleted_at IS NULL
+        SQL;
+
         $stmt = $this->db->prepare($sql);
         $stmt->bindValue(':email', $email, PDO::PARAM_STR);
         $stmt->execute();
@@ -65,7 +79,14 @@ class UsersDAO {
      * @return UsersDTO|null ユーザーが存在しない場合はnull
      */
     public function getUserById(string $id): ?UsersDTO {
-        $sql = 'SELECT * FROM '. $this::USERS_TABLE .' WHERE id = :id AND deleted_at IS NULL';
+        $usersTable = $this::USERS_TABLE;
+        $sql = <<<SQL
+            SELECT * FROM 
+                {$usersTable}
+            WHERE
+                id = :id AND deleted_at IS NULL
+        SQL;
+
         $stmt = $this->db->prepare($sql);
         $stmt->bindValue(':id', $id, PDO::PARAM_STR);
         $stmt->execute();

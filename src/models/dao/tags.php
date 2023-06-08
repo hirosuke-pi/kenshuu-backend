@@ -79,8 +79,10 @@ class TagsDAO {
         $relationTable = $this::RELATION_TAGS_POSTS_TABLE;
 
         $sql = <<<SQL
-            INSERT INTO {$relationTable} (tag_id, post_id)
-                VALUES (:tag_id, :post_id)
+            INSERT INTO {$relationTable} 
+                (tag_id, post_id)
+            VALUES 
+                (:tag_id, :post_id)
         SQL;
     
         $stmt = $this->db->prepare($sql);

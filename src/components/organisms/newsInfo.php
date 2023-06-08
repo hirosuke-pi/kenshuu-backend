@@ -12,10 +12,16 @@ class NewsInfo {
      * @param UsersDTO $user ユーザーDTO
      * @param PostsDTO $user ニュース投稿DTO
      * @param integer $postsCount 投稿数
-     * @param string $mode 表示モードか、編集モードか (固定値: MODE_VIEW, MODE_EDIT, MODE_CREATE)
+     * @param NewsMode $mode ニュース表示モード
      * @return void
      */
-    public static function render(UsersDTO $user, ?PostsDTO $post, int $postsCount, string $mode): void {
+    public static function render(UsersDTO $user, ?PostsDTO $post, int $postsCount, NewsMode $mode): void {
+        $isCreateMode = $mode === NewsMode::CREATE;
+        $tags = match($mode) {
+            NewsMode::CREATE => TagsRepo::getTags(),
+            default => TagsRepo::getTagsByPostId($post->id)
+        };
+
         ?>
             <aside class="w-full lg:w-80 m-3">
                 <?php UserInfo::render(user: $user, postsCount: $postsCount, title: '投稿者', visibleSettingButton: false) ?>
@@ -24,7 +30,7 @@ class NewsInfo {
                         <i class="fa-solid fa-tags"></i> タグ
                     </h3>
                     <div class="mt-3 flex flex-wrap">
-                        <?php TagCheckbox::render($mode === MODE_CREATE, $post->id ?? null) ?>
+                        <?php TagCheckbox::render($tags, $isCreateMode) ?>
                     </div>
                 </section>
                 <section class="border border-gray-300 rounded-lg p-5 mt-3">
@@ -32,7 +38,7 @@ class NewsInfo {
                         <i class="fa-solid fa-images"></i> 画像一覧
                     </h3>
                     <div class="mt-5">
-                        <?php if ($mode === MODE_CREATE): ?>
+                        <?php if ($isCreateMode): ?>
                             <?php for($i = 0; $i < MAX_IMAGE_COUNT; $i++): ?>
                                 <div class="mt-2 rounded-md overflow-hidden">
                                     <form id="imageForm">

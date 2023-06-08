@@ -3,17 +3,7 @@
 require_once __DIR__ .'/../atoms/badge.php';
 
 class TagCheckbox {
-    public static function render(bool $enable, ?string $postId = null): void {
-        $db = PDOFactory::getNewPDOInstance();
-        $tagsDao = new TagsDAO($db);
-
-        $tags = [];
-        if (is_null($postId)) {
-            $tags = $tagsDao->getTags();
-        } else {
-            $tags = $tagsDao->getTagsByPostId($postId);
-        }
-
+    public static function render(array $tags, bool $enable): void {
         ?>
             <?php if($enable): ?>
                 <?php foreach($tags as $tag): ?>
