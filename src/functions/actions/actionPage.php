@@ -67,7 +67,7 @@ class ActionPage {
     public function dispatch() {
         // HTTPメソッドを取得
         $method = $_SERVER['REQUEST_METHOD'];
-        if (isset($_REQUEST[METHOD_NAME]) && in_array(strtoupper($_REQUEST[METHOD_NAME]), ['PUT', 'DELETE'])) {
+        if (isset($_REQUEST[METHOD_NAME]) && in_array(strtoupper($_REQUEST[METHOD_NAME]), ['PUT', 'DELETE'], true)) {
             $method = strtoupper($_REQUEST[METHOD_NAME]);
         }
 

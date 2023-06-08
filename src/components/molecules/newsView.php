@@ -30,7 +30,7 @@ class NewsView {
                             <?php endif; ?>
                         </div>
                         <p class="text-gray-700 mt-8">
-                            <?=replaceBr(convertSpecialCharsToHtmlEntities($post->body)) ?>
+                            <?=replaceBrTagByNewLineCharacter(convertSpecialCharsToHtmlEntities($post->body)) ?>
                         </p>
                     </section>
                 </article>

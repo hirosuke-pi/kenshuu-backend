@@ -38,6 +38,6 @@ function getDateTimeFormat(string $datetime): string {
  * @param string $str 変換したい文字列
  * @return string
  */
-function replaceBr(string $str): string {
+function replaceBrTagByNewLineCharacter(string $str): string {
     return str_replace("\n", '<br/>', $str);
 }
