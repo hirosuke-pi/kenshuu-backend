@@ -23,13 +23,13 @@ class NewsDetail {
         ?>
             <div class="w-full lg:w-3/6 ">
                 <div class="m-3 p-2 rounded-lg">
-                    <?=Breadcrumb::render($breadcrumbProps)?>
+                    <?php Breadcrumb::render($breadcrumbProps) ?>
                 </div>
                 <?php if ($editorMode): ?>
-                    <?=NewsEdit::render($post->id, $post->title, $post->body) ?>
+                    <?php NewsEdit::render($post->id, $post->title, $post->body) ?>
                 <?php else: ?>
-                    <?=NewsActions::render($post->id) ?>
-                    <?=NewsView::render($post->title, $post->body, $post->createdAt) ?>
+                    <?php NewsActions::render($post->id) ?>
+                    <?php NewsView::render($post->title, $post->body, $post->createdAt) ?>
                 <?php endif; ?>
             </div>       
         <?php

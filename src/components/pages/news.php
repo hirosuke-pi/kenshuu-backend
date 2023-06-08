@@ -35,8 +35,8 @@ class News {
                 <body>
                     <?php Header::render() ?>
                     <section class="flex justify-center flex-wrap items-start">
-                        <?=NewsDetail::render($post, $mode) ?>
-                        <?=UserInfo::render($user->username, $postsCount) ?>
+                        <?php NewsDetail::render($post, $mode) ?>
+                        <?php UserInfo::render($user->username, $postsCount) ?>
                     </section>
                     <?php Footer::render() ?>
                 </body>
