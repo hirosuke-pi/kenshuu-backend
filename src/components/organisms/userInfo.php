@@ -20,9 +20,9 @@ class UserInfo {
                     <div class="mt-3 flex justify-center items-center flex-col">
                         <a href="#" class="hover:underline">
                             <img class="w-20 h-20 rounded-full object-cover" src="/img/news.jpg" alt="user image">
-                            <p class="text-xl font-bold text-gray-700 text-center">@<?=h($username) ?></p>
+                            <p class="text-xl font-bold text-gray-700 text-center">@<?=convertSpecialCharsToHtmlEntities($username) ?></p>
                         </a>
-                        <p class="text-gray-600 mt-2">記事投稿数: <strong><?=h($postsCount) ?></strong></p>
+                        <p class="text-gray-600 mt-2">記事投稿数: <strong><?=convertSpecialCharsToHtmlEntities($postsCount) ?></strong></p>
                     </div>
                 </section>
                 <section class="border border-gray-300 rounded-lg p-5 mt-3">
@@ -30,9 +30,9 @@ class UserInfo {
                     <i class="fa-solid fa-tags"></i> タグ
                     </h3>
                     <div class="mt-3 flex flex-wrap">
-                        <?=Badge::render('テストバッジ1') ?>
-                        <?=Badge::render('テストバッジ2') ?>
-                        <?=Badge::render('テストバッジ3') ?>
+                        <?php Badge::render('テストバッジ1') ?>
+                        <?php Badge::render('テストバッジ2') ?>
+                        <?php Badge::render('テストバッジ3') ?>
                     </div>
                 </section>
                 <section class="border border-gray-300 rounded-lg p-5 mt-3">
