@@ -16,14 +16,15 @@ class Home {
      * @return void
      */
     public static function render(): void {
+        PDOFactory::getNewPDOInstance();
         ?>
-            <?=Head::render('Flash News')?>
+            <?php Head::render('Flash News')?>
                 <body>
-                    <?=Header::render()?>
-                    <?=NewsList::render()?>
-                    <?=Footer::render()?>
+                    <?php Header::render()?>
+                    <?php NewsList::render()?>
+                    <?php Footer::render()?>
                 </body>
-            <?=End::render()?>
+            <?php End::render()?>
         <?php
     }
 }
