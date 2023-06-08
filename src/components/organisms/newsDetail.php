@@ -15,7 +15,7 @@ class NewsDetail {
      */
     public static function render(PostsDTO $post, string $mode): void {
         $newsDetail = new NewsDetail(['post' => $post, 'mode' => $mode]);
-        $editorMode = in_array($mode, [MODE_EDIT, MODE_NEW]);
+        $editorMode = in_array($mode, [MODE_EDIT, MODE_NEW], true);
 
         $breadcrumbProps = [
             ['name' => 'ニュース - '. $post->title, 'link' => $_SERVER['REQUEST_URI']]

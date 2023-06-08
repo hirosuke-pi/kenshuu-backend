@@ -21,7 +21,7 @@ class NewsView {
                     <section class="mt-2">
                         <p class="text-gray-700"><i class="fa-regular fa-calendar"></i> <?=getDateTimeFormat($createdAt)?></p>
                         <p class="text-gray-700 mt-5">
-                            <?=replaceBr(convertSpecialCharsToHtmlEntities($body)) ?>
+                            <?=replaceBrTagByNewLineCharacter(convertSpecialCharsToHtmlEntities($body)) ?>
                         </p>
                     </section>
                 </article>
@@ -29,5 +29,3 @@ class NewsView {
         <?php
     }
 }
-
-?>
