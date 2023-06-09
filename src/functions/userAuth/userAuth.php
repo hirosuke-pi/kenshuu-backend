@@ -43,7 +43,7 @@ class UserAuth {
     /**
      * ログインユーザーを取得
      *
-     * @return ?string ログインユーザー
+     * @return string ログインユーザー
      */
     public static function getLoginUserIdWithException(): string {
         if (self::isLogin()) {
