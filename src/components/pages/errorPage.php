@@ -21,9 +21,9 @@ class ErrorPage {
         }
 
         ?>
-            <?php Head::render('Flash News - エラー')?>
+            <?php Head::render('Flash News - エラー') ?>
                 <body>
-                    <?php Header::render()?>
+                    <?php Header::render() ?>
                     <main class="flex justify-center flex-col items-center mx-3">
                         <img class="h-60 my-5" src="https://3.bp.blogspot.com/-f2csyxp_K2o/VuKEBEj7NjI/AAAAAAAA4w4/jVcA_kX6sbcXu3O5R5muNVOlN1DdyW2kA/s800/pet_angel_cat.png" />
                         <?php AlertSession::render(false) ?>
@@ -31,9 +31,9 @@ class ErrorPage {
                             <i class="fa-solid fa-arrow-left"></i> ホームへ戻る
                         </a>
                     </main>
-                    <?php Footer::render()?>
+                    <?php Footer::render() ?>
                 </body>
-            <?php End::render()?>
+            <?php End::render() ?>
         <?php
     }
 }
