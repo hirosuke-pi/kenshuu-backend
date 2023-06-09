@@ -14,7 +14,6 @@ class NewsDetail {
      * @return void
      */
     public static function render(PostsDTO $post, string $mode): void {
-        $newsDetail = new NewsDetail(['post' => $post, 'mode' => $mode]);
         $editorMode = in_array($mode, [MODE_EDIT, MODE_NEW], true);
 
         $breadcrumbProps = [
@@ -29,7 +28,7 @@ class NewsDetail {
                     <?php NewsEdit::render($post->id, $post->title, $post->body) ?>
                 <?php else: ?>
                     <?php NewsActions::render($post->id) ?>
-                    <?php NewsView::render($post->title, $post->body, $post->createdAt) ?>
+                    <?php NewsView::render($post) ?>
                 <?php endif; ?>
             </div>       
         <?php

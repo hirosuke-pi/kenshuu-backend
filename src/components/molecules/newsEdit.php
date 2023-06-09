@@ -10,7 +10,7 @@ class NewsEdit {
      * @return void
      */
     public static function render(string $newsId, string $title, string $body): void {
-        $newsEditUrl = '/actions/news?id='. $newsId;
+        $newsEditUrl = '/actions/news.php?id='. $newsId;
 
         ?>
             <form action="<?=$newsEditUrl ?>" method="POST">

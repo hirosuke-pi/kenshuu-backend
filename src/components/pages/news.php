@@ -23,7 +23,7 @@ class News {
         $postsDao = new PostsDAO($db);
         $post = $postsDao->getPostById($_GET['id']);
         if (is_null($post)) {
-            PageController::redirect('/error.php', ['message' => '投稿が見つかりませんでした']);
+            PageController::redirect('/error.php', ['message' => '投稿が見つかりませんでした。']);
         }
     
         $usersDao = new UsersDAO($db);

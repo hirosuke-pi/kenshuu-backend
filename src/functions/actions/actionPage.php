@@ -26,11 +26,11 @@ class ActionPage {
     private function checkCsrfToken () {
         // CSRFトークン有無チェック
         if (!isset($_SESSION[CSRF_NAME]) || !isset($_REQUEST[CSRF_NAME])) {
-            throw new Exception('CSRF token is not set');
+            PageController::redirect('/error.php', ['message' => 'CSRFトークンが設定されていません。']);
         }
         // CSRFトークン一致チェック
         if ($_SESSION[CSRF_NAME] !== $_REQUEST[CSRF_NAME]) {
-            throw new Exception('CSRF token is invalid');
+            PageController::redirect('/error.php', ['message' => 'CSRFトークンが一致しません。']);
         }
 
         // CSRFトークンを破棄
@@ -73,7 +73,7 @@ class ActionPage {
 
         // HTTPメソッドが存在するか
         if (!isset($this->actionMethods[$method])) {
-            throw new Exception('Invalid method: ' . $method);
+            PageController::redirect('/error.php', ['message' => '許可されていないメソッドです。']);
         }
         
         // HTTPメソッドに対するクロージャー・パラメーター取得
@@ -135,7 +135,7 @@ class ActionPage {
      * @param array $requireParams 必須パラメーター ['key' => 'keyType', ...]
      * @return void
      */
-    public function put(Closure $patchAction, array $requireParams = []) {
-        $this->actionMethods['PUT'] = new ActionMethod('PUT', $patchAction, $requireParams);
+    public function put(Closure $putAction, array $requireParams = []) {
+        $this->actionMethods['PUT'] = new ActionMethod('PUT', $putAction, $requireParams);
     }
 }
