@@ -61,6 +61,10 @@ class NewsEdit {
                 </div>
             </form>
             <script>
+                const easyMDE = new EasyMDE({
+                    spellChecker: false,
+                    hideIcons: ['guide', 'preview', 'side-by-side'],
+                });
                 document.getElementById('newsForm').addEventListener('formdata', (event) => {
                     document.querySelectorAll('.image-input').forEach((element) => {
                         if (!element?.files?.[0]) return;

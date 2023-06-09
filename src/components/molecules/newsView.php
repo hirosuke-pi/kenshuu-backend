@@ -29,11 +29,22 @@ class NewsView {
                                 </p>
                             <?php endif; ?>
                         </div>
-                        <p class="text-gray-700 mt-8">
-                            <?=replaceBrTagByNewLineCharacter(convertSpecialCharsToHtmlEntities($post->body)) ?>
+                        <iframe class="w-full" id="message" srcdoc="" scrolling="no" sandbox="allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
+                        <p id="message-raw" class="hidden">
+<?=convertSpecialCharsToHtmlEntities($post->body) ?>
                         </p>
                     </section>
                 </article>
+                <script>
+                    const rawMd = document.getElementById('message-raw').innerText
+                    const md = DOMPurify.sanitize(marked.parse(rawMd));
+
+                    const iframeElement = document.getElementById('message');
+                    iframeElement.srcdoc = md.replaceAll('<a', '<a target="_self" ');
+                    iframeElement.addEventListener('load', () => {
+                        iframeElement.style.height = (iframeElement.contentWindow.document.body.scrollHeight + 50) + 'px';
+                    });
+                </script>
             </main>
         <?php
     }
