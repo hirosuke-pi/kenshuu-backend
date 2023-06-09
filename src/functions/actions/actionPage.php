@@ -8,14 +8,9 @@ class ActionPage {
      *
      * @param boolean $isCheckCsrfToken CSRFトークンをチェックするかどうか
      */
-    function __construct(bool $isCheckCsrfToken = true) {
+    function __construct() {
         PageController::sessionStart();
         $this->actionMethods = [];
-
-        // CSRFトークンをチェック
-        if ($isCheckCsrfToken) {
-            $this->checkCsrfToken();
-        }
     }
 
     /**
@@ -23,19 +18,21 @@ class ActionPage {
      *
      * @return void
      */
-    private function checkCsrfToken () {
+    private function checkCsrfToken(string $prefix) {
+        $CsrfNameWithPrefix = $prefix .'_'. CSRF_NAME;
+
         // CSRFトークン有無チェック
-        if (!isset($_SESSION[CSRF_NAME]) || !isset($_REQUEST[CSRF_NAME])) {
-            PageController::redirectWithStatus('/error.php', 'error', 'CSRFトークンが設定されていません。');
+        if (!isset($_SESSION[$CsrfNameWithPrefix]) || !isset($_REQUEST[$CsrfNameWithPrefix])) {
+            throw new Exception('CSRFトークンが設定されていません。');
         }
         // CSRFトークン一致チェック
-        if ($_SESSION[CSRF_NAME] !== $_REQUEST[CSRF_NAME]) {
-            PageController::redirectWithStatus('/error.php', 'error', 'CSRFトークンが一致しません。');
+        if ($_SESSION[$CsrfNameWithPrefix] !== $_REQUEST[$CsrfNameWithPrefix]) {
+            throw new Exception('CSRFトークンが一致しません。');
         }
 
         // CSRFトークンを破棄
-        unset($_SESSION[CSRF_NAME]);
-        unset($_REQUEST[CSRF_NAME]);
+        unset($_SESSION[$CsrfNameWithPrefix]);
+        unset($_REQUEST[$CsrfNameWithPrefix]);
     }
 
     /**
@@ -49,11 +46,11 @@ class ActionPage {
         foreach ($requirePropKeys as $key => $type) {
             if (!array_key_exists($key, $params)) {
                 // 必須パラメーターが存在しなかった場合はエラーをスロー
-                PageController::redirectWithStatus('/error.php', 'error', '必須パラメーターが存在しません。'. $key);
+                throw new Exception('必須パラメーターが存在しません。'. $key);
             }
             elseif (gettype($params[$key]) !== $type) {
                 // 必須パラメーターが型が一致しなければエラーをスロー
-                PageController::redirectWithStatus('/error.php', 'error', '必須パラメーターの型('. $type .')が一致しません: ' . $key .'('. gettype($params[$key]) .')');
+                throw new Exception('必須パラメーターの型('. $type .')が一致しません: ' . $key .'('. gettype($params[$key]) .')');
             }
         }
     }
@@ -65,28 +62,36 @@ class ActionPage {
      * @return void
      */
     public function dispatch() {
-        // HTTPメソッドを取得
-        $method = $_SERVER['REQUEST_METHOD'];
-        if (isset($_REQUEST[METHOD_NAME]) && in_array(strtoupper($_REQUEST[METHOD_NAME]), ['PUT', 'DELETE'], true)) {
-            $method = strtoupper($_REQUEST[METHOD_NAME]);
+        try {
+            // HTTPメソッドを取得
+            $method = $_SERVER['REQUEST_METHOD'];
+            if (isset($_REQUEST[METHOD_NAME]) && in_array(strtoupper($_REQUEST[METHOD_NAME]), ['PUT', 'DELETE'], true)) {
+                $method = strtoupper($_REQUEST[METHOD_NAME]);
+            }
+
+            // HTTPメソッドが存在するか
+            if (!isset($this->actionMethods[$method])) {
+                throw new Exception('許可されていないメソッドです。');
+            }
+
+            // HTTPメソッドに対するクロージャー・パラメーター取得
+            $actionMethod = $this->actionMethods[$method];
+
+            // CSRFトークンをチェック
+            $this->checkCsrfToken($actionMethod->csrfPrefix);
+
+            // 必須パラメーターが存在するか
+            self::checkKeyTypes($_REQUEST, $actionMethod->requireParams);
+
+            // クロージャーを実行
+            $response = ($actionMethod->action)($_REQUEST);
+
+            // リダイレクト
+            PageController::redirectWithStatus($response->location, $response->status, $response->message, $response->data);
         }
-
-        // HTTPメソッドが存在するか
-        if (!isset($this->actionMethods[$method])) {
-            PageController::redirectWithStatus('/error.php', 'error', '許可されていないメソッドです。');
+        catch (Exception $error) {
+            PageController::redirectWithStatus('/error.php', 'error', $error->getMessage());
         }
-        
-        // HTTPメソッドに対するクロージャー・パラメーター取得
-        $actionMethod = $this->actionMethods[$method];
-
-        // 必須パラメーターが存在するか
-        self::checkKeyTypes($_REQUEST, $actionMethod->requireParams);
-
-        // クロージャーを実行
-        $response = ($actionMethod->action)($_REQUEST);
-
-        // リダイレクト
-        PageController::redirectWithStatus($response->location, $response->status, $response->message);
     }
 
     /**
@@ -96,8 +101,8 @@ class ActionPage {
      * @param array $requireParams 必須パラメーター ['key' => 'keyType', ...]
      * @return void
      */
-    public function get(Closure $getAction, array $requireParams = []) {
-        $this->actionMethods['GET'] = new ActionMethod('GET', $getAction, $requireParams);
+    public function get(Closure $getAction, string $csrfPrefix, array $requireParams = []) {
+        $this->actionMethods['GET'] = new ActionMethod('GET', $getAction, $csrfPrefix, $requireParams);
     }
 
     /**
@@ -107,8 +112,8 @@ class ActionPage {
      * @param array $requireParams 必須パラメーター ['key' => 'keyType', ...]
      * @return void
      */
-    public function post(Closure $postAction, array $requireParams = []) {
-        $this->actionMethods['POST'] = new ActionMethod('POST', $postAction, $requireParams);
+    public function post(Closure $postAction, string $csrfPrefix, array $requireParams = []) {
+        $this->actionMethods['POST'] = new ActionMethod('POST', $postAction, $csrfPrefix, $requireParams);
     }
 
     /**
@@ -118,8 +123,8 @@ class ActionPage {
      * @param array $requireParams 必須パラメーター ['key' => 'keyType', ...]
      * @return void
      */
-    public function delete(Closure $deleteAction, array $requireParams = []) {
-        $this->actionMethods['DELETE'] = new ActionMethod('DELETE', $deleteAction, $requireParams);
+    public function delete(Closure $deleteAction, string $csrfPrefix, array $requireParams = []) {
+        $this->actionMethods['DELETE'] = new ActionMethod('DELETE', $deleteAction, $csrfPrefix, $requireParams);
     }
 
     /**
@@ -129,7 +134,7 @@ class ActionPage {
      * @param array $requireParams 必須パラメーター ['key' => 'keyType', ...]
      * @return void
      */
-    public function put(Closure $putAction, array $requireParams = []) {
-        $this->actionMethods['PUT'] = new ActionMethod('PUT', $putAction, $requireParams);
+    public function put(Closure $putAction, string $csrfPrefix, array $requireParams = []) {
+        $this->actionMethods['PUT'] = new ActionMethod('PUT', $putAction, $csrfPrefix, $requireParams);
     }
 }

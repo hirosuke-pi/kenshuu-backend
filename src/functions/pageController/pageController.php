@@ -24,8 +24,8 @@ class PageController {
      * @param string $message メッセージ
      * @return void
      */
-    public static function redirectWithStatus(string $url, string $status, string $message): void {
-        PageController::redirect($url, ['status' => $status, 'message' => $message]);
+    public static function redirectWithStatus(string $url, string $status, string $message, array $data = []): void {
+        PageController::redirect($url, array_merge(['status' => $status, 'message' => $message], $data));
     }
 
     /**
@@ -40,16 +40,13 @@ class PageController {
     /**
      * リダイレクトデータを取得
      *
-     * @return array|null リダイレクト時のセッションデータ
+     * @return array リダイレクト時のセッションデータ
      */
-    public static function getRedirectData(): ?array {
+    public static function getRedirectData(): array {
         if (!isset($_SESSION[REDIRECT_INDEX])) {
-            return null;
+            return [];
         }
-
-        $data = $_SESSION[REDIRECT_INDEX];
-        unset($_SESSION[REDIRECT_INDEX]);
-        return $data;
+        return $_SESSION[REDIRECT_INDEX];
     }
 
     /**
@@ -63,9 +60,16 @@ class PageController {
         }
 
         $data = $_SESSION[REDIRECT_INDEX];
-        unset($_SESSION[REDIRECT_INDEX]);
-
         return [$data['status'], $data['message']];
+    }
+
+    /**
+     * リダイレクトデータを削除
+     *
+     * @return void
+     */
+    public static function unsetRedirectData(): void {
+        unset($_SESSION[REDIRECT_INDEX]);
     }
 
     /**
@@ -79,15 +83,17 @@ class PageController {
         }
     }
 
-        /**
+    /**
      * CSRFトークンを設定
      *
      * @return void
      */
-    public static function setCsrfToken(){
+    public static function setCsrfToken($prefix){
         $csrf_token = bin2hex(random_bytes(32));
-        $_SESSION[CSRF_NAME] = $csrf_token;
-        echo '<input name="'. CSRF_NAME .'" type="hidden" value="'. $csrf_token .'" />';
+        $CsrfNameWithPrefix = $prefix .'_'. CSRF_NAME;
+
+        $_SESSION[$CsrfNameWithPrefix] = $csrf_token;
+        echo '<input name="'. $CsrfNameWithPrefix .'" type="hidden" value="'. $csrf_token .'" />';
     }
 
     /**

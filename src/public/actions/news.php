@@ -42,6 +42,7 @@ $action->post(
 
         return new ActionResponse('/', 'success', 'ニュースを投稿しました。ID: '. $postId);
     },
+    CSRF_NEWS_CREATE,
     ['title' => 'string', 'body' => 'string']
 );
 
@@ -57,6 +58,7 @@ $action->put(
 
         return new ActionResponse('/news/index.php?id='. $params['id'], 'success', 'ニュースを編集しました。');
     },
+    CSRF_NEWS_EDIT,
     ['title' => 'string', 'body' => 'string', 'id' => 'string']
 );
 
@@ -69,6 +71,7 @@ $action->delete(
 
         return new ActionResponse('/', 'success', 'ニュースを削除しました。 ID: '. $postId);
     },
+    CSRF_NEWS_DELETE,
     ['id' => 'string']
 );
 

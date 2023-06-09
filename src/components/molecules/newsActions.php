@@ -7,7 +7,11 @@ class NewsActions {
      * @param string $postId 操作するニュースID
      * @return void
      */
-    public static function render(string $postId) {
+    public static function render(string $postId, string $userId) {
+        if (!UserAuth::isLoginUser($userId)) {
+            return;
+        }
+
         $editUrl = './edit.php?id='. $postId;
         $deleteUrl = '/actions/news.php?id='. $postId;
 
@@ -24,7 +28,7 @@ class NewsActions {
                         <button  class="bg-red-400 hover:bg-red-500 text-white font-bold py-2 px-4 rounded ">
                             <i class="fa-solid fa-trash"></i> ページを削除
                         </button>
-                        <?php PageController::setCsrfToken() ?>
+                        <?php PageController::setCsrfToken(CSRF_NEWS_DELETE) ?>
                         <?php PageController::setDeleteMethod() ?>
                     </form>
                 </div>

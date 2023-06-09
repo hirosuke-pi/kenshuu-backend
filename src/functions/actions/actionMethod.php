@@ -11,6 +11,7 @@ class ActionMethod {
     function __construct(
         public readonly string $method,
         public readonly Closure $action,
+        public readonly string $csrfPrefix,
         public readonly array $requireParams
     ) {}
 }

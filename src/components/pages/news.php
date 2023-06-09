@@ -11,6 +11,18 @@ require_once __DIR__ .'/../organisms/newsDetail.php';
 require_once __DIR__ .'/../organisms/newsInfo.php';
 
 class News {
+    private static function getPostByPostIdQuery(): PostsDTO {
+        if (!isset($_GET['id'])) {
+            throw new Exception('不正なアクセスです。ニュースIDが指定されていません。');
+        }
+        $post = PostsRepo::getPostById($_GET['id']);
+        if (is_null($post)) {
+            throw new Exception('投稿が見つかりませんでした。');
+        }
+
+        return $post;
+    }
+
     /**
      * ニュース詳細ページをレンダリング
      * 
@@ -20,17 +32,27 @@ class News {
     public static function render(NewsMode $mode): void {
         $title = '新規作成';
         $post = null;
-        if (in_array($mode, [NewsMode::EDIT, NewsMode::VIEW], true)) {
-            if (!isset($_GET['id'])) {
-                PageController::redirectWithStatus('/error.php', 'error', 'ニュースIDは数値で指定してください。');
+        $user = null;
+
+        try {
+            switch($mode) {
+                case NewsMode::CREATE:
+                    $user = UsersRepo::getUserById(UserAuth::getLoginUserIdWithException());
+                    break;
+                case NewsMode::EDIT:
+                    $post = self::getPostByPostIdQuery();
+                    $user = UsersRepo::getUserById(UserAuth::getLoginUserIdWithException());
+                    break;
+                case NewsMode::VIEW:
+                    $post = self::getPostByPostIdQuery();
+                    $user = UsersRepo::getUserById($post->userId);
+                    break;
             }
-            $post = PostsRepo::getPostById($_GET['id']);
-            if (is_null($post)) {
-                PageController::redirectWithStatus('/error.php', 'error', '投稿が見つかりませんでした。');
-            }
-            $title = $post->title;
         }
-        $user = UsersRepo::getUserByEmail('test@test.com');
+        catch (Exception $error) {
+            PageController::redirectWithStatus('/error.php', 'error', $error->getMessage());
+            return;
+        }
 
         ?>
             <?php Head::render('Flash News - '. $title) ?>

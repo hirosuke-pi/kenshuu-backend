@@ -29,9 +29,9 @@ class PostsRepo {
      * 投稿IDを元に投稿情報を取得
      *
      * @param string $postId 投稿ID
-     * @return PostsDTO 投稿情報
+     * @return ?PostsDTO 投稿情報
      */
-    public static function getPostById(string $postId): PostsDTO {
+    public static function getPostById(string $postId): ?PostsDTO {
         $db = PDOFactory::getPDOInstance();
         $postsDao = new PostsDAO($db);
         return $postsDao->getPostById($postId);

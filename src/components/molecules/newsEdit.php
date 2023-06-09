@@ -48,8 +48,6 @@ class NewsEdit {
                         </section>
                     </article>
                 </div>
-                <?php PageController::setCsrfToken() ?>
-                <?php if ($isEditMode) PageController::setPutMethod() ?>
                 <div class="p-3">
                     <button class="w-full bg-blue-400 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded ">
                         <?php if($isEditMode): ?>
@@ -59,6 +57,15 @@ class NewsEdit {
                         <?php endif; ?>
                     </button>
                 </div>
+                <?php 
+                    if ($isEditMode) {
+                        PageController::setPutMethod();
+                        PageController::setCsrfToken(CSRF_NEWS_EDIT);
+                    }
+                    else {
+                        PageController::setCsrfToken(CSRF_NEWS_CREATE);
+                    }
+                ?>
             </form>
             <script>
                 const easyMDE = new EasyMDE({
