@@ -13,18 +13,18 @@ class ErrorPage {
         }
 
         ?>
-            <?=Head::render('Flash News - エラー')?>
+            <?php Head::render('Flash News - エラー') ?>
                 <body>
-                    <?=Header::render()?>
+                    <?php Header::render() ?>
                     <main class="flex justify-center flex-col items-center">
-                        <h2 class="text-2xl">エラー: <?=h($session['message']) ?></h2>
+                        <h2 class="text-2xl">エラー: <?=convertSpecialCharsToHtmlEntities($session['message']) ?></h2>
                         <a href="/" class="mt-5 bg-blue-400 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded ">
                             <i class="fa-solid fa-arrow-left"></i> ホームへ戻る
                         </a>
                     </main>
-                    <?=Footer::render()?>
+                    <?php Footer::render() ?>
                 </body>
-            <?=End::render()?>
+            <?php End::render() ?>
         <?php
     }
 }
