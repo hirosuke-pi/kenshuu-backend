@@ -6,5 +6,3 @@ require_once '../components/pages/home.php';
 PDOFactory::getNewPDOInstance();
 
 Home::render();
-
-PageController::unsetRedirectData();

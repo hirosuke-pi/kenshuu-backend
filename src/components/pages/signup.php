@@ -7,9 +7,9 @@ require_once __DIR__ .'/../templates/header.php';
 require_once __DIR__ .'/../templates/end.php';
 require_once __DIR__ .'/../templates/footer.php';
 
-require_once __DIR__ .'/../organisms/loginForm.php';
+require_once __DIR__ .'/../organisms/signupForm.php';
 
-class Login {
+class Signup {
     /**
      * ログインページをレンダリング
      *
@@ -22,14 +22,14 @@ class Login {
         }
 
         ?>
-            <?php Head::render('Flash News - ログイン')?>
+            <?php Head::render('Flash News - 新規登録')?>
                 <body>
                     <?php Header::render()?>
-                    <div class="flex justify-center items-center flex-wrap">
+                    <div class="flex flex-row justify-center items-center">
+                        <?php SignupForm::render() ?>
                         <aside class="mx-2">
                             <image class="w-full max-w-xl" src="/img/login.jpg">
                         </aside>
-                        <?php LoginForm::render() ?>
                     </div>
                     <?php Footer::render()?>
                 </body>

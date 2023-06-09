@@ -91,6 +91,7 @@ class ActionPage {
         }
         catch (Exception $error) {
             PageController::redirectWithStatus('/error.php', 'error', $error->getMessage());
+            return;
         }
     }
 

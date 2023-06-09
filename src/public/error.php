@@ -6,5 +6,3 @@ require_once '../components/pages/errorPage.php';
 PDOFactory::getNewPDOInstance();
 
 ErrorPage::render();
-
-PageController::unsetRedirectData();

@@ -11,9 +11,11 @@ class AlertSession {
      */
     public static function render(bool $visibleCloseButton = true): void {
         [$status, $message] = PageController::getRedirectStatus();
+
         if ($status === null || $message === null) {
             return;
         }
+        PageController::unsetRedirectData();
 
         $title = match($status) {
             'success' => '成功',

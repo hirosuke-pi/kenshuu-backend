@@ -6,5 +6,3 @@ require_once '../../components/pages/news.php';
 PDOFactory::getNewPDOInstance();
 
 News::render(NewsMode::VIEW);
-
-PageController::unsetRedirectData();

@@ -21,6 +21,7 @@ class User {
 
         if (!isset($_GET['id'])) {
             PageController::redirectWithStatus('/error.php', 'error', 'ユーザーIDが指定されていません。');
+            return;
         }
 
         // ユーザーデータ取得
@@ -29,6 +30,7 @@ class User {
 
         if (!isset($user)) {
             PageController::redirectWithStatus('/error.php', 'error', 'ユーザーが見つかりませんでした。');
+            return;
         }
 
         ?>
