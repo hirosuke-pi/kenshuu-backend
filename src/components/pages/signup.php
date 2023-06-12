@@ -7,7 +7,7 @@ require_once __DIR__ .'/../templates/header.php';
 require_once __DIR__ .'/../templates/end.php';
 require_once __DIR__ .'/../templates/footer.php';
 
-require_once __DIR__ .'/../organisms/signupForm.php';
+require_once __DIR__ .'/../organisms/userForm.php';
 
 class Signup {
     /**
@@ -26,7 +26,7 @@ class Signup {
                 <body>
                     <?php Header::render()?>
                     <div class="flex flex-row justify-center items-center flex-wrap">
-                        <?php SignupForm::render() ?>
+                        <?php UserForm::render() ?>
                         <aside class="mx-2">
                             <image class="w-full max-w-xl" src="/img/login.jpg">
                         </aside>

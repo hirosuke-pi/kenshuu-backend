@@ -43,6 +43,39 @@ class UsersDAO {
     }
 
     /**
+     * ユーザーを更新
+     *
+     * @param string $userId ユーザーID
+     * @param string $username ユーザー名
+     * @param string $email メールアドレス
+     * @param string $password パスワード(未ハッシュ)
+     * @param ?string $profileImagePath プロフィール画像のパス
+     * @return boolean
+     */
+    public function updateUser(string $userId, string $username, string $email, string $password, string $profileImagePath = null): bool {
+        $usersTable = $this::USERS_TABLE;
+        $profileImageQuery = is_null($profileImagePath) ? '' : ', profile_img_path = :profile_img_path';
+        $sql = <<<SQL
+            UPDATE {$usersTable}
+            SET
+                username = :username, email = :email, password = :password {$profileImageQuery}
+            WHERE
+                id = :id
+        SQL;
+
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(':id', $userId, PDO::PARAM_STR);
+        $stmt->bindValue(':username', $username, PDO::PARAM_STR);
+        $stmt->bindValue(':email', $email, PDO::PARAM_STR);
+        $stmt->bindValue(':password', password_hash($password, PASSWORD_DEFAULT), PDO::PARAM_STR);
+        if (!is_null($profileImagePath)) {
+            $stmt->bindValue(':profile_img_path', $profileImagePath, PDO::PARAM_STR);
+        }
+        
+        return $stmt->execute();
+    }
+
+    /**
      * メールアドレスをもとに、ユーザーを取得
      *
      * @param string $email メールアドレス

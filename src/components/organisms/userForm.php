@@ -6,18 +6,38 @@ require_once __DIR__ .'/../molecules/alertSession.php';
 
 require_once __DIR__ .'/../atoms/selectImage.php';
 
-class SignupForm {
-    public static function render() {
+class UserForm {
+    public static function render(UsersDTO $user = null) {
         $data = PageController::getRedirectData();
-        $email = $data['email'] ?? '';
-        $username = $data['username'] ?? '';
 
-        $breadcrumbProps = [
-            ['name' => '新規登録', 'link' => $_SERVER['REQUEST_URI']]
-        ];
+        [
+            $email,
+            $username,
+            $userPutMode,
+            $maxSize,
+            $breadcrumbProps
+        ] = match($user) {
+            null => [
+                $data['email'] ?? '',
+                $data['username'] ?? '',
+                false,
+                'max-w-md',
+                [['name' => '新規登録', 'link' => $_SERVER['REQUEST_URI']]]
+            ],
+            default => [
+                $user->email,
+                $user->username,
+                true,
+                'max-w-2xl',
+                [
+                    ['name' => 'ユーザー - @'. $user->username, 'link' => '/user/index.php?id='. $user->id],
+                    ['name' => 'ユーザー設定', 'link' => $_SERVER['REQUEST_URI']]
+                ]
+            ]
+        };
 
         ?>
-            <main class="w-full max-w-md mx-2">
+            <main class="w-full <?=$maxSize ?> mx-2">
                 <div class="mt-3 p-2">
                     <?=Breadcrumb::render($breadcrumbProps)?>
                 </div>
@@ -60,11 +80,16 @@ class SignupForm {
                         </div>
                         <div class="flex items-center justify-center">
                             <button class="bg-blue-400 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded w-full">
-                                <i class="fa-solid fa-user-plus"></i> ユーザーを登録
+                                <?php if ($userPutMode) : ?>
+                                    <i class="fa-solid fa-user-edit"></i> ユーザーを更新
+                                <?php else : ?>
+                                    <i class="fa-solid fa-user-plus"></i> ユーザーを登録
+                                <?php endif; ?>
                             </button>
                         </div>
                     </div>
                     <?php PageController::setCsrfToken(CSRF_SIGNUP) ?>
+                    <?php if ($userPutMode) PageController::setPutMethod(); ?>
                 </form>
             </main>
         <?php
