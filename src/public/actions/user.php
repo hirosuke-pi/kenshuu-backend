@@ -22,10 +22,10 @@ function checkInputType(array $params): ?string {
             throw new Exception('プロフィール画像はjpg, jpeg, png, gifのいずれかの形式でアップロードしてください。');
         }
     }
-    elseif ($params['username'] < 5 || $params['username'] > 20) {
+    elseif (strlen($params['username']) < 5 || strlen($params['username']) > 20) {
         throw new Exception('ユーザー名は5文字以上20文字以下で入力してください。');
     }
-    elseif ($params['password1'] < 8) {
+    elseif (strlen($params['password1']) < 8) {
         throw new Exception('パスワードは8文字以上で入力してください。'. strlen($params['password1']));
     }
     elseif (!preg_match('/^[a-zA-Z0-9_+-]+(.[a-zA-Z0-9_+-]+)*@([a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]*\.)+[a-zA-Z]{2,}$/', $params['email'])) {
