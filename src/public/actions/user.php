@@ -13,9 +13,9 @@ $action->post(
             if (in_array('', [$params['email'], $params['password1'], $params['username']])) {
                 throw new Exception('ユーザー名とメールアドレス、パスワードは必須です。');
             }
-            // elseif ($params['password1'] !== $params['password2']) {
-            //     throw new Exception('確認用パスワードと一致しません。');
-            // }
+            elseif ($params['password1'] !== $params['password2']) {
+                throw new Exception('確認用パスワードと一致しません。');
+            }
             elseif (isset($_FILES['profile-image'])) {
                 $profileImageExt = strtolower(pathinfo($_FILES['profile-image']['name'], PATHINFO_EXTENSION));
                 if (!in_array($profileImageExt, ['jpg', 'jpeg', 'png', 'gif'])) {
