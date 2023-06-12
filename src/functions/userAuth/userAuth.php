@@ -45,12 +45,14 @@ class UserAuth {
      *
      * @return string ログインユーザー
      */
-    public static function getLoginUserIdWithException(): string {
-        if (self::isLogin()) {
-            return $_SESSION[self::SESSION_INDEX];
-        } else {
+    public static function getLoginUserIdWithException(string $userId = null): string {
+        if (!self::isLogin()) {
             throw new Exception('ユーザーの認証が必要な項目です。ログインしてください。');
         }
+        elseif (!is_null($userId) && $_SESSION[self::SESSION_INDEX] !== $userId) {
+            throw new Exception('ユーザーIDが一致しません。ユーザー認証をしてください。');
+        }
+        return $_SESSION[self::SESSION_INDEX];
     }
 
     /**

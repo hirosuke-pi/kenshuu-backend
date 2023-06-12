@@ -8,17 +8,14 @@ require_once '../../functions/autoload/actions.php';
  * @param string $postId 投稿ID
  */
 function authUserPost(string $postId): void {
-    // ユーザー認証
-    $userId = UserAuth::getLoginUserIdWithException();
-
     $db = PDOFactory::getPDOInstance();
     $postsDao = new PostsDAO($db);
 
     // ユーザー投稿チェック
     $post = $postsDao->getPostById($postId);
-    if($userId !== $post->userId) {
-        throw new Exception('投稿ユーザーと一致しません。');
-    }
+
+    // ユーザー認証
+    UserAuth::getLoginUserIdWithException($post->userId);
 }
 
 PDOFactory::getNewPDOInstance();

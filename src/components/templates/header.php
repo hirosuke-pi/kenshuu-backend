@@ -11,7 +11,17 @@ class Header {
         $userUrl = '#';
         if (UserAuth::isLogin()) {
             $user = UsersRepo::getUserById(UserAuth::getLoginUserId());
+            if (is_null($user)) {
+                UserAuth::logout();
+                PageController::redirectWithStatus('/actions/logout.php', 'error', 'ユーザーが見つかりませんでした。');
+                return;
+            }
+
             $userUrl = '/user/index.php?id='. $user->id;
+            $profileImageSrc = '/img/user.png';
+            if ($user->profileImagePath !== '') {
+                $profileImageSrc = '/img/users/'. $user->id .'.'. $user->profileImagePath;
+            }
         }
 
         ?>
@@ -31,7 +41,7 @@ class Header {
                                 <?php PageController::setCsrfToken(CSRF_LOGOUT) ?>
                             </form>
                             <a href="<?=$userUrl ?>" class="flex items-center py-2 px-4 hover:bg-gray-200 rounded-lg border border-gray-300 mt-3">
-                                <img class="w-7 h-7 rounded-full object-cover mr-1" src="/img/news.jpg" alt="user image">
+                                <img class="w-7 h-7 rounded-full object-cover mr-1" src="<?=$profileImageSrc ?>" alt="user image">
                                 <p class="text-xl font-bold">@<?=convertSpecialCharsToHtmlEntities($user->username) ?></p>
                             </a>
                         <?php else: ?>

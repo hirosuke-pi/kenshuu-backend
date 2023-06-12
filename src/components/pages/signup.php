@@ -25,7 +25,7 @@ class Signup {
             <?php Head::render('Flash News - 新規登録')?>
                 <body>
                     <?php Header::render()?>
-                    <div class="flex flex-row justify-center items-center">
+                    <div class="flex flex-row justify-center items-center flex-wrap">
                         <?php SignupForm::render() ?>
                         <aside class="mx-2">
                             <image class="w-full max-w-xl" src="/img/login.jpg">

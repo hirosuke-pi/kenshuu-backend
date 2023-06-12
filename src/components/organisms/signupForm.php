@@ -8,7 +8,10 @@ require_once __DIR__ .'/../atoms/selectImage.php';
 
 class SignupForm {
     public static function render() {
-        $email = PageController::getRedirectData()['email'] ?? '';
+        $data = PageController::getRedirectData();
+        $email = $data['email'] ?? '';
+        $username = $data['username'] ?? '';
+
         $breadcrumbProps = [
             ['name' => '新規登録', 'link' => $_SERVER['REQUEST_URI']]
         ];
@@ -21,13 +24,13 @@ class SignupForm {
                 <div class="my-3">
                     <?=AlertSession::render() ?>
                 </div>
-                <form action="/actions/login.php" method="POST">
+                <form action="/actions/user.php" method="POST" enctype="multipart/form-data">
                     <div class="bg-white border border-gray-300 rounded px-8 pt-6 pb-8 mb-4 flex flex-col">
                         <div class="mb-4">
                             <label class="block text-grey-darker text-sm font-bold mb-2" for="username">
                                 ユーザー名
                             </label>
-                            <input class="border border-gray-200 appearance-none border rounded w-full py-2 px-3 text-grey-darker" id="username" name="username" type="text" value="<?=convertSpecialCharsToHtmlEntities($email) ?>" placeholder="User Name">
+                            <input class="border border-gray-200 appearance-none border rounded w-full py-2 px-3 text-grey-darker" id="username" name="username" type="text" value="<?=convertSpecialCharsToHtmlEntities($username) ?>" placeholder="User Name">
                         </div>
                         <div class="mb-4">
                             <label class="block text-grey-darker text-sm font-bold mb-2" for="email">
@@ -36,10 +39,16 @@ class SignupForm {
                             <input class="border border-gray-200 appearance-none border rounded w-full py-2 px-3 text-grey-darker" id="email" name="email" type="email" value="<?=convertSpecialCharsToHtmlEntities($email) ?>" placeholder="test@test.com">
                         </div>
                         <div class="mb-2">
-                            <label class="block text-grey-darker text-sm font-bold mb-2" for="password">
+                            <label class="block text-grey-darker text-sm font-bold mb-2" for="password1">
                                 パスワード
                             </label>
-                            <input class="border border-gray-200 appearance-none border border-red rounded w-full py-2 px-3 text-grey-darker mb-3" id="password" name="password" type="password">
+                            <input class="border border-gray-200 appearance-none border border-red rounded w-full py-2 px-3 text-grey-darker mb-3" id="password1" name="password1" type="password">
+                        </div>
+                        <div class="mb-2">
+                            <label class="block text-grey-darker text-sm font-bold mb-2" for="password2">
+                                確認用パスワード
+                            </label>
+                            <input class="border border-gray-200 appearance-none border border-red rounded w-full py-2 px-3 text-grey-darker mb-3" id="password2" name="password2" type="password">
                         </div>
                         <div class="mb-6">
                             <label class="block text-grey-darker text-sm font-bold mb-2" for="password">
@@ -55,7 +64,7 @@ class SignupForm {
                             </button>
                         </div>
                     </div>
-                    <?php PageController::setCsrfToken(CSRF_LOGIN) ?>
+                    <?php PageController::setCsrfToken(CSRF_SIGNUP) ?>
                 </form>
             </main>
         <?php

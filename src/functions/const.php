@@ -11,6 +11,7 @@ const DEFAULT_THUMBNAIL = '/img/news.jpg';
 const CSRF_NEWS_CREATE = 'news-create';
 const CSRF_NEWS_DELETE = 'news-delete';
 const CSRF_NEWS_EDIT = 'news-edit';
+const CSRF_SIGNUP = 'signup';
 const CSRF_LOGIN = 'login';
 const CSRF_LOGOUT = 'logout';
 

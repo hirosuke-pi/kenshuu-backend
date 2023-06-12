@@ -41,7 +41,7 @@ class News {
                     break;
                 case NewsMode::EDIT:
                     $post = self::getPostByPostIdQuery();
-                    $user = UsersRepo::getUserById(UserAuth::getLoginUserIdWithException());
+                    $user = UsersRepo::getUserById(UserAuth::getLoginUserIdWithException($post->userId));
                     break;
                 case NewsMode::VIEW:
                     $post = self::getPostByPostIdQuery();
