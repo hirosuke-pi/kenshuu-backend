@@ -8,7 +8,6 @@ require_once __DIR__ .'/../templates/end.php';
 require_once __DIR__ .'/../templates/footer.php';
 
 require_once __DIR__ .'/../organisms/newsList.php';
-require_once __DIR__ .'/../organisms/postForm.php';
 
 class Home {
     /**
@@ -23,8 +22,6 @@ class Home {
                 <body>
                     <?php Header::render()?>
                     <?php NewsList::render()?>
-                    <hr class="ml-3 mr-3 mt-5">
-                    <?php PostForm::render()?>
                     <?php Footer::render()?>
                 </body>
             <?php End::render()?>

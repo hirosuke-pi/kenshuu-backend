@@ -9,12 +9,13 @@ class NewsCard {
      * @param PostsDTO $post ニュースのデータ
      * @return void
      */
-    public static function render(PostsDTO $post): void {
+    public static function render(PostsDTO $post, string $mode): void {
         $newsLink = '/news/index.php?id='. $post->id;
+        $cardSize = $mode === 'card' ? 'max-w-sm' : '';
 
         ?>
             <li class="m-3">
-                <div class="max-w-sm rounded overflow-hidden shadow-md">
+                <div class="<?=$cardSize ?> rounded overflow-hidden shadow-md">
                     <a href="<?=$newsLink ?>" class="">
                         <img class="w-full" src="/img/news.jpg" alt="news image">
                     </a>

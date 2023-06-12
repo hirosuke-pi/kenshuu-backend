@@ -4,13 +4,20 @@ class NewsEdit {
     /**
      * ニュース編集フォームをレンダリング
      *
-     * @param string $newsId ニュースID
-     * @param string $title ニュースタイトル
-     * @param string $body ニュース本文
+     * @param ?PostsDTO $post ニュースDTO
+     * @param string $mode 表示モードか、編集モードか (固定値: MODE_VIEW, MODE_EDIT, MODE_NEW)
      * @return void
      */
-    public static function render(string $newsId, string $title, string $body): void {
-        $newsEditUrl = '/actions/news.php?id='. $newsId;
+    public static function render(?PostsDTO $post, string $mode): void {
+        $newsEditUrl = '/actions/news.php';
+        $isEditMode = false;
+        if ($mode === MODE_EDIT) {
+            $newsEditUrl .= '?id='. $post->id;
+            $isEditMode = true;
+        }
+        
+        $title = $post->title ?? '';
+        $body = $post->body ?? '';
 
         ?>
             <form action="<?=$newsEditUrl ?>" method="POST">
@@ -30,13 +37,17 @@ class NewsEdit {
                         </section>
                         <section class="mt-3">
                             <button  class="w-full bg-blue-400 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded ">
-                                <i class="fa-solid fa-rotate-right"></i> ページを更新
+                                <?php if($isEditMode): ?>
+                                    <i class="fa-solid fa-rotate-right"></i> ニュースを更新
+                                <?php else: ?>
+                                    <i class="fa-solid fa-plus"></i> ニュースを作成
+                                <?php endif; ?>
                             </button>
                         </section>
                     </article>
                 </div>
-                <?php PageController::setPutMethod() ?>
                 <?php PageController::setCsrfToken() ?>
+                <?php if ($isEditMode) PageController::setPutMethod() ?>
             </form>
         <?php
     }

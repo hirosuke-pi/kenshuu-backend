@@ -1,30 +1,20 @@
 <?php
 
 require_once __DIR__ .'/../atoms/badge.php';
+require_once __DIR__ .'/../molecules/userInfo.php';
 
-class UserInfo {
+class NewsInfo {
     /**
-     * ユーザー情報をレンダリング
+     * ニュース情報をレンダリング
      *
-     * @param string $username ユーザー名
+     * @param UsersDTO $user ユーザーDTO
      * @param integer $postsCount 投稿数
      * @return void
      */
-    public static function render(string $username, int $postsCount): void {
+    public static function render(UsersDTO $user, int $postsCount): void {
         ?>
             <aside class="w-full lg:w-80 m-3">
-                <section class="bg-gray-100 border border-gray-300 rounded-lg p-5">
-                    <h3 class="text-xl text-gray-800 font-bold border-b border-gray-400">
-                        <i class="fa-solid fa-user"></i> 投稿者
-                    </h3>
-                    <div class="mt-3 flex justify-center items-center flex-col">
-                        <a href="#" class="hover:underline">
-                            <img class="w-20 h-20 rounded-full object-cover" src="/img/news.jpg" alt="user image">
-                            <p class="text-xl font-bold text-gray-700 text-center">@<?=convertSpecialCharsToHtmlEntities($username) ?></p>
-                        </a>
-                        <p class="text-gray-600 mt-2">記事投稿数: <strong><?=convertSpecialCharsToHtmlEntities($postsCount) ?></strong></p>
-                    </div>
-                </section>
+                <?php UserInfo::render($user, $postsCount, '投稿者', false) ?>
                 <section class="border border-gray-300 rounded-lg p-5 mt-3">
                     <h3 class="text-xl text-gray-800 font-bold border-b border-gray-400">
                     <i class="fa-solid fa-tags"></i> タグ
