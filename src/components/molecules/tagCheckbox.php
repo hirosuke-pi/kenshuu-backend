@@ -24,7 +24,7 @@ class TagCheckbox {
                 <?php endforeach; ?>
             <?php else: ?>
                 <?php foreach($tags as $tag): ?>
-                    <?=Badge::render($tag->tagName) ?>
+                    <?php Badge::render($tag->tagName) ?>
                 <?php endforeach; ?>
             <?php endif; ?>
         <?php
