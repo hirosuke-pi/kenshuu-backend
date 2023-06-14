@@ -29,7 +29,7 @@ class NewsEdit {
                     <?php if($isEditMode): ?>
                         <img class="w-full" src="<?=$thumbnailPath?>" alt="news image">
                     <?php else: ?>
-                        <?=SelectImage::render('thumbnail') ?>
+                        <?php SelectImage::render('thumbnail') ?>
                     <?php endif; ?>
                     <article class="p-5">
                         <h2 class="text-4xl text-gray-800 font-bold mt-2 mb-2">

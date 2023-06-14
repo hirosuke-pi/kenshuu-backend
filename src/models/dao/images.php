@@ -17,7 +17,7 @@ class ImagesDAO {
      * @param string $filePath ファイルパス
      * @return boolean トランザクションが成功したかどうか
      */
-    public function createImage(string $imageId, string $postId, bool $thumbnailFlag, string $filePath): string {
+    public function createImage(string $imageId, string $postId, bool $thumbnailFlag, string $filePath): bool {
         $sql = 'INSERT INTO '. $this::IMAGES_TABLE .' (id, post_id, thumbnail_flag, file_path) VALUES (:id, :post_id, :thumbnail_flag, :file_path)';
         $stmt = $this->db->prepare($sql);
         $stmt->bindValue(':id', $imageId, PDO::PARAM_STR);
@@ -25,8 +25,7 @@ class ImagesDAO {
         $stmt->bindValue(':thumbnail_flag', $thumbnailFlag, PDO::PARAM_BOOL);
         $stmt->bindValue(':file_path', $filePath, PDO::PARAM_STR);
 
-        $stmt->execute();
-        return $imageId;
+        return $stmt->execute();
     }
 
     /**
@@ -60,8 +59,8 @@ class ImagesDAO {
     /**
      * 投稿IDを元に画像を取得
      *
-     * @param string $postId
-     * @return array
+     * @param string $postId 投稿ID
+     * @return ?ImagesDTO 画像DTO
      */
     public function getThumbnailByPostId(string $postId): ?ImagesDTO {
         $sql = 'SELECT * FROM '. $this::IMAGES_TABLE .' WHERE post_id = :post_id AND thumbnail_flag = TRUE';
