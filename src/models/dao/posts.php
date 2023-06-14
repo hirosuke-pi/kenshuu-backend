@@ -15,7 +15,7 @@ class PostsDAO {
      * @param string $userId ユーザーID
      * @param string $title タイトル
      * @param string $body 内容
-     * @return boolean トランザクションが成功したかどうか
+     * @return string 投稿ID
      */
     public function createPost(string $userId, string $title, string $body): string {
         $newsId = 'post_' . uniqid(mt_rand());

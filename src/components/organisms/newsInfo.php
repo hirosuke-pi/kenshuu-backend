@@ -9,7 +9,7 @@ class NewsInfo {
      * ニュース情報をレンダリング
      *
      * @param UsersDTO $user ユーザーDTO
-     * @param PostsDTO $user ニュース投稿DTO
+     * @param ?PostsDTO $post ニュース投稿DTO
      * @param integer $postsCount 投稿数
      * @param string $mode 表示モードか、編集モードか (固定値: MODE_VIEW, MODE_EDIT, MODE_CREATE)
      * @return void
@@ -37,7 +37,7 @@ class NewsInfo {
                             <?php for($i = 0; $i < MAX_IMAGE_COUNT; $i++): ?>
                                 <div class="mt-2 rounded-md overflow-hidden">
                                     <form id="imageForm">
-                                        <?=SelectImage::render('image'. $i) ?>
+                                        <?php SelectImage::render('image'. $i) ?>
                                     </form>
                                 </div>
                             <?php endfor; ?>
