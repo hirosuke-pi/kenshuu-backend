@@ -44,12 +44,11 @@ class News {
                     <?php Header::render() ?>
                     <section class="flex justify-center flex-wrap items-start">
                         <?php NewsDetail::render($user, $post, $mode) ?>
-                        <?php NewsInfo::render($user, $postsCount) ?>
+                        <?php NewsInfo::render($user, $post, $postsCount, $mode) ?>
                     </section>
                     <?php Footer::render() ?>
                 </body>
             <?php End::render() ?>
         <?php
-
     }
 }
