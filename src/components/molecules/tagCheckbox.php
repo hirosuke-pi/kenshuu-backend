@@ -3,6 +3,13 @@
 require_once __DIR__ .'/../atoms/badge.php';
 
 class TagCheckbox {
+    /**
+     * ニュースに付与されているタグリストや、全体のタグをチェックボックス・バッジでレンダリング
+     *
+     * @param boolean $enable チェックボックスを有効にするかどうか
+     * @param string|null $postId 投稿ID　ない場合は全体のタグを取得
+     * @return void
+     */
     public static function render(bool $enable, ?string $postId = null): void {
         $db = PDOFactory::getNewPDOInstance();
         $tagsDao = new TagsDAO($db);
