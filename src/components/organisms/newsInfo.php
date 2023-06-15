@@ -10,7 +10,7 @@ class NewsInfo {
      * ニュース情報をレンダリング
      *
      * @param UsersDTO $user ユーザーDTO
-     * @param PostsDTO $user ニュース投稿DTO
+     * @param ?PostsDTO $post ニュース投稿DTO
      * @param integer $postsCount 投稿数
      * @param NewsMode $mode ニュース表示モード
      * @return void
@@ -25,7 +25,7 @@ class NewsInfo {
 
         ?>
             <aside class="w-full lg:w-80 m-3">
-                <?php UserInfo::render(user: $user, postsCount: $postsCount, title: '投稿者', visibleSettingButton: false) ?>
+                <?php UserInfo::render($user, $postsCount, '投稿者', false) ?>
                 <section class="border border-gray-300 rounded-lg p-5 mt-3">
                     <h3 class="text-xl text-gray-800 font-bold border-b border-gray-400">
                         <i class="fa-solid fa-tags"></i> タグ
@@ -43,7 +43,7 @@ class NewsInfo {
                             <?php for($i = 0; $i < MAX_IMAGE_COUNT; $i++): ?>
                                 <div class="mt-2 rounded-md overflow-hidden">
                                     <form id="imageForm">
-                                        <?=SelectImage::render('image'. $i) ?>
+                                        <?php SelectImage::render('image'. $i) ?>
                                     </form>
                                 </div>
                             <?php endfor; ?>

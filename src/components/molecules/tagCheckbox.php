@@ -3,6 +3,13 @@
 require_once __DIR__ .'/../atoms/badge.php';
 
 class TagCheckbox {
+    /**
+     * タグリストを表示する
+     *
+     * @param array $tags タグリスト
+     * @param boolean $enable チェックボックスを表示するかどうか
+     * @return void
+     */
     public static function render(array $tags, bool $enable): void {
         ?>
             <?php if($enable): ?>
@@ -14,7 +21,7 @@ class TagCheckbox {
                 <?php endforeach; ?>
             <?php else: ?>
                 <?php foreach($tags as $tag): ?>
-                    <?=Badge::render($tag->tagName) ?>
+                    <?php Badge::render($tag->tagName) ?>
                 <?php endforeach; ?>
             <?php endif; ?>
         <?php

@@ -32,16 +32,16 @@ class User {
         }
 
         ?>
-            <?=Head::render('Flash News - @'. $user->username) ?>
+            <?php Head::render('Flash News - @'. $user->username) ?>
                 <body>
-                    <?=Header::render() ?>
+                    <?php Header::render() ?>
                     <section class="flex justify-center flex-wrap-reverse items-end">
-                        <?=UserPosts::render($user->id, $user->username) ?>
-                        <?=userDetail::render($user) ?>
+                        <?php UserPosts::render($user->id, $user->username) ?>
+                        <?php userDetail::render($user) ?>
                     </section>
-                    <?=Footer::render() ?>
+                    <?php Footer::render() ?>
                 </body>
-            <?=End::render() ?>
+            <?php End::render() ?>
         <?php
     }
 }

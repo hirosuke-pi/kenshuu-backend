@@ -13,11 +13,11 @@ class ImagesDAO {
      * 画像を作成
      *
      * @param string $postId 投稿ID
-     * @param bool $thumbnailFlag サムネイルフラグ
+     * @param boolean $thumbnailFlag サムネイルフラグ
      * @param string $filePath ファイルパス
      * @return boolean トランザクションが成功したかどうか
      */
-    public function createImage(string $imageId, string $postId, bool $thumbnailFlag, string $filePath): string {
+    public function createImage(string $imageId, string $postId, bool $thumbnailFlag, string $filePath): bool {
         $imagesTable= $this::IMAGES_TABLE;
         $sql = <<<SQL
             INSERT INTO {$imagesTable} 
@@ -32,8 +32,7 @@ class ImagesDAO {
         $stmt->bindValue(':thumbnail_flag', $thumbnailFlag, PDO::PARAM_BOOL);
         $stmt->bindValue(':file_path', $filePath, PDO::PARAM_STR);
 
-        $stmt->execute();
-        return $imageId;
+        return $stmt->execute();
     }
 
     /**

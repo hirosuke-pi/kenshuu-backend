@@ -4,9 +4,13 @@ class UserInfo {
     /**
      * ユーザー情報をレンダリング
      *
+     * @param UsersDTO $user ユーザーDTO
+     * @param integer $postsCount 投稿数
+     * @param string $title タイトル
+     * @param boolean $visibleSettingButton 設定ボタンの表示フラグ
      * @return void
      */
-    public static function render(UsersDTO $user, string $title, int $postsCount, bool $visibleSettingButton): void {
+    public static function render(UsersDTO $user, int $postsCount, string $title, bool $visibleSettingButton): void {
         $userUrl = '/user/index.php?id='. $user->id;
 
         ?>
