@@ -17,12 +17,33 @@ class PageController {
     }
 
     /**
+     * リダイレクト (ステータス付き)
+     *
+     * @param string $url リダイレクト先のURL
+     * @param string $status ステータス
+     * @param string $message メッセージ
+     * @return void
+     */
+    public static function redirectWithStatus(string $url, string $status, string $message): void {
+        PageController::redirect($url, ['status' => $status, 'message' => $message]);
+    }
+
+    /**
+     * セッションデータがあるかどうか
+     *
+     * @return boolean
+     */
+    public static function hasRedirectData(): bool {
+        return isset($_SESSION[REDIRECT_INDEX]);
+    }
+
+    /**
      * リダイレクトデータを取得
      *
      * @return array リダイレクト時のセッションデータ
      */
-    public static function getRedirectData(): array {
-        $data = $_SESSION[REDIRECT_INDEX] ?? [];
+    public static function getRedirectData(): ?array {
+        $data = $_SESSION[REDIRECT_INDEX] ?? null;
         unset($_SESSION[REDIRECT_INDEX]);
         return $data;
     }

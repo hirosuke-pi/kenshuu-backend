@@ -1,6 +1,7 @@
 <?php
 
 require_once __DIR__ .'/../atoms/badge.php';
+require_once __DIR__ .'/tagCheckbox.php';
 
 class NewsCard {
     /**
@@ -11,12 +12,12 @@ class NewsCard {
      */
     public static function render(PostsDTO $post, string $mode): void {
         $newsLink = '/news/index.php?id='. $post->id;
-        $cardSize = $mode === 'card' ? 'max-w-sm' : 'w-full';
+        $cardSize = $mode === 'card' ? 'w-96' : 'w-full';
         $thumbnailPath = ImagesRepo::getThumbnailSrcByPostId($post->id);
 
         ?>
             <li class="m-3 <?=$cardSize ?>">
-                <div class="rounded overflow-hidden shadow-md">
+                <div class="rounded overflow-hidden border border-gray-300">
                     <a href="<?=$newsLink ?>" class="">
                         <img class="w-full" src="<?=$thumbnailPath ?>" alt="news image">
                     </a>
@@ -39,9 +40,7 @@ class NewsCard {
                     </div>
                     <hr class="ml-3 mr-3 mt-1 mb-1">
                     <div class="px-6 pt-4 pb-2">
-                        <?php Badge::render('テストバッジ1') ?>
-                        <?php Badge::render('テストバッジ1') ?>
-                        <?php Badge::render('テストバッジ1') ?>
+                        <?php TagCheckbox::render(false, $post->id) ?>
                     </div>
                 </div>
             </li>

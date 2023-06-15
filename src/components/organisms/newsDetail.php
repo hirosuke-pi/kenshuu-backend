@@ -1,9 +1,12 @@
 <?php
 
+require_once __DIR__ .'/../atoms/alert.php';
+
 require_once __DIR__ .'/../molecules/breadcrumb.php';
 require_once __DIR__ .'/../molecules/newsEdit.php';
 require_once __DIR__ .'/../molecules/newsActions.php';
 require_once __DIR__ .'/../molecules/newsView.php';
+require_once __DIR__ .'/../molecules/alertSession.php';
 
 class NewsDetail {
     /**
@@ -40,6 +43,9 @@ class NewsDetail {
             <div class="w-full lg:w-3/6 ">
                 <div class="m-3 p-2">
                     <?php Breadcrumb::render($breadcrumbProps)?>
+                </div>
+                <div class="m-3">
+                    <?php AlertSession::render() ?>
                 </div>
                 <?php if ($editorMode): ?>
                     <?php NewsEdit::render($post, $mode) ?>

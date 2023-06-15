@@ -1,8 +1,9 @@
 <?php
 
 require_once __DIR__ .'/../atoms/badge.php';
+require_once __DIR__ .'/../atoms/selectImage.php';
 require_once __DIR__ .'/../molecules/userInfo.php';
-require_once __DIR__ .'/../molecules/selectImage.php';
+require_once __DIR__ .'/../molecules/tagCheckbox.php';
 
 class NewsInfo {
     /**
@@ -20,12 +21,10 @@ class NewsInfo {
                 <?php UserInfo::render($user, $postsCount, '投稿者', false) ?>
                 <section class="border border-gray-300 rounded-lg p-5 mt-3">
                     <h3 class="text-xl text-gray-800 font-bold border-b border-gray-400">
-                    <i class="fa-solid fa-tags"></i> タグ
+                        <i class="fa-solid fa-tags"></i> タグ
                     </h3>
                     <div class="mt-3 flex flex-wrap">
-                        <?php Badge::render('テストバッジ1') ?>
-                        <?php Badge::render('テストバッジ2') ?>
-                        <?php Badge::render('テストバッジ3') ?>
+                        <?php TagCheckbox::render($mode === MODE_CREATE, $post->id ?? null) ?>
                     </div>
                 </section>
                 <section class="border border-gray-300 rounded-lg p-5 mt-3">
