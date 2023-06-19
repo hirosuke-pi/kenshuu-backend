@@ -12,14 +12,14 @@ class PDOFactory {
      * PDOインスタンスを取得
      *
      * @param boolean $forceNew 強制的にPDOを再生成するかどうか
-     * @return PDO PDOインスタンス
+     * @return ?PDO PDOインスタンス
      */
-    public static function getPDOInstance(bool $forceNew = false): PDO
+    public static function getPDOInstance(bool $forceNew = false): ?PDO
     {
         if ($forceNew) {
             static::$pdo = static::getNewPDOInstance();
         }
-        return static::$pdo;
+        return static::$pdo ?? null;
     }
 
     /**

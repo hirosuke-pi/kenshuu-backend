@@ -21,9 +21,7 @@ function authUserPost(string $postId): void {
     }
 }
 
-PDOFactory::getNewPDOInstance();
 $action = new ActionPage();
-
 $action->post(
     function(array $params): ActionResponse {
         try {

@@ -52,7 +52,7 @@ class PageController {
     /**
      * リダイレクトステータスを取得
      *
-     * @return array リダイレクト時のステータス
+     * @return array {status: string, message: string} リダイレクト時のステータス
      */
     public static function getRedirectStatus(): array {
         if (!isset($_SESSION[REDIRECT_INDEX]['status']) || !isset($_SESSION[REDIRECT_INDEX]['message'])) {
