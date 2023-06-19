@@ -7,7 +7,7 @@ class NewsEdit {
      * ニュース編集フォームをレンダリング
      *
      * @param ?PostsDTO $post ニュースDTO
-     * @param NewsMode ニュースの表示モード
+     * @param NewsMode $mode ニュースの表示モード
      * @return void
      */
     public static function render(?PostsDTO $post, NewsMode $mode): void {

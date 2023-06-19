@@ -17,16 +17,12 @@ class User {
      * @return void
      */
     public static function render(): void {
-        $db = PDOFactory::getNewPDOInstance();
-
         if (!isset($_GET['id'])) {
             PageController::redirectWithStatus('/error.php', 'error', 'ユーザーIDが指定されていません。');
         }
 
         // ユーザーデータ取得
-        $usersDao = new UsersDAO($db);
-        $user = $usersDao->getUserById($_GET['id']);
-
+        $user = UsersRepo::getUserById($_GET['id']);
         if (!isset($user)) {
             PageController::redirectWithStatus('/error.php', 'error', 'ユーザーが見つかりませんでした。');
         }

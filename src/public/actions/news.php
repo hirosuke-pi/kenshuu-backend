@@ -2,7 +2,6 @@
 
 require_once '../../functions/autoload/actions.php';
 
-PDOFactory::getNewPDOInstance();
 $action = new ActionPage();
 
 $action->post(
