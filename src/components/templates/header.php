@@ -7,10 +7,7 @@ class Header {
      * @return void
      */
     public static function render(): void {
-        $db = PDOFactory::getNewPDOInstance();
-        $usersDao = new UsersDAO($db);
-        
-        $user = $usersDao->getUserByEmail('test@test.com');
+        $user = UsersRepo::getUserByEmail('test@test.com');
         $userUrl = '/user/index.php?id='. $user->id;
 
         ?>

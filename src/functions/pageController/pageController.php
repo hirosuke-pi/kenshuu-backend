@@ -29,9 +29,9 @@ class PageController {
     }
 
     /**
-     * セッションデータがあるかどうか
+     * リダイレクトデータが存在するか
      *
-     * @return boolean
+     * @return boolean リダイレクトデータが存在するか
      */
     public static function hasRedirectData(): bool {
         return isset($_SESSION[REDIRECT_INDEX]);
@@ -40,12 +40,32 @@ class PageController {
     /**
      * リダイレクトデータを取得
      *
-     * @return array リダイレクト時のセッションデータ
+     * @return array|null リダイレクト時のセッションデータ
      */
     public static function getRedirectData(): ?array {
-        $data = $_SESSION[REDIRECT_INDEX] ?? null;
+        if (!isset($_SESSION[REDIRECT_INDEX])) {
+            return null;
+        }
+
+        $data = $_SESSION[REDIRECT_INDEX];
         unset($_SESSION[REDIRECT_INDEX]);
         return $data;
+    }
+
+    /**
+     * リダイレクトステータスを取得
+     *
+     * @return array {status: string, message: string} リダイレクト時のステータス
+     */
+    public static function getRedirectStatus(): array {
+        if (!isset($_SESSION[REDIRECT_INDEX]['status']) || !isset($_SESSION[REDIRECT_INDEX]['message'])) {
+            return [null, null];
+        }
+
+        $data = $_SESSION[REDIRECT_INDEX];
+        unset($_SESSION[REDIRECT_INDEX]);
+
+        return [$data['status'], $data['message']];
     }
 
     /**

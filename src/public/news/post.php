@@ -3,4 +3,4 @@
 require_once '../../functions/autoload/views.php';
 require_once '../../components/pages/news.php';
 
-News::render(MODE_CREATE);
+News::render(NewsMode::CREATE);

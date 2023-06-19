@@ -2,36 +2,27 @@
 
 require_once '../../functions/autoload/actions.php';
 
-
 $action = new ActionPage();
 
 $action->post(
     function(array $params): ActionResponse {
-        $db = PDOFactory::getNewPDOInstance();
-        $imagesDao = new ImagesDAO($db);
-
         if ($params['title'] === '' || $params['body'] === '') {
             return new ActionResponse('/news/post.php', 'error', 'タイトルと本文は必須です。');
         }
 
         // 一時的にユーザーを固定
-        $usersDao = new UsersDAO($db);
-        $userDto = $usersDao->getUserByEmail('test@test.com');
+        $userDto = UsersRepo::getUserByEmail('test@test.com');
 
         // ニュース投稿データをDBに追加
-        $postsDao = new PostsDAO($db);
-        $newsId = $postsDao->createPost($userDto->id, $params['title'], $params['body']);
+        $postId = PostsRepo::createPost($userDto->id, $params['title'], $params['body']);
 
         // タグをDBに追加
         if (isset($params['tags'])) {
-            $tagsDao = new TagsDAO($db);
-            foreach($params['tags'] as $tag) {
-                $tagsDao->addTagByPostId($tag, $newsId);
-            }
+            TagsRepo::addTagsByPostId($params['tags'], $postId);
         }
 
         // 画像フォルダ作成
-        $imageDir = __DIR__ .'/../img/news/'. $newsId;
+        $imageDir = __DIR__ .'/../img/news/'. $postId;
         mkdir($imageDir, 0777, true);
 
         // 画像ファイル移動
@@ -44,14 +35,11 @@ $action->post(
                 continue;
             }
 
-            $imageId = 'image_' . uniqid(mt_rand());
-            $filename = $imageId .'.'. convertSpecialCharsToHtmlEntities($ext);
-            $imagesDao->createImage($imageId, $newsId, $key === 'thumbnail', $filename);
-
+            $filename = ImagesRepo::createImageFile($postId, $key === 'thumbnail', $ext);
             move_uploaded_file($value['tmp_name'], $imageDir .'/'. $filename);
         }
 
-        return new ActionResponse('/', 'success', 'ニュースを投稿しました。ID: '. $newsId);
+        return new ActionResponse('/', 'success', 'ニュースを投稿しました。ID: '. $postId);
     },
     ['title' => 'string', 'body' => 'string']
 );
@@ -62,7 +50,7 @@ $action->put(
             return new ActionResponse('/news/edit.php?id='. $params['id'], 'error', 'タイトルと本文は必須です。');
         }
 
-        $db = PDOFactory::getNewPDOInstance();
+        $db = PDOFactory::getPDOInstance();
         $postsDao = new PostsDAO($db);
         $postsDao->putPostById($params['id'], $params['title'], $params['body']);
 
@@ -73,12 +61,12 @@ $action->put(
 
 $action->delete(
     function(array $params): ActionResponse {
-        $newsId = $_GET['id'];
-        $db = PDOFactory::getNewPDOInstance();
+        $postId = $params['id'];
+        $db = PDOFactory::getPDOInstance();
         $postsDao = new PostsDAO($db);
-        $postsDao->deletePostById($newsId);
+        $postsDao->deletePostById($postId);
 
-        return new ActionResponse('/', 'success', 'ニュースを削除しました。 ID: '. $newsId);
+        return new ActionResponse('/', 'success', 'ニュースを削除しました。 ID: '. $postId);
     },
     ['id' => 'string']
 );

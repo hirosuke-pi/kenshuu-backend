@@ -14,30 +14,25 @@ class NewsDetail {
      *
      * @param UsersDTO $user ユーザーDTO
      * @param ?PostsDTO $post 投稿DTO
-     * @param string $mode 表示モードか、編集モードか (固定値: MODE_VIEW, MODE_EDIT, MODE_CREATE)
+     * @param NewsMode $mode ニュース表示モード
      * @return void
      */
-    public static function render(UsersDTO $user, ?PostsDTO $post, string $mode): void {
-        $editorMode = in_array($mode, [MODE_EDIT, MODE_CREATE], true);
+    public static function render(UsersDTO $user, ?PostsDTO $post, NewsMode $mode): void {
+        $editorMode = in_array($mode, [NewsMode::EDIT, NewsMode::CREATE], true);
 
-        $breadcrumbProps = [];
-        if ($mode === MODE_EDIT) {
-            $breadcrumbProps = [
-                ['name' => 'ニュース - '. $post->title, 'link' => 'index.php?id='. $post->id],
+        $breadcrumbProps = match($mode) {
+            NewsMode::EDIT => [
+                ['name' => 'ニュース - '. $post->title, 'link' => '/news/index.php?id='. $post->id],
                 ['name' => 'ページを編集', 'link' => $_SERVER['REQUEST_URI']],
-            ];
-        }
-        elseif ($mode === MODE_CREATE) {
-            $breadcrumbProps = [
+            ],
+            NewsMode::CREATE => [
                 ['name' => 'ユーザー - @'. $user->username, 'link' => '/user/index.php?id='. $user->id],
                 ['name' => 'ニュースを作成', 'link' => $_SERVER['REQUEST_URI']],
-            ];
-        }
-        elseif ($mode === MODE_VIEW) {
-            $breadcrumbProps = [
+            ],
+            default => [
                 ['name' => 'ニュース - '. $post->title, 'link' => $_SERVER['REQUEST_URI']]
-            ];
-        }
+            ]
+        };
 
         ?>
             <div class="w-full lg:w-3/6 ">

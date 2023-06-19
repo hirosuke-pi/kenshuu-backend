@@ -12,6 +12,7 @@ class UserInfo {
      */
     public static function render(UsersDTO $user, int $postsCount, string $title, bool $visibleSettingButton): void {
         $userUrl = '/user/index.php?id='. $user->id;
+
         ?>
             <section class="bg-gray-100 border border-gray-300 rounded-lg p-5">
                 <h3 class="text-xl text-gray-800 font-bold border-b border-gray-400">

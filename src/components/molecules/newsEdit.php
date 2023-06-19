@@ -7,18 +7,22 @@ class NewsEdit {
      * ニュース編集フォームをレンダリング
      *
      * @param ?PostsDTO $post ニュースDTO
-     * @param string $mode 表示モードか、編集モードか (固定値: MODE_VIEW, MODE_EDIT, MODE_NEW)
+     * @param NewsMode $mode ニュースの表示モード
      * @return void
      */
-    public static function render(?PostsDTO $post, string $mode): void {
-        $newsEditUrl = '/actions/news.php';
-        $isEditMode = false;
-        $thumbnailPath = DEFAULT_THUMBNAIL;
-        if ($mode === MODE_EDIT) {
-            $newsEditUrl .= '?id='. $post->id;
-            $isEditMode = true;
-            $thumbnailPath = ImagesRepo::getThumbnailSrcByPostId($post->id);
-        }
+    public static function render(?PostsDTO $post, NewsMode $mode): void {
+        [$newsEditUrl, $isEditMode, $thumbnailPath] = match($mode) {
+            NewsMode::EDIT => [
+                '/actions/news.php?id='. $post->id,
+                true,
+                ImagesRepo::getThumbnailSrcByPostId($post->id)
+            ],
+            default => [
+                '/actions/news.php',
+                false,
+                DEFAULT_THUMBNAIL
+            ]
+        };
 
         $title = $post->title ?? '';
         $body = $post->body ?? '';
@@ -57,6 +61,10 @@ class NewsEdit {
                 </div>
             </form>
             <script>
+                const easyMDE = new EasyMDE({
+                    spellChecker: false,
+                    hideIcons: ['guide', 'preview', 'side-by-side'],
+                });
                 document.getElementById('newsForm').addEventListener('formdata', (event) => {
                     document.querySelectorAll('.image-input').forEach((element) => {
                         if (!element?.files?.[0]) return;
@@ -67,7 +75,6 @@ class NewsEdit {
                         event.formData.append(element.name, element.value);
                     });
                 });
-
             </script>
         <?php
     }
