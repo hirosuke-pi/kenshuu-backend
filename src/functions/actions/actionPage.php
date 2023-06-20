@@ -6,7 +6,6 @@ class ActionPage {
     /**
      * アクションページを作成
      *
-     * @param boolean $isCheckCsrfToken CSRFトークンをチェックするかどうか
      */
     function __construct() {
         PageController::sessionStart();
@@ -16,6 +15,7 @@ class ActionPage {
     /**
      * CSRFトークンをチェック (Session使用)
      *
+     * @param string $prefix CSRFトークンのプレフィックス
      * @return void
      */
     private function checkCsrfToken(string $prefix) {
@@ -37,6 +37,7 @@ class ActionPage {
 
     /**
      * キーとその型をチェック
+     * 存在しない場合はExceptionをスロー
      *
      * @param array $params チェックしたい配列
      * @param array $requirePropKeys チェックするキーとその型

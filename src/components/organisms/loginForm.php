@@ -14,12 +14,13 @@ class LoginForm {
         ?>
             <main class="w-full max-w-md mx-2">
                 <div class="mt-3 p-2">
-                    <?=Breadcrumb::render($breadcrumbProps)?>
+                    <?php Breadcrumb::render($breadcrumbProps)?>
                 </div>
                 <div class="my-3">
-                    <?=AlertSession::render() ?>
+                    <?php AlertSession::render() ?>
                 </div>
                 <form action="/actions/login.php" method="POST">
+                    <?php PageController::setCsrfToken(CSRF_LOGIN) ?>
                     <div class="bg-white border border-gray-300 rounded px-8 pt-6 pb-8 mb-4 flex flex-col">
                         <div class="mb-4">
                             <label class="block text-grey-darker text-sm font-bold mb-2" for="email">
@@ -39,7 +40,6 @@ class LoginForm {
                             </button>
                         </div>
                     </div>
-                    <?php PageController::setCsrfToken(CSRF_LOGIN) ?>
                 </form>
             <main>
         <?php

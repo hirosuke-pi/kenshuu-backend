@@ -4,6 +4,7 @@ require_once '../../functions/autoload/actions.php';
 
 /**
  * 投稿したユーザーかどうか認証
+ * 一致さなかった場合はExceptionをスロー
  * 
  * @param string $postId 投稿ID
  */
