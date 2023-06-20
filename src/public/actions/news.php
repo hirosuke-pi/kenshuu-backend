@@ -4,8 +4,8 @@ require_once '../../functions/autoload/actions.php';
 
 /**
  * 投稿したユーザーかどうか認証
- * 一致さなかった場合はExceptionをスロー
  * 
+ * @throws Exception ユーザーIDが一致しなかった場合スローする
  * @param string $postId 投稿ID
  */
 function authUserPost(string $postId): void {

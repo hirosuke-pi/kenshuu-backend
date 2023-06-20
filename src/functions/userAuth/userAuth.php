@@ -42,8 +42,8 @@ class UserAuth {
 
     /**
      * ログインユーザーを取得
-     * ログインしていない場合は例外を投げる
      *
+     * @throws Exception ログインユーザーがいない場合スローする
      * @return string ログインユーザー
      */
     public static function getLoginUserIdWithException(): string {

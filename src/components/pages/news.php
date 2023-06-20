@@ -13,8 +13,8 @@ require_once __DIR__ .'/../organisms/newsInfo.php';
 class News {
     /**
      * クエリからニュースIDを取得し、ニュースを取得する
-     * 存在しない場合はExceptionをスローする
-     *
+     * 
+     * @throws Exception 不正なニュースIDだった場合スローする
      * @return PostsDTO ニュースDTO
      */
     private static function getPostByPostIdQuery(): PostsDTO {

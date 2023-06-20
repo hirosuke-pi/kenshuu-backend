@@ -16,6 +16,7 @@ class ActionPage {
      * CSRFトークンをチェック (Session使用)
      *
      * @param string $prefix CSRFトークンのプレフィックス
+     * @throws Exception CSRFトークンが設定されていない場合スローする
      * @return void
      */
     private function checkCsrfToken(string $prefix) {
@@ -41,6 +42,7 @@ class ActionPage {
      *
      * @param array $params チェックしたい配列
      * @param array $requirePropKeys チェックするキーとその型
+     * @throws Exception 必須パラメーターが存在しない場合スローする
      * @return void
      */
     private function checkKeyTypes(array $params, array $requirePropKeys): void {
