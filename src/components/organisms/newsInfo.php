@@ -25,7 +25,7 @@ class NewsInfo {
 
         ?>
             <aside class="w-full lg:w-80 m-3">
-                <?php UserInfo::render($user, $postsCount, '投稿者', false) ?>
+                <?php UserInfo::render($user, $postsCount, '投稿者') ?>
                 <section class="border border-gray-300 rounded-lg p-5 mt-3">
                     <h3 class="text-xl text-gray-800 font-bold border-b border-gray-400">
                         <i class="fa-solid fa-tags"></i> タグ

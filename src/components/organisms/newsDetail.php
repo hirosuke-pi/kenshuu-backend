@@ -45,7 +45,7 @@ class NewsDetail {
                 <?php if ($editorMode): ?>
                     <?php NewsEdit::render($post, $mode) ?>
                 <?php else: ?>
-                    <?php NewsActions::render($post->id) ?>
+                    <?php NewsActions::render($post->id, $post->userId) ?>
                     <?php NewsView::render($post) ?>
                 <?php endif; ?>
             </div>       

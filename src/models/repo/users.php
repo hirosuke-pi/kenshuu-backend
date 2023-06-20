@@ -37,6 +37,8 @@ class UsersRepo {
      * @param string $password パスワード
      * @param string $profileImagePath プロフィール画像のパス
      * @param ?PDO $pdo PDOインスタンス
+     * 
+     * @throws Exception ユーザーの作成に失敗した場合スローする
      * @return string ユーザーID
      */
     public static function createUser(string $username, string $email, string $password, string $profileImagePath = '', PDO $pdo = null): string {

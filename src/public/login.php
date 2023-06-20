@@ -1,8 +1,8 @@
 <?php
 
 require_once '../functions/autoload/views.php';
-require_once '../components/pages/home.php';
+require_once '../components/pages/login.php';
 
-Home::render();
+Login::render();
 
 PageController::unsetRedirectData();
