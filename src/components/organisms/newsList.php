@@ -12,7 +12,7 @@ class NewsList {
     public static function render(array $posts): void {
         ?>
             <div class="m-3">
-                <?=AlertSession::render() ?>
+                <?php AlertSession::render() ?>
             </div>
             <div>
                 <ul class="flex justify-center flex-wrap">

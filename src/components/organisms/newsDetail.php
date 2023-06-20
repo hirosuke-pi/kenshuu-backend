@@ -40,7 +40,7 @@ class NewsDetail {
                     <?php Breadcrumb::render($breadcrumbProps)?>
                 </div>
                 <div class="m-3">
-                    <?=AlertSession::render() ?>
+                    <?php AlertSession::render() ?>
                 </div>
                 <?php if ($editorMode): ?>
                     <?php NewsEdit::render($post, $mode) ?>
