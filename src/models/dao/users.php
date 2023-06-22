@@ -16,9 +16,9 @@ class UsersDAO {
      * @param string $email メールアドレス
      * @param string $password パスワード(未ハッシュ)
      * @param string $profileImagePath プロフィール画像のパス
-     * @return boolean トランザクションが成功したかどうか
+     * @return ?string ユーザーID
      */
-    public function createUser(string $username, string $email, string $password, string $profileImagePath = ''): bool {
+    public function createUser(string $username, string $email, string $password, string $profileImagePath = ''): ?string {
         $usersTable = $this::USERS_TABLE;
         $sql = <<<SQL
             INSERT INTO {$usersTable}
@@ -27,14 +27,19 @@ class UsersDAO {
                 (:id, :username, :email, :password, :profile_img_path)
         SQL;
 
+        $userId = 'user_'.uniqid(mt_rand());
         $stmt = $this->db->prepare($sql);
-        $stmt->bindValue(':id', 'user_'.uniqid(mt_rand()), PDO::PARAM_STR);
+        $stmt->bindValue(':id', $userId, PDO::PARAM_STR);
         $stmt->bindValue(':username', $username, PDO::PARAM_STR);
         $stmt->bindValue(':email', $email, PDO::PARAM_STR);
         $stmt->bindValue(':password', password_hash($password, PASSWORD_DEFAULT), PDO::PARAM_STR);
         $stmt->bindValue(':profile_img_path', $profileImagePath, PDO::PARAM_STR);
+        
+        if (!$stmt->execute()) {
+            return null;
+        }
 
-        return $stmt->execute();
+        return $userId;
     }
 
     /**

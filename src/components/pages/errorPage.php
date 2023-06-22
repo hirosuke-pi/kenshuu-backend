@@ -18,6 +18,7 @@ class ErrorPage {
     public static function render(): void {
         if (!PageController::hasRedirectData()) {
             PageController::redirect('/');
+            return;
         }
 
         ?>

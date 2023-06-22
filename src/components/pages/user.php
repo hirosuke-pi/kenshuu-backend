@@ -19,12 +19,14 @@ class User {
     public static function render(): void {
         if (!isset($_GET['id'])) {
             PageController::redirectWithStatus('/error.php', 'error', 'ユーザーIDが指定されていません。');
+            return;
         }
 
         // ユーザーデータ取得
         $user = UsersRepo::getUserById($_GET['id']);
         if (!isset($user)) {
             PageController::redirectWithStatus('/error.php', 'error', 'ユーザーが見つかりませんでした。');
+            return;
         }
 
         ?>

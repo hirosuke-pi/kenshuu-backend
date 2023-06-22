@@ -13,7 +13,6 @@ class PageController {
             $_SESSION[REDIRECT_INDEX] = $data;
         }
         header('Location: ' . $url, true, $statusCode);
-        exit;
     }
 
     /**

@@ -41,7 +41,7 @@ class LoginForm {
                         </div>
                     </div>
                 </form>
-            <main>
+    </main>
         <?php
     }
 }

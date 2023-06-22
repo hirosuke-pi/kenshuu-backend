@@ -37,11 +37,21 @@ class UsersRepo {
      * @param string $password パスワード
      * @param string $profileImagePath プロフィール画像のパス
      * @param ?PDO $pdo PDOインスタンス
-     * 
+     *
      * @throws Exception ユーザーの作成に失敗した場合スローする
      * @return string ユーザーID
      */
     public static function createUser(string $username, string $email, string $password, string $profileImagePath = '', PDO $pdo = null): string {
+        if (strlen($username) < 5) {
+            throw new Exception('ユーザー名は5文字以上で入力してください。');
+        }
+        elseif (strlen($password) < 8) {
+            throw new Exception('パスワードは8文字以上で入力してください。'. strlen($password));
+        }
+        elseif (!preg_match('/^[a-zA-Z0-9_+-]+(.[a-zA-Z0-9_+-]+)*@([a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]*\.)+[a-zA-Z]{2,}$/', $email)) {
+            throw new Exception('不正なメールアドレス形式でです。');
+        }
+        
         if (is_null($pdo)) $pdo = PDOFactory::getPDOInstance();
         $usersDao = new UsersDAO($pdo);
 

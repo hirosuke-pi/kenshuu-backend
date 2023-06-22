@@ -40,7 +40,7 @@ class NewsView {
                     const md = DOMPurify.sanitize(marked.parse(rawMd));
 
                     const iframeElement = document.getElementById('message');
-                    iframeElement.srcdoc = md.replaceAll('<a', '<a target="_self" ');
+                    iframeElement.srcdoc = md.replaceAll('<a', '<a target="_blank" ');
                     iframeElement.addEventListener('load', () => {
                         iframeElement.style.height = (iframeElement.contentWindow.document.body.scrollHeight + 50) + 'px';
                     });
