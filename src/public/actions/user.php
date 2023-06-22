@@ -9,7 +9,7 @@ $action->post(
     function(array $params): ActionResponse {
         $responseData = ['email' => $params['email'], 'username' => $params['username']];
         try {
-            $profileImageExt = '';
+            $profileImageExt = null;
             if (in_array('', [$params['email'], $params['password1'], $params['username']])) {
                 throw new Exception('ユーザー名とメールアドレス、パスワードは必須です。');
             }
