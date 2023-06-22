@@ -28,16 +28,16 @@ class UserSettings {
         $user = $usersDao->getUserById($userId);
 
         ?>
-            <?=Head::render('Flash News - @'. $user->username) ?>
+            <?php Head::render('Flash News - @'. $user->username) ?>
                 <body>
-                    <?=Header::render() ?>
+                    <?php Header::render() ?>
                     <section class="flex justify-center flex-wrap-reverse items-end">
-                        <?=UserForm::render($user) ?>
-                        <?=UserDetail::render($user) ?>
+                        <?php UserForm::render($user) ?>
+                        <?php UserDetail::render($user) ?>
                     </section>
-                    <?=Footer::render() ?>
+                    <?php Footer::render() ?>
                 </body>
-            <?=End::render() ?>
+            <?php End::render() ?>
         <?php
     }
 }
