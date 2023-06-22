@@ -5,6 +5,7 @@ require_once '../../functions/autoload/actions.php';
 /**
  * 投稿したユーザーかどうか認証
  * 
+ * @throws Exception ユーザーIDが一致しなかった場合スローする
  * @param string $postId 投稿ID
  */
 function authUserPost(string $postId): void {
@@ -18,9 +19,7 @@ function authUserPost(string $postId): void {
     UserAuth::getLoginUserIdWithException($post->userId);
 }
 
-PDOFactory::getNewPDOInstance();
 $action = new ActionPage();
-
 $action->post(
     function(array $params): ActionResponse {
         try {

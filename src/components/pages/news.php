@@ -11,6 +11,12 @@ require_once __DIR__ .'/../organisms/newsDetail.php';
 require_once __DIR__ .'/../organisms/newsInfo.php';
 
 class News {
+    /**
+     * クエリからニュースIDを取得し、ニュースを取得する
+     * 
+     * @throws Exception 不正なニュースIDだった場合スローする
+     * @return PostsDTO ニュースDTO
+     */
     private static function getPostByPostIdQuery(): PostsDTO {
         if (!isset($_GET['id'])) {
             throw new Exception('不正なアクセスです。ニュースIDが指定されていません。');

@@ -5,12 +5,13 @@ class ImagesRepo {
      * サムネイルの画像パスを取得
      *
      * @param string $postId 投稿ID
+     * @param ?PDO $pdo PDOインスタンス
      * @return string 画像パス
      */
-    public static function getThumbnailSrcByPostId(string $postId): string {
-        $db = PDOFactory::getPDOInstance();
+    public static function getThumbnailSrcByPostId(string $postId, PDO $pdo = null): string {
+        if (is_null($pdo)) $pdo = PDOFactory::getPDOInstance();
 
-        $imagesDao = new ImagesDAO($db);
+        $imagesDao = new ImagesDAO($pdo);
         $imagesDto = $imagesDao->getThumbnailByPostId($postId);
 
         if (is_null($imagesDto)) {
@@ -24,12 +25,13 @@ class ImagesRepo {
      * 投稿IDを元に画像パスリストを取得
      *
      * @param string $postId 投稿ID
+     * @param ?PDO $pdo PDOインスタンス
      * @return array 画像パスリスト
      */
-    public static function getImagesSrcByPostId(string $postId): array {
-        $db = PDOFactory::getPDOInstance();
+    public static function getImagesSrcByPostId(string $postId, PDO $pdo = null): array {
+        if (is_null($pdo)) $pdo = PDOFactory::getPDOInstance();
 
-        $imagesDao = new ImagesDAO($db);
+        $imagesDao = new ImagesDAO($pdo);
         $imagesDtoList = $imagesDao->getImagesByPostId($postId);
 
         $imagesSrcList = [];
@@ -46,11 +48,12 @@ class ImagesRepo {
      * @param string $postId 投稿ID
      * @param boolean $thumbnailFlag サムネイルかどうか
      * @param string $fileExt ファイル拡張子
+     * @param ?PDO $pdo PDOインスタンス
      * @return string 画像ファイル名
      */
-    public static function createImageFile(string $postId, bool $thumbnailFlag, string $fileExt): string {
-        $db = PDOFactory::getPDOInstance();
-        $imagesDao = new ImagesDAO($db);
+    public static function createImageFile(string $postId, bool $thumbnailFlag, string $fileExt, PDO $pdo = null): string {
+        if (is_null($pdo)) $pdo = PDOFactory::getPDOInstance();
+        $imagesDao = new ImagesDAO($pdo);
 
         $imageId = 'image_' . uniqid(mt_rand());
         $filename = $imageId .'.'. convertSpecialCharsToHtmlEntities($fileExt);

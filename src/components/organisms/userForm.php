@@ -39,10 +39,10 @@ class UserForm {
         ?>
             <main class="w-full <?=$maxSize ?> mx-2">
                 <div class="mt-3 p-2">
-                    <?=Breadcrumb::render($breadcrumbProps)?>
+                    <?php Breadcrumb::render($breadcrumbProps)?>
                 </div>
                 <div class="my-3">
-                    <?=AlertSession::render() ?>
+                    <?php AlertSession::render() ?>
                 </div>
                 <form action="/actions/user.php" method="POST" enctype="multipart/form-data">
                     <div class="bg-white border border-gray-300 rounded px-8 pt-6 pb-8 mb-4 flex flex-col">

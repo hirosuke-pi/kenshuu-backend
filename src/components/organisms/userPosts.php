@@ -19,11 +19,11 @@ class UserPosts {
         ?>
             <div class="w-full lg:w-3/6 ">
                 <div class="mt-3 mx-3 p-2">
-                    <?=Breadcrumb::render($breadcrumbProps)?>
+                    <?php Breadcrumb::render($breadcrumbProps) ?>
                 </div>
                 <ul class="flex justify-center flex-wrap">
                     <?php foreach ($posts as $post): ?>
-                        <?=NewsCard::render($post, CardSize::WIDE) ?>
+                        <?php NewsCard::render($post, CardSize::WIDE) ?>
                     <?php endforeach; ?>
                 </ul>
             </div>
