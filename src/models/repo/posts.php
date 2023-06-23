@@ -53,6 +53,17 @@ class PostsRepo {
     }
 
     /**
+     * 投稿ワードを元に投稿リストを取得
+     *
+     * @return array 投稿リスト
+     */
+    public static function getPostsByWord(string $word): array {
+        $db = PDOFactory::getPDOInstance();
+        $postsDao = new PostsDAO($db);
+        return $postsDao->getPostsByWord($word);
+    }
+
+    /**
      * 投稿を作成
      *
      * @param string $userId ユーザーID

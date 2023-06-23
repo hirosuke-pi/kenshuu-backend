@@ -17,7 +17,7 @@ class Home {
      * @return void
      */
     public static function render(): void {
-        $posts = PostsRepo::getPosts();
+        $posts = isset($_GET['word']) ? PostsRepo::getPostsByWord($_GET['word']) : PostsRepo::getPosts();
 
         ?>
             <?php Head::render('Flash News')?>

@@ -83,6 +83,32 @@ class PostsDAO {
     }
 
     /**
+     * 検索ワードに一致するニュースを取得
+     *
+     * @return array PostsDTOの配列
+     */
+    public function getPostsByWord(string $word): array {
+        $postsTable = $this::POSTS_TABLE;
+        $sql = <<<SQL
+            SELECT * FROM 
+                {$postsTable} 
+            WHERE
+                (body LIKE :word OR title LIKE :title) AND
+                deleted_at IS NULL
+        SQL;
+
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(':word', '%' .$word .'%', PDO::PARAM_STR);
+        $stmt->bindValue(':title', '%' .$word .'%', PDO::PARAM_STR);
+
+        if (!$stmt->execute()) {
+            return [];
+        }
+
+        return $this->fetchAllStatement($stmt);
+    }
+
+    /**
      * ユーザーIDを元にニュースを取得
      *
      * @param string $userId ユーザーID
